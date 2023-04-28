@@ -1,2 +1,2 @@
 pkt_dict = {}
-num_packets = 5
+num_packets = 10

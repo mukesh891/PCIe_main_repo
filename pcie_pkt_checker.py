@@ -25,16 +25,24 @@ class checker_pkt():
 		size_in_bytes = pkt_dict.get("size_in_bytes")
 		xwr = pkt_dict.get("xwr")
 		
+		print('checker_fn BDF = {}\n' 'config type = {} for {}\n' '{}, pkt = {}\n' 'ECRC = {}\n' 'Data = {}\n' 'fmt = {}\n' 'tc = {}\n' 'attr = {}\n' 'tlp hint = {}\n' 'address translation = {}\n' 'length = {}\n' 'first_dw_be = {}\n' 'name = {}\n' 'size in bytes = {}\n' 'xwr = {}\n' .format(bdf , conf_type, "Switch" if conf_type else "end-point", "Blocking" if block else "Non-blocking", "Poisoned" if ep else "Not poisoned","Enabled" if td else "Disabled", data, fmt, tc, attr, th, at, length, first_dw_be,name, size_in_bytes, xwr))
 
 
-		print('checker_fn BDF = {}, config type {} for {}, {}, pkt is {}, ECRC is {}, Data is {}, fmt is {}, tc is {}, attr is {}, tlp hint is {}, address translation is {}, length is {}, first_dw_be is {}, name is {}, size in bytes, xwr is {}'
-		.format(bdf, conf_type, "Switch" if conf_type else "end-point", "Blocking" if block else "Non-blocking", "Poisoned" if ep else "Not poisoned", "Enabled" if td else "Disabled", data, fmt, tc, attr, th, at, length, first_dw_be, name, size_in_bytes, xwr))
-        
+
+		
+		with open('output.txt', 'a') as f:
+			f.write('checker_fn BDF = {}\n' 'config type = {} for {}\n' '{}, pkt = {}\n' 'ECRC = {}\n' 'Data = {}\n' 'fmt = {}\n' 'tc = {}\n' 'attr = {}\n' 'tlp hint = {}\n' 'address translation = {}\n' 'length = {}\n' 'first_dw_be = {}\n' 'name = {}\n' 'size in bytes = {}\n' 'xwr = {}\n' .format(bdf , conf_type, "Switch" if conf_type else "end-point", "Blocking" if block else "Non-blocking", "Poisoned" if ep else "Not poisoned","Enabled" if td else "Disabled", data, fmt, tc, attr, th, at, length, first_dw_be,name, size_in_bytes, xwr))
+
+
 		if not (0 <= fmt < 2**3 and 0 <= bdf < 2**16 and 0 <= conf_type <= 1 and 0 <= ep <= 1 and 0 <= td <= 1 and 0 <= block <= 1):
 			print("Packet is invalid due to:")
 			if(bdf >= 2**16):
+				with open('output.txt', 'a') as f:
+					f.write('INVALID BDF, value: {}\n'.format(bdf))
 				print('INVALID BDF, value: {}'.format(bdf))
 			if(fmt >= 2**3):
+				with open('output.txt', 'a') as f:
+					f.write('INVALID FMT, value: {}\n'.format(fmt))
 				print('INVALID FMT, value: {}'.format(fmt))
 		
 
@@ -42,4 +50,6 @@ class checker_pkt():
 			return False
 		else:
 			print("Packet is valid")
+			with open('output.txt', 'a') as f:
+				f.write('Packet is valid\n')
 			return True

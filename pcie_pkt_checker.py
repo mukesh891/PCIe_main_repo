@@ -34,7 +34,7 @@ class checker_pkt():
 			print("Packet is invalid due to:")
 			if(bdf >= 2**16):
 				print('INVALID BDF, value: {}'.format(bdf))
-			if(fmt >= 2**16):
+			if(fmt >= 2**3):
 				print('INVALID FMT, value: {}'.format(fmt))
 		
 

@@ -24,11 +24,11 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         self.ep = 0
         self.td = 0
         #self.packet = [self.bdf, self.conf_type, self.block, self.ep, self.td]
-        pkt_dict{"bdf"} = self.bdf 
-        pkt_dict{"conf_type"} = self.conf_type 
-        pkt_dict{"block"} = self.block 
-        pkt_dict{"ep"} = self.ep 
-        pkt_dict{"td"} = self.td
+        pkt_dict["bdf"] = self.bdf 
+        pkt_dict["conf_type"] = self.conf_type 
+        pkt_dict["block"] = self.block 
+        pkt_dict["ep"] = self.ep 
+        pkt_dict["td"] = self.td
                   
 
     def print_bdf(self):

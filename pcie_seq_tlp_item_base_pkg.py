@@ -6,13 +6,13 @@ import random
 from pprint import pprint
 
 from enum import IntEnum
-from bitstring import BitArray
+#from bitarray import bitarray
 
 class pcie_pkg:
     def __init__(self, name="", size_in_bytes=0, xwr=0):
         with open("bdf_file.txt","w") as f:
             f.write("bdf")
-            self.transaction_type = random.getrandbits(8)	
+            self.fmt = random.getrandbits(3)	
             self.bdf = 10
             self.conf_type = 0
             self.first_dw_be = 0b0011
@@ -28,27 +28,6 @@ class pcie_pkg:
             f.write(hex(self.bdf))
             f.write("\n")
     
-
-    def print_var(self):
-        pprint(vars(self))
-        '''s = bin(self.first_dw_be)
-        pprint(s)
-        a = 20
-        print(bytes(a))
-        b=BitArray(uint = a , length = 10).bin
-        pprint(b)
-        for i in range(1,11): 
-            pprint(b[i-1:i])
-'''
-    def bitwise_read():
-        s = bin(self.first_dw_be)
-        pprint(s)
-        a = 20
-        print(bytes(a))
-        b=BitArray(uint = a , length = 10).bin
-        pprint(b)
-        for i in range(1,11): 
-            pprint(b[i-1:i])
     
  
 class tlp_fmt(IntEnum):
@@ -63,7 +42,7 @@ class tlp_type(IntEnum):
 
 
 pkg = pcie_pkg()
-pkg.print_var()
+
 
 
 

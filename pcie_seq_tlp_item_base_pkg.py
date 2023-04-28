@@ -12,13 +12,13 @@ class pcie_pkg:
     def __init__(self, name="", size_in_bytes=0, xwr=0):
         with open("bdf_file.txt","w") as f:
             f.write("bdf")
-            self.transaction_type = random.getrandbits(8)
-            self.bdf = random.getrandbits(16)
-            self.cfg_type = random.getrandbits(1)
+            self.transaction_type = random.getrandbits(8)	
+            self.bdf = 10
+            self.conf_type = 0
             self.first_dw_be = 0b0011
-            self.ep = random.getrandbits(1)
+            self.ep = 0
             self.block = random.getrandbits(1)
-            self.td= random.getrandbits(1)
+            self.td = 0
             #self.command_num = random.getrandbits(32)
             ############### code for byte conv #############
             self.name = name

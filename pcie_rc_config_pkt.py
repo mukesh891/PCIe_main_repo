@@ -74,7 +74,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             str(function_str  )+
             str(tag_str       )+
             str(last_dw_be_str))
-            Header = (str(fmt_str)+str(bdf_str)+str(type_str)+
+            header = (str(fmt_str)+str(bdf_str)+str(type_str)+
             str(first_dw_be_str)+
             str(ep_str        )+
             str(block_str     )+
@@ -90,7 +90,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             str(tag_str       )+
             str(last_dw_be_str))
 
-            pkt_queue.put(Header)
+            pkt_queue.put(header)
 
 cls=pcie_seq_rc_config_pkt()
 cls.cf0_pkt()              

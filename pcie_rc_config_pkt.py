@@ -90,11 +90,11 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             str(tag_str       )+
             str(last_dw_be_str))
 
-            self.pkt_queue.put(Header)
+            pkt_queue.put(Header)
 
 cls=pcie_seq_rc_config_pkt()
 cls.cf0_pkt()              
-print(cls.pkt_queue)
+print(pkt_queue)
   #      def print_bdf(self):
   #          print('Generated packet: BDF = {}, config type {} for {}, {}, pkt is {}, ECRC is {}, fmt is {}, first_dw_be is {}'.format(self.bdf, self.conf_type, "Switch" if self.conf_type else "end-point", "Blocking" if self.block else "Non-blocking", "Poisoned" if self.ep else "Not poisoned", "Enabled" if self.td else "Disabled", self.fmt, self.first_dw_be))
   #         #print(self.packet)

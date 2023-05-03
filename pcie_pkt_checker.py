@@ -12,8 +12,8 @@ class ep_check_pkt(ep_base_pkt):
 
 	def ep_fn(self, pkt_num):
 		header = ep_base_pkt.checker_fn_base(self, pkt_num)
-		received_pkt.write(header)
-		received_pkt.write('\n')
+		received_pkt.write('{}, {}\n'.format((header[0:96]), (header[96:128])))
+		received_pkt.write('\nheader is {}, Data is {}\n'.format(hex(int(header[0:96], 2)), hex(int(header[96:128], 2))))
 
 		print('********************************* packet number {} **********************************'.format(pkt_num))
 		print('inherited header is {}\n'.format(header))
@@ -180,15 +180,25 @@ class ep_check_pkt(ep_base_pkt):
 				false_pkt += 1
 
 
+			#checking for poisoned data
+			if (EP_int):
+				print('Packet is INVALID due to POISONED Data: Value {}'.format(EP_int))
+				received_invalid_pkt.write('Packet is INVALID due to POISONED Data: Value {}\n'.format(EP_int))
+				false_pkt += 1
+			else:
+				true_pkt += 1
+
+
+
 
 
 
 		if(false_pkt):
-			received_invalid_pkt.write(header)
-			received_invalid_pkt.write('\n')
+			received_invalid_pkt.write('{}, {}\n'.format((header[0:96]), (header[96:128])))
+			received_invalid_pkt.write('header is {}, Data is {}\n'.format(hex(int(header[0:96], 2)), hex(Data_int)))
 			return False
 		else:
-			received_valid_pkt.write(header)
-			received_valid_pkt.write('\n')
+			received_valid_pkt.write('{}, {}\n'.format((header[0:96]), (header[96:128])))
+			received_valid_pkt.write('header is {}, Data is {}\n'.format(hex(int(header[0:96], 2)), hex(Data_int)))
 			return True
 

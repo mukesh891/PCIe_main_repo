@@ -133,8 +133,8 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             pkt = pkt_queue.queue[i]
             print(pkt)
             ## Writing the tlp_packet into the hex_fil.txt ##
-            #f.write(tlp_packet)
-            #f.write("\n")
+            f.write(tlp_packet)
+            f.write("\n")
              
  
 

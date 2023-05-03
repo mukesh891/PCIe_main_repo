@@ -11,15 +11,15 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         super().__init__()
     def cf0_pkt(self):
         for i in range(num_packets):
-            self.fmt                    = random.getrandbits(3)
+            self.fmt                    = random.choice([0,2])
             ##    BDF format for requester and completer    ##
             self.requester_id           = random.getrandbits(16)
             self.completer_id           = random.getrandbits(16)
             ##################################################
-            self.type                   = random.getrandbits(5)
+            self.type                   = random.choice([4,5])
             self.first_dw_be            = 0b0011
-            self.ep                     = random.getrandbits(1) 
-            self.td                     = random.getrandbits(1)
+            self.ep                     = 0 
+            self.td                     = 0
             self.tc                     = random.getrandbits(3)
             self.attr0                  = random.getrandbits(2)
             self.attr1                  = random.getrandbits(1)
@@ -32,13 +32,16 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             self.tag                    = random.getrandbits(8)
             self.last_dw_be             = random.getrandbits(4)
             
-            self.payload                = random.getrandbits(32)
+            if((self.fmt==2) or (self.fmt ==3)):
+                self.payload                = random.getrandbits(32)
+            else:
+                self.payload                = 0
             self.reserve_bit1           = random.choice([0,1])
             self.reserve_bit2           = random.choice([0,1])
             self.reserve_bit3           = random.choice([0,1])
             self.reserve_bit4           = random.choice([0,15])
             self.reserve_bit5           = random.choice([0,3])
-            self.th                     = random.choice([0,1])
+            self.th                     = 0 
             ######### initializing reserved bits to zero ########
             self.reserve_bit1           = 0
             self.reserve_bit2           = 0
@@ -76,33 +79,8 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
                          
             #addresses  =format(self.addresses, '04b')
             reserve_bit5_str=  format(self.reserve_bit5, '02b')
-
             payload_str     = format(self.payload, '032b')
             ###############################################
-
-            #print(str(fmt_str)+
-            #        str(type_str)+
-            #        str(self.reserve_bit1)+
-            #str(tc_str        )+
-            #str(self.reserve_bit2)+
-            #str(attr1_str     )+
-            #str(self.reserve_bit3)+
-            #str(self.th)+
-            #str(td_str        )+
-            #str(ep_str        )+
-            #str(attr0_str     )+
-            #str(at_str        )+
-            #str(length_str    )+
-            ##str(requester_bdf_str)+
-            #str(requester_id_str)+
-            #str(tag_str       )+
-            #str(last_dw_be_str)+
-            #str(first_dw_be_str)+
-            #str(completer_id_str)+
-            #str(reserve_bit4_str)+
-            #str(ext_register_number_str)+
-            #str(register_number_str)
-            #)
 
             ## Concatenating all the value into tlp_pkt in string format of binary value ##
             tlp_packet = (str(fmt_str)+str(type_str)+str(self.reserve_bit1)+
@@ -124,8 +102,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             str(reserve_bit4_str)+
             str(ext_register_number_str)+
             str(register_number_str)+
-            str(reserve_bit5_str)+
-            str(payload_str))
+            str(reserve_bit5_str)+str(payload_str))
             ##################################################################################
             
             ## puting the tlp_packet into queue ##
@@ -135,7 +112,14 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             ## Writing the tlp_packet into the hex_fil.txt ##
             f.write(tlp_packet)
             f.write("\n")
-             
+
+
+    #def log_script(self):
+    #    pprint(vars(self))
  
+#c = pcie_seq_rc_config_pkt()
+#c.cf0_pkt()
+#c.log_script()
+
 
 #f.close()

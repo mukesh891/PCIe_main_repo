@@ -20,13 +20,13 @@ for i in range(size):
 	if not c1.ep_fn(i):
 		print('Packet failed the checker!')
 		received_pkt.write('Packet failed the checker!\n\n')
-		received_invalid_pkt.write('Packet failed the checker!\n\n')
+		received_invalid_pkt.write('Packet failed the checker!\n\n\n\n\n')
 		inval_pkt += 1
 		inval_pkt_num.append(i)
 	else:
 		print('Packet passed the checker!')
 		received_pkt.write('Packet passed the checker!\n\n')
-		received_valid_pkt.write('Packet passed the checker!\n\n')
+		received_valid_pkt.write('Packet passed the checker!\n\n\n\n\n')
 		val_pkt_num.append(i)
 		val_pkt += 1
 

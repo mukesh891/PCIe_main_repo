@@ -52,6 +52,7 @@ class ep_check_pkt(ep_base_pkt):
 		'Data is {}\n'
 		.format(Fmt, Type, TC, Attr1, Attr0, Attr, TH, TD, EP, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id, Ext_Register_Num, Register_Num, Data))
 
+
 		
 		
 		Fmt_int = int(Fmt, 2)		
@@ -81,7 +82,7 @@ class ep_check_pkt(ep_base_pkt):
 
 		header_int = int(header, 2)
 		Data_int = int(Data, 2)
-		
+
 
 		false_pkt = 0
 		true_pkt = 0
@@ -195,9 +196,19 @@ class ep_check_pkt(ep_base_pkt):
 		if(false_pkt):
 			received_invalid_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:128])))
 			received_invalid_pkt.write('header is {}, Data is {}\n'.format(hex(header_int), hex(Data_int)))
+			received_invalid_pkt.write('ep_fn Fmt = {}\n' 'type {}\n' 'TC is {}\n' 'Attr1 is {}\n' 'Attr0 is {}\n' 'Final Attr is {}\n' 'TH is {}\n' 'TD is {}\n' 'EP is {}\n'
+							  'AT is {}\n' 'Length is {}\n'	'Requester ID is {}\n' 'Tag is {}\n' 'Last DW BE is {}\n' 'First DW BE is {}\n' 'Completion ID is {}\n' 
+							  'External Register Num is {}\n' 'Register Num is {}\n' 'Data is {}\n'.format(Fmt, Type, TC, Attr1, Attr0, Attr, TH, TD, EP, AT, Length, 
+																					  Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id, Ext_Register_Num, 
+																					  Register_Num, Data))
 			return False
 		else:
 			received_valid_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:128])))
 			received_valid_pkt.write('header is {}, Data is {}\n'.format(hex(header_int), hex(Data_int)))
+			received_valid_pkt.write('ep_fn Fmt = {}\n' 'type {}\n' 'TC is {}\n' 'Attr1 is {}\n' 'Attr0 is {}\n' 'Final Attr is {}\n' 'TH is {}\n' 'TD is {}\n' 'EP is {}\n'
+							  'AT is {}\n' 'Length is {}\n'	'Requester ID is {}\n' 'Tag is {}\n' 'Last DW BE is {}\n' 'First DW BE is {}\n' 'Completion ID is {}\n' 
+							  'External Register Num is {}\n' 'Register Num is {}\n' 'Data is {}\n'.format(Fmt, Type, TC, Attr1, Attr0, Attr, TH, TD, EP, AT, Length, 
+																					  Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id, Ext_Register_Num, 
+																					  Register_Num, Data))
 			return True
 

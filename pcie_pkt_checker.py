@@ -91,40 +91,59 @@ class ep_check_pkt(ep_base_pkt):
 		  0 <= Attr0_int < 2**2 and 0 <= AT_int < 2**2 and 0 <= Length_int < 2**10 and 0 <= Requester_Id_int < 2**16 and 0 <= Tag_int < 2**8 and 0 <= Last_DW_BE_int < 2**4 and 
 		  0 <= First_DW_BE_int < 2**4 and 0 <= Completion_Id_int < 2**16 and 0 <= Ext_Register_Num_int < 2**4 and 0 <= Register_Num_int < 2**6):
 			
+			print('Packet is INVALID due to:')
+			received_invalid_pkt.write('Packet is INVALID due to:\n')
 			if(Fmt_int >= 2**3):
 				print('INVALID FMT, value: {}'.format(Fmt_int))
+				received_invalid_pkt.write('INVALID FMT, value: {}\n'.format(Fmt_int))
 			if(Type_int >= 2**5):
 				print('INVALID Type, value: {}'.format(Type_int))
+				received_invalid_pkt.write('INVALID Type, value: {}\n'.format(Type_int))
 			if(TC_int >= 2**3):
 				print('INVALID TC, value: {}'.format(TC_int))
+				received_invalid_pkt.write('INVALID TC, value: {}\n'.format(TC_int))
 			if(Attr1_int!=0 | Attr1_int!=1):
 				print('INVALID Attr1, value: {}'.format(Attr1_int))
+				received_invalid_pkt.write('INVALID Attr1, value: {}\n'.format(Attr1_int))
 			if(TH_int!=0 | TH_int!=1):
 				print('INVALID TH, value: {}'.format(TH_int))
+				received_invalid_pkt.write('INVALID TH, value: {}\n'.format(TH_int))
 			if(TD_int!=0 | TD_int!=1):
 				print('INVALID TD, value: {}'.format(TD_int))
+				received_invalid_pkt.write('INVALID TD, value: {}\n'.format(TD_int))
 			if(EP_int!=0 | EP_int!=1):
 				print('INVALID EP, value: {}'.format(EP_int))
+				received_invalid_pkt.write('INVALID EP, value: {}\n'.format(EP_int))
 			if(Attr0_int >= 2**2):
 				print('INVALID Attr0, value: {}'.format(Attr0_int))
+				received_invalid_pkt.write('INVALID Attr0, value: {}\n'.format(Attr0_int))
 			if(AT_int >= 2**2):
 				print('INVALID AT, value: {}'.format(AT_int))
+				received_invalid_pkt.write('INVALID AT, value: {}\n'.format(AT_int))
 			if(Length_int >= 2**10):
 				print('INVALID Length, value: {}'.format(Length_int))
+				received_invalid_pkt.write('INVALID Length, value: {}\n'.format(Length_int))
 			if(Requester_Id_int >= 2**16):
 				print('INVALID Requester_Id, value: {}'.format(Requester_Id_int))
+				received_invalid_pkt.write('INVALID Requester_Id, value: {}\n'.format(Requester_Id_int))
 			if(Tag_int >= 2**8):
 				print('INVALID Tag, value: {}'.format(Tag_int))
+				received_invalid_pkt.write('INVALID Tag, value: {}\n'.format(Tag_int))
 			if(Last_DW_BE_int >= 2**4):
-				print('INVALID Last_DW_BE, value: {}'.format(Last_DW_BE_int))		
+				print('INVALID Last_DW_BE, value: {}'.format(Last_DW_BE_int))
+				received_invalid_pkt.write('INVALID Last_DW_BE, value: {}\n'.format(Last_DW_BE_int))
 			if(First_DW_BE_int >= 2**4):
 				print('INVALID First_DW_BE, value: {}'.format(First_DW_BE_int))
+				received_invalid_pkt.write('INVALID First_DW_BE, value: {}\n'.format(First_DW_BE_int))
 			if(Completion_Id_int >= 2**16):
 				print('INVALID Completion_Id, value: {}'.format(Completion_Id_int))
+				received_invalid_pkt.write('INVALID Completion_Id, value: {}\n'.format(Completion_Id_int))
 			if(Ext_Register_Num_int >= 2**4):
 				print('INVALID Ext_Register_Num, value: {}'.format(Ext_Register_Num_int))
+				received_invalid_pkt.write('INVALID Ext_Register_Num, value: {}\n'.format(Ext_Register_Num_int))
 			if(Register_Num_int >= 2**6):
 				print('INVALID Register_Num, value: {}'.format(Register_Num_int))
+				received_invalid_pkt.write('INVALID Register_Num, value: {}\n'.format(Register_Num_int))
 					
 			false_pkt += 1
 		else:
@@ -132,16 +151,20 @@ class ep_check_pkt(ep_base_pkt):
 			if(int(Fmt[1], 2)):
 				if(Data_int == 0):
 					print('Packet is INVALID due to NO DATA RECEIVED from write fmt')
+					received_invalid_pkt.write('Packet is INVALID due to NO DATA RECEIVED from write fmt\n')
 					if Type not in ['00000', '00010', '00100', '00101', '01010', '01011', '01100', '01101', '01110']:
 						print('Packet is INVALID due to invalid Type for write Fmt: Value {}'.format(Type))
+						received_invalid_pkt.write('Packet is INVALID due to invalid Type for write Fmt: Value {}\n'.format(Type))
 					false_pkt += 1
 				else:
 					true_pkt += 1
 			else:
 				if(Data_int != 0):
 					print('Packet is INVALID due to DATA RECEIVED from read fmt')
+					received_invalid_pkt.write('Packet is INVALID due to DATA RECEIVED from read fmt\n')
 					if Type not in ['00000', '00001', '00010', '00100', '00101', '01010', '01011']:
 						print('Packet is INVALID due to invalid Type for read Fmt: Value {}'.format(Type))
+						received_invalid_pkt.write('Packet is INVALID due to invalid Type for read Fmt: Value {}\n'.format(Type))
 					false_pkt += 1
 				else:
 					true_pkt += 1
@@ -153,6 +176,7 @@ class ep_check_pkt(ep_base_pkt):
 				true_pkt += 1
 			else:
 				print('Packet is INVALID due to invalid Type: Value {}'.format(Type))
+				received_invalid_pkt.write('Packet is INVALID due to invalid Type: Value {}\n'.format(Type))
 				false_pkt += 1
 
 

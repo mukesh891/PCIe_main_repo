@@ -81,9 +81,6 @@ class ep_check_pkt(ep_base_pkt):
 
 		header_int = int(header, 2)
 		Data_int = int(Data, 2)
-
-		print('data {}'.format(Data_int))
-		
 		
 
 		false_pkt = 0

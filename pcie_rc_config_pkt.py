@@ -11,7 +11,6 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         super().__init__()
     def cf0_pkt(self):
         for i in range(100):
-            self.pkt_queue = queue.Queue()
             self.fmt                    = random.getrandbits(3)
             ##    BDF format for requester and completer    ##
             self.requester_id           = random.getrandbits(16)
@@ -98,7 +97,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             #)
 
 
-            header = (str(fmt_str)+str(type_str)+str(self.reserve_bit1)+
+            tlp_packet = (str(fmt_str)+str(type_str)+str(self.reserve_bit1)+
             str(tc_str        )+str(self.reserve_bit2)+
             str(attr1_str     )+
             str(self.reserve_bit3)+
@@ -120,15 +119,12 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             str(reserve_bit5_str)+
             str(payload_str))
             
-            pkt_queue.put(header)
-            f.write(header)
+            pkt_queue.put(tlp_packet)
+            f.write(tlp_packet)
             f.write("\n")
 
 cls=pcie_seq_rc_config_pkt()
 cls.cf0_pkt()              
-for i in range (100):
-    q = pkt_queue.get()
-    print(q)
 
   #      def print_bdf(self):
   #          print('Generated packet: BDF = {}, config type {} for {}, {}, pkt is {}, ECRC is {}, fmt is {}, first_dw_be is {}'.format(self.bdf, self.conf_type, "Switch" if self.conf_type else "end-point", "Blocking" if self.block else "Non-blocking", "Poisoned" if self.ep else "Not poisoned", "Enabled" if self.td else "Disabled", self.fmt, self.first_dw_be))

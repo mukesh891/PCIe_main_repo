@@ -130,14 +130,12 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             
             ## puting the tlp_packet into queue ##
             pkt_queue.put(tlp_packet)
-
+            pkt = pkt_queue.queue[i]
+            print(pkt)
             ## Writing the tlp_packet into the hex_fil.txt ##
-            f.write(tlp_packet)
-            f.write("\n")
-
-cls=pcie_seq_rc_config_pkt()
-cls.cf0_pkt()              
+            #f.write(tlp_packet)
+            #f.write("\n")
+             
  
-p1 = pcie_seq_rc_config_pkt()
-p1.cf0_pkt()
-f.close()
+
+#f.close()

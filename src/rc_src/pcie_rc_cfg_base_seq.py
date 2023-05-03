@@ -4,7 +4,7 @@ from pprint import pprint
 from pcie_rc_tx_item import *
 from pcie_config_obj import *
 
-print("hello pcie_seq_rc_config_base")
+print("hello pcie_seq_rc_cfg_base_seq")
 
 class pcie_rc_cfg0_pkt(pcie_rc_tx_item):
     print("2. This is pcie_rc_cfg0_pkt")

@@ -3,12 +3,18 @@ from ep_base import *
 
 print("checker block")
 
+received_pkt = open("received_pkt.txt","w")
+received_valid_pkt = open("received_valid_pkt.txt","w")
+received_invalid_pkt = open("received_invalid_pkt.txt","w")
+
 class ep_check_pkt(ep_base_pkt):
 
 
 	def ep_fn(self, pkt_num):
 		header = ep_base_pkt.checker_fn_base(self, pkt_num)
-		
+		received_pkt.write(header)
+		received_pkt.write('\n')
+
 		print('********************************* packet number {} **********************************'.format(pkt_num))
 		print('inherited header is {}\n'.format(header))
 		Fmt = header[0:3]		
@@ -154,8 +160,11 @@ class ep_check_pkt(ep_base_pkt):
 
 
 		if(false_pkt):
+			received_invalid_pkt.write(header)
+			received_invalid_pkt.write('\n')
 			return False
 		else:
-			print("Packet is valid")
+			received_valid_pkt.write(header)
+			received_valid_pkt.write('\n')
 			return True
 

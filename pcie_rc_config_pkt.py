@@ -39,13 +39,19 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             self.reserve_bit4           = random.choice([0,15])
             self.reserve_bit5           = random.choice([0,3])
             self.th                     = random.choice([0,1])
-            
+            ######### initializing reserved bits to zero ########
+            self.reserve_bit1           = 0
+            self.reserve_bit2           = 0
+            self.reserve_bit3           = 0
+            self.reserve_bit4           = 0
+            self.reserve_bit5           = 0
+            #####################################################
+
             self.ext_register_number    = random.choice([0,15])
             self.register_number        = random.choice([0,63])
  
-
-            #fdb_str = format(self.first_dw_be, '04b')
-
+            ## converting all the values to bin format ##
+            
             fmt_str                 =format(self.fmt, '03b')       
             requester_id_str        =format(self.requester_id, '016b')       
             completer_id_str        =format(self.completer_id, '016b')       
@@ -72,6 +78,8 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             reserve_bit5_str=  format(self.reserve_bit5, '02b')
 
             payload_str     = format(self.payload, '032b')
+            ###############################################
+
             #print(str(fmt_str)+
             #        str(type_str)+
             #        str(self.reserve_bit1)+
@@ -96,7 +104,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             #str(register_number_str)
             #)
 
-
+            ## Concatenating all the value into tlp_pkt in string format of binary value ##
             tlp_packet = (str(fmt_str)+str(type_str)+str(self.reserve_bit1)+
             str(tc_str        )+str(self.reserve_bit2)+
             str(attr1_str     )+
@@ -118,20 +126,18 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             str(register_number_str)+
             str(reserve_bit5_str)+
             str(payload_str))
+            ##################################################################################
             
+            ## puting the tlp_packet into queue ##
             pkt_queue.put(tlp_packet)
+
+            ## Writing the tlp_packet into the hex_fil.txt ##
             f.write(tlp_packet)
             f.write("\n")
 
 cls=pcie_seq_rc_config_pkt()
 cls.cf0_pkt()              
-
-  #      def print_bdf(self):
-  #          print('Generated packet: BDF = {}, config type {} for {}, {}, pkt is {}, ECRC is {}, fmt is {}, first_dw_be is {}'.format(self.bdf, self.conf_type, "Switch" if self.conf_type else "end-point", "Blocking" if self.block else "Non-blocking", "Poisoned" if self.ep else "Not poisoned", "Enabled" if self.td else "Disabled", self.fmt, self.first_dw_be))
-  #         #print(self.packet)
-
-
-
+ 
 p1 = pcie_seq_rc_config_pkt()
 p1.cf0_pkt()
 f.close()

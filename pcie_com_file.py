@@ -2,7 +2,7 @@ import queue
 
 pkt_queue = queue.Queue()
 pkt_dict = {}
-num_packets = 10
+num_packets = 100
 
 '''for i in range(100):
     pkt = pkt_queue.queue[i]

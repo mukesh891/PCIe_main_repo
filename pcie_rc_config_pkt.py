@@ -10,7 +10,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
     def __init__(self):
         super().__init__()
     def cf0_pkt(self):
-        for i in range(100):
+        for i in range(num_packets):
             self.fmt                    = random.getrandbits(3)
             ##    BDF format for requester and completer    ##
             self.requester_id           = random.getrandbits(16)

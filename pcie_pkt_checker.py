@@ -189,6 +189,15 @@ class ep_check_pkt(ep_base_pkt):
 				true_pkt += 1
 
 
+			#checking for read/write with 3DW header size
+			if Fmt not in ['000', '010']:
+				print('TLP is INVALID due to invalid fmt for 3DW header size: Value {}'.format(Fmt))
+				received_invalid_pkt.write('TLP is INVALID due to invalid fmt for 3DW header size: Value {}\n'.format(Fmt))
+				false_pkt += 1
+			else:
+				true_pkt += 1
+
+
 
 
 

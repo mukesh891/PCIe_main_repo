@@ -90,7 +90,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             self.cfg0_pkt()
             ## converting all the values to bin format ##
             if(self.err_eij):
-                if (self.arr[j]==i and j < len(self.arr)):
+                if (self.arr[j]==i and j < len(self.arr)-1):
                     self.fmt_eij_err()
                     print(self.fmt)
                     j=j+1
@@ -167,7 +167,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         hex_f.close()
         bin_f.close()
 
-c = pcie_rc_cfg0_pkt()
+c = pcie_seq_rc_config_pkt()
 #c.bin_file_handle()
 #c.file_handle()
 #c.hex_file_handle()

@@ -10,8 +10,6 @@ val_pkt = 0
 inval_pkt_num = [];
 val_pkt_num = [];
 
-p1 = pcie_seq_rc_config_pkt()
-p1.cf0_pkt()
 f.close()
 
 

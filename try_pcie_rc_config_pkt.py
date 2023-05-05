@@ -159,20 +159,14 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         for line in bin_f:
             line = "0b" + line
             hex_val = hex(int(line,2))[2:]
-            hex_val = str(hex_val)
-            if len(hex_val)==32:
-                hex_f.write(hex_val)
-            else:
-                hex_val = "0"+hex_val
-                hex_f.write(hex_val)
             print(hex_val)
+            hex_f.write(hex_val)
             hex_f.write("\n")
         hex_f.close()
         bin_f.close()
 
 
     def gen_log(self):
-         
         gen_f = open("genearator.csv","w")
         gen_f.write("fmt,")
         gen_f.write("type,")
@@ -270,9 +264,9 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             gen_f.write(",")
             gen_f.write(hex(self.payload)      )      
             gen_f.write("\n")
-        self.hex_file_handle()
 
 
+        self.hex_file_handle
 
 
 c = pcie_seq_rc_config_pkt()

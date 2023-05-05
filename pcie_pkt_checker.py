@@ -180,64 +180,10 @@ class ep_check_pkt(ep_base_pkt):
 				false_pkt += 1
 
 
-			#checking for configuration request type possibilities
-			if (int(Type[2], 2)):
-				if (TC_int==0):
-					if (Attr1_int==0):
-						if (TH_int==0):
-							if (Attr0_int==0):
-								if (AT_int==0):
-									if (Last_DW_BE_int==0):
-										if(int(Register_Num[-2:], 2) == 0):
-											if Type in ['00100', '00101']:
-												true_pkt += 1
-											else:
-												print('TLP is INVALID since for TYPE is not 00100 or 00101: Value {}'.format(Type))
-												received_invalid_pkt.write('TLP is INVALID since for TYPE is not 00100 or 00101: Value {}\n'.format(Type))
-												false_pkt += 1
-										else:
-											print('TLP is INVALID since for CFG request, last two bits of Register Number is not ZERO: Value {}'.format(Register_Num))
-											received_invalid_pkt.write('TLP is INVALID since for CFG request, last two bits of Register Number is not ZERO: Value {}\n'.format(Register_Num))
-											false_pkt += 1
-									else:
-										print('TLP is INVALID since for CFG request, last DW BE is not ZERO: Value {}'.format(Last_DW_BE_int))
-										received_invalid_pkt.write('TLP is INVALID since for CFG request, last DW BE is not ZERO: Value {}\n'.format(Last_DW_BE_int))
-										false_pkt += 1
-								else:
-									print('TLP is INVALID since for CFG request, AT is not ZERO: Value {}'.format(AT_int))
-									received_invalid_pkt.write('TLP is INVALID since for CFG request, AT is not ZERO: Value {}\n'.format(AT_int))
-									false_pkt += 1
-							else:
-								print('TLP is INVALID since for CFG request, ATTR(byte 2) is not ZERO: Value {}'.format(Attr0_int))
-								received_invalid_pkt.write('TLP is INVALID since for CFG request, ATTR(byte 2) is not ZERO: Value {}\n'.format(Attr0_int))
-								false_pkt += 1
-						else:
-							print('TLP is INVALID since for CFG request, TH is not ZERO: Value {}'.format(TH_int))
-							received_invalid_pkt.write('TLP is INVALID since for CFG request, TH is not ZERO: Value {}\n'.format(TH_int))
-							false_pkt += 1
-					else:
-						print('TLP is INVALID since for CFG request, ATTR(byte 1) is not ZERO: Value {}'.format(Attr1_int))
-						received_invalid_pkt.write('TLP is INVALID since for CFG request, ATTR(byte 1) is not ZERO: Value {}\n'.format(Attr1_int))
-						false_pkt += 1
-				else:
-					print('TLP is INVALID since for CFG request, TC is not ZERO: Value {}'.format(TC_int))
-					received_invalid_pkt.write('TLP is INVALID since for CFG request, TC is not ZERO: Value {}\n'.format(TC_int))
-					false_pkt += 1
-
-
 			#checking for poisoned data
 			if (EP_int):
 				print('TLP is INVALID due to POISONED Data: Value {}'.format(EP_int))
 				received_invalid_pkt.write('TLP is INVALID due to POISONED Data: Value {}\n'.format(EP_int))
-				false_pkt += 1
-			else:
-				true_pkt += 1
-
-
-			#checking for read/write with 3DW header size
-			if Fmt not in ['000', '010']:
-				print('TLP is INVALID due to invalid fmt for 3DW header size: Value {}'.format(Fmt))
-				received_invalid_pkt.write('TLP is INVALID due to invalid fmt for 3DW header size: Value {}\n'.format(Fmt))
 				false_pkt += 1
 			else:
 				true_pkt += 1
@@ -265,3 +211,4 @@ class ep_check_pkt(ep_base_pkt):
 																					  Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id, Ext_Register_Num, 
 																					  Register_Num, Data))
 			return True
+

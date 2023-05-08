@@ -1,5 +1,5 @@
 from ep_base import *
-#from ep_com_file import *
+from ep_com_file import *
 
 print("checker block")
 

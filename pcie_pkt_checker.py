@@ -1,5 +1,5 @@
 from ep_base import *
-
+#from ep_com_file import *
 
 print("checker block")
 
@@ -29,15 +29,10 @@ class ep_check_pkt(ep_base_pkt):
 		Length = TLP[22:32]
 		Attr = Attr1 + Attr0
 
-		'''Bus = TLP[32:40]
-		Device = TLP[40:45]
-		Function = TLP[45:48]
-		Requester_Id = Bus + Device + Function'''
 		Requester_Id = TLP[32:48]
 		Tag = TLP[48:56]
 		Last_DW_BE = TLP[56:60]
 		First_DW_BE = TLP[60:64]
-
 
 		Completion_Id = TLP[64:80]
 		Ext_Register_Num = TLP[84:88]
@@ -180,6 +175,61 @@ class ep_check_pkt(ep_base_pkt):
 				false_pkt += 1
 
 
+			#checking for configuration request type possibilities
+			if (int(Type[2], 2)):
+				if (TC_int==0):
+					if (Attr1_int==0):
+						if (TH_int==0):
+							if (Attr0_int==0):
+								if (AT_int==0):
+									if (Last_DW_BE_int==0):
+										if(int(Register_Num[-2:], 2) == 0):
+											if Type in ['00100']: #since this is an endpoint so request should be for type 0
+												if (Length_int == 1):
+													if (len(Data) == (32*Length_int)):
+														true_pkt += 1
+													else:
+														print('TLP is INVALID since for CFG request, DATA should be 1DW: Value {} SIZE {}'.format(Data_int, len(Data))) 
+														received_invalid_pkt.write('TLP is INVALID since for CFG request, DATA should be 1DW: Value {} SIZE {}'.format(Data_int, len(Data)))
+														false_pkt += 1
+												else:
+													print('TLP is INVALID since for CFG request, Length is not 1: Value {}'.format(Length_int)) 
+													received_invalid_pkt.write('TLP is INVALID since for CFG request, Length is not 1: Value {}\n'.format(Length_int))
+													false_pkt += 1
+											else:
+												print('TLP is INVALID since for CFG request for EP, TYPE is not 00100: Value {}'.format(Type))
+												received_invalid_pkt.write('TLP is INVALID since for CFG request for EP, TYPE is not 00100: Value {}\n'.format(Type))
+												false_pkt += 1
+										else:
+											print('TLP is INVALID since for CFG request, last two bits of Register Number is not ZERO: Value {}'.format(Register_Num))
+											received_invalid_pkt.write('TLP is INVALID since for CFG request, last two bits of Register Number is not ZERO: Value {}\n'.format(Register_Num))
+											false_pkt += 1
+									else:
+										print('TLP is INVALID since for CFG request, last DW BE is not ZERO: Value {}'.format(Last_DW_BE_int))
+										received_invalid_pkt.write('TLP is INVALID since for CFG request, last DW BE is not ZERO: Value {}\n'.format(Last_DW_BE_int))
+										false_pkt += 1
+								else:
+									print('TLP is INVALID since for CFG request, AT is not ZERO: Value {}'.format(AT_int))
+									received_invalid_pkt.write('TLP is INVALID since for CFG request, AT is not ZERO: Value {}\n'.format(AT_int))
+									false_pkt += 1
+							else:
+								print('TLP is INVALID since for CFG request, ATTR(byte 2) is not ZERO: Value {}'.format(Attr0_int))
+								received_invalid_pkt.write('TLP is INVALID since for CFG request, ATTR(byte 2) is not ZERO: Value {}\n'.format(Attr0_int))
+								false_pkt += 1
+						else:
+							print('TLP is INVALID since for CFG request, TH is not ZERO: Value {}'.format(TH_int))
+							received_invalid_pkt.write('TLP is INVALID since for CFG request, TH is not ZERO: Value {}\n'.format(TH_int))
+							false_pkt += 1
+					else:
+						print('TLP is INVALID since for CFG request, ATTR(byte 1) is not ZERO: Value {}'.format(Attr1_int))
+						received_invalid_pkt.write('TLP is INVALID since for CFG request, ATTR(byte 1) is not ZERO: Value {}\n'.format(Attr1_int))
+						false_pkt += 1
+				else:
+					print('TLP is INVALID since for CFG request, TC is not ZERO: Value {}'.format(TC_int))
+					received_invalid_pkt.write('TLP is INVALID since for CFG request, TC is not ZERO: Value {}\n'.format(TC_int))
+					false_pkt += 1
+
+
 			#checking for poisoned data
 			if (EP_int):
 				print('TLP is INVALID due to POISONED Data: Value {}'.format(EP_int))
@@ -189,9 +239,31 @@ class ep_check_pkt(ep_base_pkt):
 				true_pkt += 1
 
 
+			#checking for read/write with 3DW header size
+			if Fmt not in ['000', '010']:
+				print('TLP is INVALID due to invalid fmt for 3DW header size: Value {}'.format(Fmt))
+				received_invalid_pkt.write('TLP is INVALID due to invalid fmt for 3DW header size: Value {}\n'.format(Fmt))
+				false_pkt += 1
+			else:
+				true_pkt += 1
+
+
+			#checking for data size w.r.to length
+			if (len(Data) != (Length_int * 32)):
+				print('TLP is INVALID due to invalid Data size: Data size is {} and length is {}'.format(len(Data), Length_int))
+				received_invalid_pkt.write('TLP is INVALID due to invalid Data size: Data size is {} and length is {}'.format(len(Data), Length_int))
+				false_pkt += 1
+			else:
+				true_pkt += 1
 
 
 
+
+		#tlp_flag_size = '{:0{}b}'.format(0, len(TLP) + 1)  # size is TLP+1, 1 for flag
+		tlp_flag_size = '0' + str(len(TLP) + 1) + 'b'
+		#print('tlp with flag ')
+		v_tlp = format(0, tlp_flag_size)
+		inv_tlp = format(0, tlp_flag_size)
 
 		if(false_pkt):
 			received_invalid_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:128])))
@@ -201,6 +273,9 @@ class ep_check_pkt(ep_base_pkt):
 							  'External Register Num is {}\n' 'Register Num is {}\n' 'Data is {}\n'.format(Fmt, Type, TC, Attr1, Attr0, Attr, TH, TD, EP, AT, Length, 
 																					  Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id, Ext_Register_Num, 
 																					  Register_Num, Data))
+			inv_tlp = TLP + '1'   # adding this 1 because, 1 indicates that the CRC is 1 (as a indication for error for the time being)
+			pkt_with_flag_queue.put(inv_tlp)
+			#print('printing inv tlp {}' . format(inv_tlp))
 			return False
 		else:
 			received_valid_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:128])))
@@ -210,5 +285,8 @@ class ep_check_pkt(ep_base_pkt):
 							  'External Register Num is {}\n' 'Register Num is {}\n' 'Data is {}\n'.format(Fmt, Type, TC, Attr1, Attr0, Attr, TH, TD, EP, AT, Length, 
 																					  Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id, Ext_Register_Num, 
 																					  Register_Num, Data))
+			
+			v_tlp = TLP + '0'   # adding this 0 because, 0 indicates that the CRC is 0 (as a indication for valid packet for the time being)
+			pkt_with_flag_queue.put(v_tlp)  # sending all the valid TLPs to another queue so that it will help me during completion process 
+			#print('printing valid tlp {}' . format(v_tlp))
 			return True
-

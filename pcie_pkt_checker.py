@@ -259,7 +259,6 @@ class ep_check_pkt(ep_base_pkt):
 
 
 
-		#tlp_flag_size = '{:0{}b}'.format(0, len(TLP) + 1)  # size is TLP+1, 1 for flag
 		tlp_flag_size = '0' + str(len(TLP) + 1) + 'b'
 		#print('tlp with flag ')
 		v_tlp = format(0, tlp_flag_size)

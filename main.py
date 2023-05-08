@@ -2,7 +2,8 @@ from pcie_pkt_checker import *
 #from pkt_dict import *
 from pcie_com_file import *
 from pcie_rc_config_pkt import *
-
+from ep_pkt_completer import *
+from pcie_rc_checker_pkt import *
 
 c1 = ep_check_pkt()
 inval_pkt = 0
@@ -48,4 +49,24 @@ for i in range(size):
 received_pkt.close()
 received_invalid_pkt.close()
 received_valid_pkt.close()
+
+
+
+#from checker
+valid_pkt_size = pkt_valid_queue.qsize()
+comp1 = ep_pkt_completer()
+
+for i in range(valid_pkt_size):
+	comp1.plt_compl_fn(i)
+
+completer_rec.close()
+
+
+
+
+
+
+
+
+
 	

@@ -14,5 +14,4 @@ c=pcie_config_obj
 argv = pcie_config_obj.parse_args()
 
 pkt_queue = queue.Queue()
-pkt_queue
-''
+

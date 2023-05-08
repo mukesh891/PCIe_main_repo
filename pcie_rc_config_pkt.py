@@ -154,8 +154,8 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         bin_f.close()
         
     def hex_file_handle(self):
-        bin_f = open("/home/mukesh/PCIe/PCIe_repo/src/rc_src/bin_file.txt","r")
-        hex_f = open("/home/mukesh/PCIe/PCIe_repo/src/rc_src/hex_file.txt","w")
+        bin_f = open("bin_file.txt","r")
+        hex_f = open("hex_file.txt","w")
         for line in bin_f:
             line = "0b" + line
             hex_val = hex(int(line,2))[2:]

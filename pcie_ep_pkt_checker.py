@@ -209,9 +209,15 @@ class ep_check_pkt(ep_base_pkt):
 												if (Length_int == 1):
 													if (len(Data) == (32*Length_int)):
 														true_pkt += 1
+														if(Completion_Id_int == 0):
+															true_pkt += 1
+														else:
+															print('TLP is INVALID since for CFG request, Comepltion ID must be 0: Value {}'.format(Completion_Id_int)) 
+															received_invalid_pkt.write('TLP is INVALID since for CFG request, Comepltion ID must be 0: Value {}\n'.format(Completion_Id_int))
+															false_pkt += 1	
 													else:
 														print('TLP is INVALID since for CFG request, DATA should be 1DW: Value {} SIZE {}'.format(Data_int, len(Data))) 
-														received_invalid_pkt.write('TLP is INVALID since for CFG request, DATA should be 1DW: Value {} SIZE {}'.format(Data_int, len(Data)))
+														received_invalid_pkt.write('TLP is INVALID since for CFG request, DATA should be 1DW: Value {} SIZE {}\n'.format(Data_int, len(Data)))
 														false_pkt += 1
 												else:
 													print('TLP is INVALID since for CFG request, Length is not 1: Value {}'.format(Length_int)) 

@@ -4,7 +4,7 @@ from pcie_com_file import *
 from pcie_rc_config_pkt import *
 from pcie_ep_pkt_checker import *
 from pcie_ep_pkt_completer import *
-#from pcie_rc_checker_pkt import *
+
 import console_to_log
 c1 = ep_check_pkt()
 inval_pkt = 0
@@ -65,17 +65,12 @@ received_valid_pkt.close()
 
 valid_pkt_size = pkt_with_flag_queue.qsize()
 comp1 = ep_pkt_completer()
-#rc_check = pcie_rc_checker_pkt()
 
 for i in range(valid_pkt_size):
 	comp1.tlp_compl_fn(i)
 
 completer_rec.close()
 
-'''send_compl_pkt_size = compl_pkt_queue.qsize()
-for i in range(send_compl_pkt_size):
-	rc_check.rc_checker_fn(i)
-comp_send.close()'''
 
 #log_file.close()
 # Stop redirecting console output to the log file

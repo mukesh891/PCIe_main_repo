@@ -11,7 +11,7 @@ class ep_pkt_completer(ep_base_pkt):
 		temp_valid_pkts = pkt_with_flag_queue.queue[pkt_num]
 		valid_pkts = temp_valid_pkts[:-1]
 		#valid_pkts = pkt_valid_queue.queue[pkt_num]
-		completer_rec.write('\n priting packet{} from completer\n' '{}\n'.format(pkt_num, valid_pkts))
+		completer_rec.write('\n priting cfg request TLP -- {} \n'.format(valid_pkts))
 		base_TLP = ep_base_pkt.checker_fn_base(self, pkt_num)
 
 		if(base_TLP == valid_pkts):		#here i am checking if the packet received from rc and ep_checker is same, because might be some fields got overwriten, in that case completion status will be 100 and fmt: 000
@@ -34,7 +34,8 @@ class ep_pkt_completer(ep_base_pkt):
 			AT = format(0, '02b')
 			Length = valid_pkts[22:32]
 			
-			Completion_Id = valid_pkts[64:80]
+			#Completion_Id = valid_pkts[64:80]
+			Completion_Id = format(random.getrandbits(16), '016b')
 			
 			if(int(temp_valid_pkts[-1], 2) == 0):
 				Compl_status = format(0, '03b')
@@ -66,7 +67,8 @@ class ep_pkt_completer(ep_base_pkt):
 			AT = format(0, '02b')
 			Length = base_TLP[22:32]
 
-			Completion_Id = base_TLP[64:80]
+			#Completion_Id = base_TLP[64:80]
+			Completion_Id = format(random.getrandbits(16), '016b')
 			Compl_status = format(3, '03b')
 			BCM = format(0, '01b')
 			Byte_count = format(int(Length, 2), '012b')
@@ -78,12 +80,20 @@ class ep_pkt_completer(ep_base_pkt):
 
 
 
+
 		#TLP = format(0, '0128b')   #default set
 		'''TLP = Fmt + Type + format(0, '01b') + TC + format(0, '01b') + Attr1 + format(0, '01b') + TH + TD + EP + Attr0 + AT + Length + Completion_Id + Compl_status + BCM + Byte_count + Requester_Id + Tag + format(0, '01b') + Lower_address
 		if((int(Fmt_l[1], 2) == 1) | (Compl_status == '001')):
 			TLP = TLP + format(0, '032b')
 		else:
 			TLP = TLP + format(random.getrandbits(32 * (int(Length, 2))), '032b')'''
+		
+		data = [[ Fmt, Type, '', TC, '', Attr1, '', TH, TD, EP, Attr0, AT, Length, Completion_Id, Compl_status,BCM,Byte_count, Requester_Id,Tag,'',Lower_address,'']]
+		headers = [ 'Fmt', 'Type', '', 'TC', '', 'Attr1', '', 'TH', 'TD', 'EP', 'Attr', 'AT', 'Length','Completion_Id', 'Compl_status', ' BCM' ,'Byte_count', 'Requester_Id', 'Tag', '', 'Lower_address', '']
+		#headers = [ 'Fmt', 'Type', '', 'TC', '', 'Attr1', '', 'TH', 'TD', 'EP', 'Attr', 'AT', 'Length','Requester_Id', 'Tag','Last_DW_BE','First_DW_BE ','Completion_Id ','','Ext_Reg_no', 'Register_no',''] 
+		table = tabulate(data, headers=headers, tablefmt='orgtbl')
+		completer_rec.write(table)
+		
 		
 		
 		TLP = Fmt + Type + format(0, '01b') + TC + format(0, '01b') + Attr1 + format(0, '01b') + TH + TD + EP + Attr0 + AT + Length + Completion_Id + Compl_status + BCM + Byte_count + Requester_Id + Tag + format(0, '01b') + Lower_address
@@ -96,12 +106,9 @@ class ep_pkt_completer(ep_base_pkt):
 			TLP = TLP + format(data, data_size)
 			
 
+		completer_rec.write('\n priting complition TLP -- {} \n'.format(TLP))
 		
 		
-		data = [[ Fmt, Type, '', TC, '', Attr1, '', TH, TD, EP, Attr0, AT, Length, Completion_Id, Compl_status,BCM,Byte_count, Requester_Id,Tag,'',Lower_address,'']]
-		headers = [ 'Fmt', 'Type', '', 'TC', '', 'Attr1', '', 'TH', 'TD', 'EP', 'Attr', 'AT', 'Length','Completion_Id', 'Compl_status', ' BCM' ,'Byte_count', 'Requester_Id', 'Tag', '', 'Lower_address', '']
-		table = tabulate(data, headers=headers, tablefmt='orgtbl')
-		completer_rec.write(table)
 
 		compl_pkt_queue.put(TLP)
 

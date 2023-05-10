@@ -15,3 +15,4 @@ argv = pcie_config_obj.parse_args()
 
 pkt_queue = queue.Queue()
 
+compl_pkt_queue = queue.Queue()

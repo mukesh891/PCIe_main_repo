@@ -16,7 +16,7 @@ print("This will be logged to ep_checke.log")
 reset_output()
 
 # Your code goes here...
-print("This will be printed to the console")
+print("The console prints are printed in ep_checker.log file")
 
 # Close the log file when you're done
 sys.stdout.close()

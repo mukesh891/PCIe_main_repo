@@ -13,7 +13,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         self.arr_t =[0]*self.err_pkt_no
         for i in range(self.err_pkt_no):
             self.arr_t[i] = random.randrange(self.num_pkts)
-        self.arr = list(set(self.arr_t))
+            self.arr = list(set(self.arr_t))
         self.arr.sort()
         print(self.arr)
         print(self.num_pkts)
@@ -93,7 +93,6 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         pprint(vars(self))
     def bin_file_handle(self):
         #for i in range(100):
-        self.k=self.k+1
         self.cfg0_pkt()
         ## converting all the values to bin format ##
         if(self.err_eij):
@@ -101,6 +100,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
                 self.fmt_eij_err()
                 print(self.fmt)
                 self.j=self.j+1
+        self.k=self.k+1
         fmt_str                 =format(self.fmt, '03b')       
         requester_id_str        =format(self.requester_id, '016b')       
         completer_id_str        =format(self.completer_id, '016b')       

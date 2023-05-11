@@ -2,7 +2,8 @@
 Command line for running the main.py file:
   
 $ python3 main.py --num_pkts=100 --err_eij=1 --err_pkt_no=20
-  [By default num_pkts = 100, err_eij = 0, err_pkt_no = 0]
+  
+[By default num_pkts = 100, err_eij = 0, err_pkt_no = 0]
     
 >>num_pkts      ->Declared as int datatype  
                     ->Total no. of packets you need to be generate

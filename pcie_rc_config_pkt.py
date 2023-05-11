@@ -40,6 +40,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         self.at                     = random.getrandbits(2)
         self.at                     = 0
         self.length                 = random.getrandbits(10)
+        self.length                 = 1 
 
         #self.bus                    = random.getrandbits(8)
         #elf.device                 = random.getrandbits(5)
@@ -68,7 +69,9 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
 
         self.ext_register_number    = random.choice([0,15])
         self.ext_register_number    = 0
+        ## TODO : register last 2 bit will be zero
         self.register_number        = random.choice([0,63])
+        self.register_number        = 0 
 
 
     def bad_pkt_eij(self):

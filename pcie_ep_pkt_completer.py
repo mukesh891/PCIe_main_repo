@@ -2,6 +2,7 @@
 #from pcie_ep_base import *
 #from pcie_com_file import compl_pkt_queue
 from pcie_ep_pkt_checker import *
+from pcie_ep_config_space_type0 import *
 from tabulate import tabulate
 
 completer_rec = open('completer_rec.txt', 'w')
@@ -21,8 +22,11 @@ class ep_pkt_completer(ep_base_pkt):
 			
 			if(int(Fmt_l[1], 2) == 1):
 				Fmt = format(0, '03b')
+				ep_cfg_space_type0.ep_config_space_fn(pkt_num, data) 
 			else:
 				Fmt = format(2, '03b')
+				data_from_cfg = ep_cfg_space_type0.ep_config_space_fn(pkt_num, None)
+				#print('data_from_cfg init {}'.format(data_from_cfg))
 			
 			Type = format(10, '05b')
 			TC = valid_pkts[9:12]
@@ -98,11 +102,14 @@ class ep_pkt_completer(ep_base_pkt):
 		
 		TLP = Fmt + Type + format(0, '01b') + TC + format(0, '01b') + Attr1 + format(0, '01b') + TH + TD + EP + Attr0 + AT + Length + Completion_Id + Compl_status + BCM + Byte_count + Requester_Id + Tag + format(0, '01b') + Lower_address
 		data_size = '0' + str(32 * int(Length, 2)) + 'b'
+		
 		if((int(Fmt_l[1], 2) == 1) | (int(temp_valid_pkts[-1], 2) != 0)):  # data will be zero if either packet is invalid or config write tlp
 			data = 0
 			TLP = TLP + format(data, data_size)
 		else:
-			data = random.getrandbits(32 * (int(Length, 2)))               # else data is sent 
+			data = int(data_from_cfg, 2)
+			print('data {}'.format(data))
+			print('data_from_cfg {}'.format(data_from_cfg))
 			TLP = TLP + format(data, data_size)
 			
 

@@ -3,6 +3,7 @@ import random
 from pcie_com_file import *
 from pcie_ep_com_file import *
 from array import array
+from tabulate import tabulate
 
 print("ep_cfg_space_type0 block")
 
@@ -144,8 +145,44 @@ class ep_cfg_space_type0():
 			format(cfg_array[0], '032b')
 
 		#print('printing type 0 header value from base\n' '{}'.format(type_0_header))
-		cfg.write('printing type 0 header value from base\n' '{}\n'.format(type_0_header))
+		#cfg.write('\n printing type 0 header value from base\n' '{}\n'.format(type_0_header))
 		#print('printing data value from base\n' '{}'.format(data_sent))
+		'''data = [[ Vendor_ID, Device_ID,Command, Status, Rev_ID, Class_Code, Cache_line_Size, Latency_Timer, Header_Type,BIST,BAR0,BAR1, BAR2, BAR3,BAR4, BAR5, CardBus_CIS_Pointer, Subsystem_Vendor_ID,Subsystem_Device_ID, Expansion_ROM_Base_Address, Capability_Pointer,Reserved0,Reserved1,Interrupt_Line,Interrupt_Pin,Min_Gnt,Max_Lat]]
+		headers = ['Vendor_ID','Device_ID','Command','Status','Rev_ID','Class_Code','Cache_line_Size','Latency_Timer','Header_Type','BIST','BAR0','BAR1','BAR2','BAR3','BAR4','BAR5','CardBus_CIS_Pointer','Subsystem_Vendor_ID','Subsystem_Device_ID','Expansion_ROM_Base_Address', 'Capability_Pointer','Reserved0','Reserved1','Interrupt_Line','Interrupt_Pin','Min_Gnt','Max_Lat']
+		table1 = tabulate(data, headers=headers, tablefmt='orgtbl')
+		#print(table)
+
+		cfg.write('\n\n printing type 0 header for packet {} \n\n' '{}\n'.format(pkt_num,table1))'''
+
+
+		
+		table_data = [("Vendor_ID", Vendor_ID),("Device_ID", Device_ID),("Command", Command),("Status", Status),("Rev_ID", Rev_ID),("Class_Code", Class_Code),
+                      ("Cache_line_Size", Cache_line_Size),
+                      ("Latency_Timer", Latency_Timer),
+                      ("Header_Type", Header_Type),
+                      ("BIST", BIST),
+                      ("BAR0", BAR0),
+                      ("BAR1", BAR1),
+                      ("BAR2", BAR2),
+                      ("BAR3", BAR3),
+                      ("BAR4", BAR4),
+                      ("BAR5", BAR5),
+                      ("CardBus_CIS_Pointer", CardBus_CIS_Pointer),
+                      ("Subsystem_Vendor_ID", Subsystem_Vendor_ID),
+                      ("Subsystem_Device_ID", Subsystem_Device_ID),
+                      ("Expansion_ROM_Base_Address", Expansion_ROM_Base_Address),
+                      ("Capability_Pointer", Capability_Pointer),
+                      ("Reserved0", Reserved0),
+                      ("Reserved1", Reserved1),
+                      ("Interrupt_Line", Interrupt_Line),
+                      ("Interrupt_Pin", Interrupt_Pin),
+                      ("Min_Gnt", Min_Gnt),
+                      ("Max_Lat", Max_Lat)
+					 ]
+		# Print the table
+		#print(tabulate(table_data, headers=["Field", "Value"], tablefmt="grid"))
+		table = tabulate(table_data, headers=["Field", "Value"], tablefmt="grid")
+		cfg.write('\n\n printing type 0 header for packet {} \n\n' '{}\n'.format(pkt_num,table))
 
 		return data_sent
 

@@ -21,7 +21,7 @@ arr = []
 compl_pkt_queue = queue.Queue()
 if(err_eij): 
     while len(arr) < err_pkt_no:
-        num = random.randrange(0,num_pkts)
+        num = random.randrange(0,num_pkts-1)
         if num not in arr:
             arr.append(num)
         arr.sort()

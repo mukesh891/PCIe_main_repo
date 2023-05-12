@@ -82,12 +82,6 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
     def bad_pkt_eij(self):
         self.fmt                    = random.choice([1,3,4,5,6,7])
 
-    '''def mix_pkt(self):
-        arr=[0]*20
-        for i in range(20):
-            arr[i] = random.randrange(0,100)
-            print(arr[i])
-    '''
     def fmt_eij_err(self):
         for i in range(0,self.num_pkts-1):
             for m in arr:
@@ -101,10 +95,17 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         self.cfg0_pkt()
         ## converting all the values to bin format ##
         if(self.err_eij):
-            if (arr[self.j]==self.k and self.j < len(arr)-1):
+            for i in arr:
+                if(i==self.k):
+                    self.fmt_eij_err()
+                    print(self.fmt)
+                    self.j=self.j+1
+            '''
+            if (arr[self.j]==self.k or self.j < len(arr)-1):
                 self.fmt_eij_err()
                 print(self.fmt)
                 self.j=self.j+1
+            ''' 
         self.k=self.k+1
         fmt_str                 =format(self.fmt, '03b')       
         requester_id_str        =format(self.requester_id, '016b')       
@@ -159,7 +160,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         
         ## puting the tlp_packet into queue ##
         pkt_queue.put(tlp_packet)
-        print(tlp_packet)
+        print("->",tlp_packet)
         ## Writing the tlp_packet into the hex_fil.txt ##
         bin_f.write(tlp_packet)
         bin_f.write("\n")

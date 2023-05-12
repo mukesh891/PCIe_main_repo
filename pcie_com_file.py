@@ -1,5 +1,6 @@
 import os,queue
 import argparse
+import random 
 cwd = os.getcwd()
 class pcie_config_obj:
     @staticmethod
@@ -12,7 +13,20 @@ class pcie_config_obj:
         return parser.parse_args()
 c=pcie_config_obj
 argv = pcie_config_obj.parse_args()
-
+err_eij = argv.err_eij
+err_pkt_no = argv.err_pkt_no 
+num_pkts= argv.num_pkts
 pkt_queue = queue.Queue()
-
+arr = []
 compl_pkt_queue = queue.Queue()
+if(err_eij): 
+    while len(arr) < err_pkt_no:
+        num = random.randrange(0,num_pkts)
+        if num not in arr:
+            arr.append(num)
+        arr.sort()
+print(len(arr))
+print(arr)
+print(num_pkts)
+	
+

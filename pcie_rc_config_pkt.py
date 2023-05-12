@@ -10,13 +10,18 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         self.num_pkts=argv.num_pkts        
         self.err_eij = argv.err_eij
         self.err_pkt_no = argv.err_pkt_no
+        '''
+        self.arr =[0]*self.err_pkt_no
         self.arr_t =[0]*self.err_pkt_no
-        for i in range(self.err_pkt_no):
+        for i in range(0,self.err_pkt_no):
             self.arr_t[i] = random.randrange(self.num_pkts)
             self.arr = list(set(self.arr_t))
-        self.arr.sort()
+            self.arr.sort()
+        
         print(self.arr)
+        print(len(self.arr))
         print(self.num_pkts)
+        '''
         self.k=0
         self.j=0
         super().__init__()
@@ -84,8 +89,8 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
             print(arr[i])
     '''
     def fmt_eij_err(self):
-        for i in range(self.num_pkts):
-            for i in self.arr:
+        for i in range(0,self.num_pkts-1):
+            for m in arr:
                 self.bad_pkt_eij()
 
 
@@ -96,7 +101,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         self.cfg0_pkt()
         ## converting all the values to bin format ##
         if(self.err_eij):
-            if (self.arr[self.j]==self.k and self.j < len(self.arr)-1):
+            if (arr[self.j]==self.k and self.j < len(arr)-1):
                 self.fmt_eij_err()
                 print(self.fmt)
                 self.j=self.j+1

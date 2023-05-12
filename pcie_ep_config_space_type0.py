@@ -6,7 +6,7 @@ from array import array
 
 print("ep_cfg_space_type0 block")
 
-cfg_array = array('Q', [0] * 16)   # q = unsigned 8 bytes storage in each index
+cfg_array = array('Q', [0] * 16)   # Q = unsigned 8 bytes storage in each index
 
 
 #default set for configuration header type 0

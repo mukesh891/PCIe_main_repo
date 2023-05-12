@@ -71,7 +71,7 @@ comp1 = ep_pkt_completer()
 check = pcie_rc_rx_pkt_checker()
 
 for i in range(valid_pkt_size):
-	comp1.tlp_compl_fn(i)
+	comp1.pkt_compl_fn(i)
 
 check.rc_rx_checker()
 completer_rec.close()

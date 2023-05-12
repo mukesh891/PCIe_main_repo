@@ -24,32 +24,32 @@ class ep_check_pkt(ep_base_pkt):
 		print('inherited TLP is {}\n'.format(TLP))
 		Fmt = TLP[0:3]		
 		Type = TLP[3:8]
+		T9 = TLP[8]
 		TC = TLP[9:12]
+		T8 = TLP[12]
 		Attr1 = TLP[13]
+		LN = TLP[14]
 		TH = TLP[15]
 		TD = TLP[16]
 		EP = TLP[17]
 		Attr0 = TLP[18:20]
 		AT = TLP[20:22]
 		Length = TLP[22:32]
-		Attr = Attr1 + Attr0
 
-		'''Bus = TLP[32:40]
-		Device = TLP[40:45]
-		Function = TLP[45:48]
-		Requester_Id = Bus + Device + Function'''
 		Requester_Id = TLP[32:48]
 		Tag = TLP[48:56]
 		Last_DW_BE = TLP[56:60]
 		First_DW_BE = TLP[60:64]
 
-
 		Completion_Id = TLP[64:80]
+		Rsv_10_7 = TLP[80:84]       # reserved byte 10- bit 7:4
 		Ext_Register_Num = TLP[84:88]
 		Register_Num = TLP[88:94]
+		Rsv_11_1 = TLP[94:96]       # reserved byte 11- bit 1:0
 		
 		header = TLP[0:96]
 		Data = TLP[96:128]
+
 
 		
 		'''print('ep_fn Fmt = {}\n' 'type {}\n' 'TC is {}\n' 'Attr1 is {}\n' 'Attr0 is {}\n' 'Final Attr is {}\n' 'TH is {}\n' 'TD is {}\n' 'EP is {}\n' 'AT is {}\n' 'Length is {}\n'
@@ -62,8 +62,8 @@ class ep_check_pkt(ep_base_pkt):
         'Data is {}\n'
         .format(Fmt, Type, TC, Attr1, Attr0, Attr, TH, TD, EP, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id, Ext_Register_Num, Register_Num, Data))'''
 
-		data = [[ Fmt, Type, '', TC, '', Attr1, '', TH, TD, EP, Attr, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id, Ext_Register_Num, Register_Num,Data, '']]
-		headers = [ 'Fmt', 'Type', '', 'TC', '', 'Attr1', '', 'TH', 'TD', 'EP', 'Attr', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id', 'Ext_Register_Num', 'Register_Num','Data', '']
+		data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id,Rsv_10_7, Ext_Register_Num, Register_Num,Rsv_11_1,Data, '']]
+		headers = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id','Rsv_10_7', 'Ext_Register_Num', 'Register_Num','Rsv_11_1','Data', '']
 		table = tabulate(data, headers=headers, tablefmt='orgtbl')
 		print(table)
 		#log_file.write(table)
@@ -73,15 +73,17 @@ class ep_check_pkt(ep_base_pkt):
 		
 		Fmt_int = int(Fmt, 2)		
 		Type_int = int(Type, 2)
+		T9_int = int(T9, 2)
 		TC_int = int(TC, 2)
+		T8_int = int(T8, 2)
 		Attr1_int = int(Attr1, 2)
+		LN_int = int(LN, 2)
 		TH_int = int(TH, 2)
 		TD_int = int(TD, 2)
 		EP_int = int(EP, 2)
 		Attr0_int = int(Attr0, 2)
 		AT_int = int(AT, 2)
 		Length_int = int(Length, 2)
-		Attr_int = int(Attr, 2)
 
 		'''Bus_int = int(Bus, 2)
 		Device_int = int(Device, 2)
@@ -93,8 +95,10 @@ class ep_check_pkt(ep_base_pkt):
 		
 
 		Completion_Id_int = int(Completion_Id, 2)
+		Rsv_10_7_int = int(Rsv_10_7, 2)
 		Ext_Register_Num_int = int(Ext_Register_Num, 2)
 		Register_Num_int = int(Register_Num, 2)
+		Rsv_11_1_int = int(Rsv_11_1, 2)
 
 		header_int = int(header, 2)
 		Data_int = int(Data, 2)
@@ -197,24 +201,58 @@ class ep_check_pkt(ep_base_pkt):
 
 
 			#checking for configuration request type possibilities
-			if (int(Type[2], 2)):
-				if (TC_int==0):
-					if (Attr1_int==0):
-						if (TH_int==0):
-							if (Attr0_int==0):
-								if (AT_int==0):
-									if (Last_DW_BE_int==0):
-										if(int(Register_Num[-2:], 2) == 0):
+			if (int(Type[2], 2)):   #  bit 2 of type must be 1 for cfg request
+				if (TC_int==0):      # must be 0 for cfg
+					if (Attr1_int==0):   # must be reserved for cfg
+						if (TH_int==0):    # must be reserved for cfg
+							if (Attr0_int==0):   # must be 0 for cfg
+								if (AT_int==0):    # must be 0 for cfg
+									if (Last_DW_BE_int==0):  # must be 0 for cfg
+										if(int(Register_Num[-2:], 2) == 0):  # last two bits must be 0
 											if Type in ['00100']: #since this is an endpoint so request should be for type 0
-												if (Length_int == 1):
-													if (len(Data) == (32*Length_int)):
-														true_pkt += 1
-														if(Completion_Id_int == 0):
-															true_pkt += 1
+												if (Length_int == 1):   # must be 1 for cfg
+													if ((32*Length_int) == len(Data)):   # data must be equal to length in DW
+														if(Completion_Id_int == 0):    # completion ID must be 0 
+															if(len(TLP) == (32*4)):   #TLP  size must be 4DW (including 1DW data)
+																if(LN_int == 0):  # must be reserved for cfg
+																	if(T9_int == 0):   # must be reserved for cfg
+																		if(T8_int == 0):   # must be reserved for cfg
+																			if(Rsv_10_7_int == 0):   # must be reserved for cfg
+																				if(Rsv_11_1_int == 0):  # must be reserved for cfg
+																					if Fmt in ['000', '010']:  # must be either 000 or 010
+																						true_pkt += 1
+																					else:
+																						print('TLP is INVALID since for CFG request, FMT must be either 000 or 010: value {}'.format(Fmt))
+																						received_invalid_pkt.write('TLP is INVALID since for CFG request, FMT must be either 000 or 010: value {}\n'.format(Fmt))
+																						false_pkt += 1
+																				else:
+																					print('TLP is INVALID since for CFG request, byte 11 bit 1:0 must be reserved: value {}'.format(Rsv_11_1_int)) 
+																					received_invalid_pkt.write('TLP is INVALID since for CFG request, byte 11 bit 1:0 must be reserved: value {}\n'.format(Rsv_11_1_int))
+																					false_pkt += 1
+																			else:
+																				print('TLP is INVALID since for CFG request, byte 10 bit 7:4 must be reserved: value {}'.format(Rsv_10_7_int)) 
+																				received_invalid_pkt.write('TLP is INVALID since for CFG request, byte 10 bit 7:4 must be reserved: value {}\n'.format(Rsv_10_7_int))
+																				false_pkt += 1
+																		else:
+																			print('TLP is INVALID since for CFG request, T8 must be reserved: value {}'.format(T8_int)) 
+																			received_invalid_pkt.write('TLP is INVALID since for CFG request, T8 must be reserved: value {}\n'.format(T8_int))
+																			false_pkt += 1
+																	else:
+																		print('TLP is INVALID since for CFG request, T9 must be reserved: value {}'.format(T9_int)) 
+																		received_invalid_pkt.write('TLP is INVALID since for CFG request, T9 must be reserved: value {}\n'.format(T9_int))
+																		false_pkt += 1
+																else:
+																	print('TLP is INVALID since for CFG request, LN is reserved: value {}'.format(LN_int)) 
+																	received_invalid_pkt.write('TLP is INVALID since for CFG request, LN is reserved: value {}\n'.format(LN_int))
+																	false_pkt += 1
+															else:
+																print('TLP is INVALID since for CFG request, LENGTH of the TLP must be 4DW (including 1DW data): TLP size {} Data size {}'.format(len(TLP), len(Data))) 
+																received_invalid_pkt.write('TLP is INVALID since for CFG request, LENGTH of the TLP must be 4DW (including 1DW data): TLP size {} Data size {}\n'.format(len(TLP), len(Data)))
+																false_pkt += 1
 														else:
 															print('TLP is INVALID since for CFG request, Comepltion ID must be 0: Value {}'.format(Completion_Id_int)) 
 															received_invalid_pkt.write('TLP is INVALID since for CFG request, Comepltion ID must be 0: Value {}\n'.format(Completion_Id_int))
-															false_pkt += 1	
+															false_pkt += 1
 													else:
 														print('TLP is INVALID since for CFG request, DATA should be 1DW: Value {} SIZE {}'.format(Data_int, len(Data))) 
 														received_invalid_pkt.write('TLP is INVALID since for CFG request, DATA should be 1DW: Value {} SIZE {}\n'.format(Data_int, len(Data)))
@@ -255,6 +293,7 @@ class ep_check_pkt(ep_base_pkt):
 					print('TLP is INVALID since for CFG request, TC is not ZERO: Value {}'.format(TC_int))
 					received_invalid_pkt.write('TLP is INVALID since for CFG request, TC is not ZERO: Value {}\n'.format(TC_int))
 					false_pkt += 1
+			
 
 
 			#checking for poisoned data
@@ -266,14 +305,6 @@ class ep_check_pkt(ep_base_pkt):
 				true_pkt += 1
 
 
-			#checking for read/write with 3DW header size
-			if Fmt not in ['000', '010']:
-				print('TLP is INVALID due to invalid fmt for 3DW header size: Value {}'.format(Fmt))
-				received_invalid_pkt.write('TLP is INVALID due to invalid fmt for 3DW header size: Value {}\n'.format(Fmt))
-				false_pkt += 1
-			else:
-				true_pkt += 1
-
 
 			#checking for data size w.r.to length
 			if (len(Data) != (Length_int * 32)):
@@ -284,38 +315,32 @@ class ep_check_pkt(ep_base_pkt):
 				true_pkt += 1
 
 
-        #tlp_flag_size = '{:0{}b}'.format(0, len(TLP) + 1)  # size is TLP+1, 1 for flag
-		tlp_flag_size = '0' + str(len(TLP) + 1) + 'b'
-		#print('tlp with flag ')
+
+
+		tlp_flag_size = '0' + str(len(TLP) + 1) + 'b'       # size is TLP+1, 1 for flag
 		v_tlp = format(0, tlp_flag_size)
 		inv_tlp = format(0, tlp_flag_size)
-
-
 
 		if(false_pkt):
 			received_invalid_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:128])))
 			received_invalid_pkt.write('header is {}, Data is {}\n'.format(hex(header_int), hex(Data_int)))
-			received_invalid_pkt.write('ep_fn Fmt = {}\n' 'type {}\n' 'TC is {}\n' 'Attr1 is {}\n' 'Attr0 is {}\n' 'Final Attr is {}\n' 'TH is {}\n' 'TD is {}\n' 'EP is {}\n'
+			received_invalid_pkt.write('ep_fn Fmt = {}\n' 'type {}\n' 'TC is {}\n' 'Attr1 is {}\n'  'LN is {}\n' 'Attr0 is {}\n' 'TH is {}\n' 'TD is {}\n' 'EP is {}\n'
 							  'AT is {}\n' 'Length is {}\n'	'Requester ID is {}\n' 'Tag is {}\n' 'Last DW BE is {}\n' 'First DW BE is {}\n' 'Completion ID is {}\n' 
-							  'External Register Num is {}\n' 'Register Num is {}\n' 'Data is {}\n'.format(Fmt, Type, TC, Attr1, Attr0, Attr, TH, TD, EP, AT, Length, 
+							  'External Register Num is {}\n' 'Register Num is {}\n' 'Data is {}\n'.format(Fmt, Type, TC, Attr1, LN_int, Attr0, TH, TD, EP, AT, Length, 
 																					  Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id, Ext_Register_Num, 
 																					  Register_Num, Data))
-			#pkt_valid_queue.put(TLP)
-			inv_tlp = TLP + '1'   # adding this 1 because, 1 indicates that the CRC is 1 (as a indication for error for the time being)
-			pkt_with_flag_queue.put(inv_tlp)
+			inv_tlp = TLP + '1'   # adding this 1 because, 1 indicates that the error_flag is 1 (as a indication for ERROR from requested TLP)
+			pkt_with_flag_queue.put(inv_tlp)  # sending TLPs(including flag) to another queue so that it will help me during completion process 
 			return False
 		else:
 			received_valid_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:128])))
 			received_valid_pkt.write('header is {}, Data is {}\n'.format(hex(header_int), hex(Data_int)))
-			received_valid_pkt.write('ep_fn Fmt = {}\n' 'type {}\n' 'TC is {}\n' 'Attr1 is {}\n' 'Attr0 is {}\n' 'Final Attr is {}\n' 'TH is {}\n' 'TD is {}\n' 'EP is {}\n'
+			received_valid_pkt.write('ep_fn Fmt = {}\n' 'type {}\n' 'TC is {}\n' 'Attr1 is {}\n'  'LN is {}\n' 'Attr0 is {}\n' 'TH is {}\n' 'TD is {}\n' 'EP is {}\n'
 							  'AT is {}\n' 'Length is {}\n'	'Requester ID is {}\n' 'Tag is {}\n' 'Last DW BE is {}\n' 'First DW BE is {}\n' 'Completion ID is {}\n' 
-							  'External Register Num is {}\n' 'Register Num is {}\n' 'Data is {}\n'.format(Fmt, Type, TC, Attr1, Attr0, Attr, TH, TD, EP, AT, Length, 
+							  'External Register Num is {}\n' 'Register Num is {}\n' 'Data is {}\n'.format(Fmt, Type, TC, Attr1, LN_int, Attr0, TH, TD, EP, AT, Length, 
 																					  Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id, Ext_Register_Num, 
 																					  Register_Num, Data))
 			
-			
-			#pkt_valid_queue.put(TLP)  # sending all the valid TLPs to another queue so that it will help me during completion process 
-			v_tlp = TLP + '0'   # adding this 0 because, 0 indicates that the CRC is 0 (as a indication for valid packet for the time being)
-			pkt_with_flag_queue.put(v_tlp)  # sending all the valid TLPs to another queue so that it will help me during completion process 
+			v_tlp = TLP + '0'   # adding this 0 because, 0 indicates that the error_flag is 0 (as a indication for NO ERROR from requested TLP)
+			pkt_with_flag_queue.put(v_tlp)  # sending TLPs(including flag) to another queue so that it will help me during completion process 
 			return True
-		

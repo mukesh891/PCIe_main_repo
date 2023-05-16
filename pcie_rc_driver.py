@@ -29,16 +29,15 @@ class pcie_rc_driver:
                     err_eij_hdl = pcie_err_eij()
                     if self.m in arr:
                         print("m in arr",self.m)
-                        #if(self.k == self.m):
-                        #if(m==self.k):
                         logging.info("Entering err_eij array to inject ")
-                        ## randomly choose between bdf and fmt err
+                        ## randomly choose between bdf and fmt and type error
                         j = random.choice([0,1,2])
-                        j = 1 
+                        #j = 1 
                         if(j==0):
                             print(str(bin(err_eij_hdl.pcie_requester_id_err_eij())))
-                            r_id = str(bin(err_eij_hdl.pcie_requester_id_err_eij()))
-                            ln = str(line[:32])+str(r_id)+line[48:]
+                            r_id = err_eij_hdl.pcie_requester_id_err_eij()
+                            r_id_str                 =format(r_id , '03b')       
+                            ln = str(line[:32])+r_id_str+line[48:]
                             err_bin_f.write(ln)
                             pkt_queue.put(ln)
                         if(j==1):
@@ -51,9 +50,9 @@ class pcie_rc_driver:
                             
                         if(j==2):
                             typ =err_eij_hdl.pcie_type_err_eij()
-                            type_str                 =format(typ, '05b')       
-                            print(typ_str) 
-                            ln = line[:3]+str(typ)+line[8:] 
+                            type_str=format(typ, '05b')       
+                            print(type_str) 
+                            ln = line[:3]+type_str+line[8:] 
                             err_bin_f.write(ln)
                             pkt_queue.put(ln)
                     else:
@@ -64,7 +63,7 @@ class pcie_rc_driver:
                 err_bin_f.write(line)
                 pkt_queue.put(line)
             #contents[self.m] = ln 
-            #err_bin_f.write("\n")
+            err_bin_f.write("\n")
 
 
             self.m=self.m+1

@@ -36,7 +36,7 @@ class pcie_rc_driver:
                         if(j==0):
                             print(str(bin(err_eij_hdl.pcie_requester_id_err_eij())))
                             r_id = err_eij_hdl.pcie_requester_id_err_eij()
-                            r_id_str                 =format(r_id , '03b')       
+                            r_id_str                 =format(r_id , '016b')       
                             ln = str(line[:32])+r_id_str+line[48:]
                             err_bin_f.write(ln)
                             pkt_queue.put(ln)

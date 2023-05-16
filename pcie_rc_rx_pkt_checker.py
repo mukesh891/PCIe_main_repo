@@ -1,4 +1,4 @@
-from pcie_com_file import *
+from pcie_com_file import compl_pkt_queue
 #from pcie_seq_rc_config_pkt import *
 
 print("hello ")

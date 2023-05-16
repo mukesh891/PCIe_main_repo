@@ -1,7 +1,9 @@
 
 #from pkt_dict import *
 from pcie_com_file import *
-from pcie_rc_config_pkt import *
+from pcie_rc_driver import *
+
+#from pcie_rc_config_pkt import *
 from pcie_ep_pkt_checker import *
 from pcie_ep_pkt_completer import *
 from pcie_rc_rx_pkt_checker import *

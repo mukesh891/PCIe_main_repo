@@ -1,27 +1,16 @@
 from pcie_lib import *
 from pcie_seq_tlp_item_base_pkg import *
-from pcie_com_file import *
+#from pcie_com_file import *
+from err_id_creation import *
 import queue
 print("hello pcie_seq_config_pkg")
-bin_f = open("bin_file.txt","w")
+bin_f = open("gen_logs/bin_file.txt","w")
 
-class pcie_seq_rc_config_pkt(pcie_pkg):
+class pcie_rc_config_pkt(pcie_pkg):
     def __init__(self):
         self.num_pkts=argv.num_pkts        
         self.err_eij = argv.err_eij
         self.err_pkt_no = argv.err_pkt_no
-        '''
-        self.arr =[0]*self.err_pkt_no
-        self.arr_t =[0]*self.err_pkt_no
-        for i in range(0,self.err_pkt_no):
-            self.arr_t[i] = random.randrange(self.num_pkts)
-            self.arr = list(set(self.arr_t))
-            self.arr.sort()
-        
-        print(self.arr)
-        print(len(self.arr))
-        print(self.num_pkts)
-        '''
         self.k=0
         self.j=0
         super().__init__()
@@ -79,33 +68,42 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         self.register_number        = 0 
 
 
-    def bad_pkt_eij(self):
-        self.fmt                    = random.choice([1,3,4,5,6,7])
+    #def bad_pkt_eij(self):
+    #    self.fmt                    = random.choice([1,3,4,5,6,7])
+      
+    #def fmt_eij_err(self):
+    #    for i in range(0,self.num_pkts-1):
+    #        for m in arr:
+    #            self.bad_pkt_eij()
 
-    def fmt_eij_err(self):
-        for i in range(0,self.num_pkts-1):
-            for m in arr:
-                self.bad_pkt_eij()
 
-
-    def print_f(self):
-        pprint(vars(self))
+    #def print_f(self):
+    #    pprint(vars(self))
     def bin_file_handle(self):
         #for i in range(100):
         self.cfg0_pkt()
         ## converting all the values to bin format ##
-        if(self.err_eij):
-            for i in arr:
-                if(i==self.k):
-                    self.fmt_eij_err()
-                    print(self.fmt)
-                    self.j=self.j+1
-            '''
-            if (arr[self.j]==self.k or self.j < len(arr)-1):
-                self.fmt_eij_err()
-                print(self.fmt)
-                self.j=self.j+1
-            ''' 
+        #if(self.err_eij):
+        #   if self.k in arr:
+        #       print("k value is ->",self.k)
+        #       err_dict=j
+        #       for err_dict in err_enum_q:
+        #           err_id=self.k 
+        #           print("ERROR_ID =",err_id)
+        #           if err_id in err_dict:
+        #               #print("i value is ->",i)
+        #               print(err_dict[err_id])
+        #   for i in arr:
+        #       if(i==self.k):
+        #           self.fmt_eij_err()
+        #           print(self.fmt)
+        #           self.j=self.j+1
+        #           '''
+        #           if (arr[self.j]==self.k or self.j < len(arr)-1):
+        #               self.fmt_eij_err()
+        #               print(self.fmt)
+        #               self.j=self.j+1
+        #           ''' 
         self.k=self.k+1
         fmt_str                 =format(self.fmt, '03b')       
         requester_id_str        =format(self.requester_id, '016b')       
@@ -159,16 +157,18 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         ##################################################################################
         
         ## puting the tlp_packet into queue ##
-        pkt_queue.put(tlp_packet)
+        g_pkt_queue.put(tlp_packet)
         print("->",tlp_packet)
+        print("len of tlp pkt",len(tlp_packet))
         ## Writing the tlp_packet into the hex_fil.txt ##
         bin_f.write(tlp_packet)
         bin_f.write("\n")
+        print("len of tlp pkt after n",len(tlp_packet))
         #bin_f.close()
         
     def hex_file_handle(self):
-        bin_f = open("bin_file.txt","r")
-        hex_f = open("hex_file.txt","w")
+        bin_f = open("gen_logs/bin_file.txt","r")
+        hex_f = open("gen_logs/hex_file.txt","w")
         for line in bin_f:
             line = "0b" + line
             hex_val = hex(int(line,2))[2:]
@@ -184,7 +184,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         bin_f.close()
     def gen_log(self):
          
-        gen_f = open("genearator_out.log","w")
+        gen_f = open("gen_logs/generator_out.log","w")
             
         num_pkts=argv.num_pkts        
         for i in range(num_pkts):
@@ -384,7 +384,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         self.hex_file_handle()
 
     '''def gen_log(self):
-        gen_f = open("genearator.csv","w")
+        gen_f = open("gen_logs/genearator.csv","w")
         gen_f.write("fmt,")
         gen_f.write("type,")
         gen_f.write("reserve_bit1       ,")
@@ -466,7 +466,7 @@ class pcie_seq_rc_config_pkt(pcie_pkg):
         bin_f.close()
         self.hex_file_handle()'''
 
-c = pcie_seq_rc_config_pkt()
+c = pcie_rc_config_pkt()
 #c.bin_file_handle()
 #c.file_handle()
 #c.hex_file_handle()

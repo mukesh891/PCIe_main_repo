@@ -17,6 +17,7 @@ err_eij = argv.err_eij
 err_pkt_no = argv.err_pkt_no 
 num_pkts= argv.num_pkts
 pkt_queue = queue.Queue()
+g_pkt_queue = queue.Queue()
 arr = []
 compl_pkt_queue = queue.Queue()
 if(err_eij): 

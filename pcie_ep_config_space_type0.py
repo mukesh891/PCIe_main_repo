@@ -19,7 +19,7 @@ type_0_header = format(0, type0header_size)
 Vendor_ID = format(540, '016b')						  # offset 00 hwinit
 Device_ID = format(2, '016b')						  # offset 02 hwinit
 #DW1
-Command = format(0b100, '016b')						  # offset 04 
+Command = format(0b110, '016b')             		  # offset 04 
 Status = format(0b10000, '016b')		    		  # offset 06
 #DW2
 Rev_ID = format(1, '08b')						      # offset 08 hwinit
@@ -82,61 +82,53 @@ for i in range(16):
 
 cfg = open('cfg_values.txt', 'w')
 class ep_cfg_space_type0():		
-	def ep_config_space_fn(pkt_num, data_rec):
+	def ep_config_space_fn(pkt_num, data_rec, compl_st):
 		#print('ep_config_space header is {}'.format(TLP))
 		temp_valid_pkts = pkt_with_flag_queue.queue[pkt_num]
 		valid_pkts = temp_valid_pkts[:-1]
 		error_flag = temp_valid_pkts[-1]
 
 
-		'''
-		if(error_flag):
-			compl_st = '0000'
+		
+		if(int(compl_st, 2) == 0):
+			compl_code = format(0, '04b')
 		else:
-			compl_st = '0001'
-		Bist = '1' + '0' + '00' + compl_st
+			compl_code = format(int(compl_st, 2), '04b')
+		Bist = '1' + '1' + '00' + compl_code
  
 		BIST = format(int(Bist, 2), '08b')					  # offset 0f 
 		
-		
-		BAR0 = format((random.getrandbits(32) & 0xFFFFC000), '032b')
-		BAR1 = format((random.getrandbits(32) & 0xFFFFFC00), '032b')
-		BAR2 = format((random.getrandbits(32) & 0xFFFFC000), '032b')
-		BAR3 = format((random.getrandbits(32) & 0xFFFFFC00), '032b')
-		BAR4 = format((random.getrandbits(32) & 0xFFFFC000), '032b')
-		BAR5 = format((random.getrandbits(32) & 0xFFFFFC00), '032b')
 		type_0_header = Max_Lat + Min_Gnt + Interrupt_Pin + Interrupt_Line + Reserved1 + Reserved0 + Capability_Pointer + Expansion_ROM_Base_Address + Subsystem_Device_ID + Subsystem_Vendor_ID + CardBus_CIS_Pointer + BAR5 + BAR4 + BAR3 + BAR2 + BAR1 + BAR0 + BIST + Header_Type + Latency_Timer + Cache_line_Size + Class_Code + Rev_ID + Status + Command + Device_ID + Vendor_ID
-		'''
+		
+		DW3 = BIST + Header_Type + Latency_Timer + Cache_line_Size
+		cfg_array[3] = int(DW3, 2)   # setting new BIST for every pkt
 
 
-
-		data_sent = 0
-		if (error_flag == '0'):
-			index = pkt_num % 16
+		data_sent = format(0, '032b')
+		if ((int(error_flag, 2) == 0) & (int(compl_code, 2) == 0)):			
 			if(valid_pkts[1] == '0'):
-				#write_count += 1				
-				data_sent = format(cfg_array[index], '032b')				
+				#write_count += 1		
+				read_index = pkt_num % 16		
+				data_sent = format(cfg_array[read_index], '032b')				
 			else:
-				data_sent = 0
-
-				if(index == 4):
-					data_rec = int(data_rec, 2) & 0xFFFFC000
-				elif(index == 5):
-					data_rec = int(data_rec, 2) & 0xFFFFFC00
-				elif(index == 6):
-					data_rec = int(data_rec, 2) & 0xFFFFC000
-				elif(index == 7):
-					data_rec = int(data_rec, 2) & 0xFFFFFC00
-				elif(index == 8):
-					data_rec = int(data_rec, 2) & 0xFFFFC000
-				elif(index == 9):
-					data_rec = int(data_rec, 2) & 0xFFFFFC00
-				else:
-					data_rec = int(data_rec, 2)
-
-				cfg_array[index] = data_rec		
+				data_sent = format(0, '032b')
+				write_index = pkt_num % 6
+				if(write_index == 0):
+					cfg_array[4] = int(data_rec, 2) & 0xFFFFC000
+					print('cfg 4 bar0 {}'.format(cfg_array[4]))
+				elif(write_index == 1):
+					cfg_array[5] = int(data_rec, 2) & 0xFFFFFC00
+				elif(write_index == 2):
+					cfg_array[6] = int(data_rec, 2) & 0xFFFFC000
+				elif(write_index == 3):
+					cfg_array[7] = int(data_rec, 2) & 0xFFFFFC00
+				elif(write_index == 4):
+					cfg_array[8] = int(data_rec, 2) & 0xFFFFC000
+				elif(write_index == 5):
+					cfg_array[9] = int(data_rec, 2) & 0xFFFFFC00
+				
 		else:
-			data_sent = 0
+			data_sent = format(0, '032b')
 
 
 		type_0_header = format(cfg_array[15], '032b') + format(cfg_array[14], '032b') + format(cfg_array[13], '032b') + format(cfg_array[12], '032b') + format(cfg_array[11], '032b') + \
@@ -156,28 +148,33 @@ class ep_cfg_space_type0():
 
 
 		
-		table_data = [("Vendor_ID", Vendor_ID),("Device_ID", Device_ID),("Command", Command),("Status", Status),("Rev_ID", Rev_ID),("Class_Code", Class_Code),
-                      ("Cache_line_Size", Cache_line_Size),
-                      ("Latency_Timer", Latency_Timer),
-                      ("Header_Type", Header_Type),
-                      ("BIST", BIST),
-                      ("BAR0", BAR0),
-                      ("BAR1", BAR1),
-                      ("BAR2", BAR2),
-                      ("BAR3", BAR3),
-                      ("BAR4", BAR4),
-                      ("BAR5", BAR5),
-                      ("CardBus_CIS_Pointer", CardBus_CIS_Pointer),
-                      ("Subsystem_Vendor_ID", Subsystem_Vendor_ID),
-                      ("Subsystem_Device_ID", Subsystem_Device_ID),
-                      ("Expansion_ROM_Base_Address", Expansion_ROM_Base_Address),
-                      ("Capability_Pointer", Capability_Pointer),
-                      ("Reserved0", Reserved0),
-                      ("Reserved1", Reserved1),
-                      ("Interrupt_Line", Interrupt_Line),
-                      ("Interrupt_Pin", Interrupt_Pin),
-                      ("Min_Gnt", Min_Gnt),
-                      ("Max_Lat", Max_Lat)
+		table_data = [("Vendor_ID", type_0_header[-16:]),
+				      ("Device_ID", type_0_header[-32:-16]),
+					  ("Command", type_0_header[-48:-32]),
+					  ("Status", type_0_header[-64:-48]),
+					  ("Rev_ID", type_0_header[-72:-64]),
+					  ("Class_Code", type_0_header[-96:-72]),
+                      ("Cache_line_Size", type_0_header[-104:-96]),
+                      ("Latency_Timer", type_0_header[-112:-104]),
+                      ("Header_Type", type_0_header[-120:-112]),
+                      ("BIST", type_0_header[-128:-120]),
+                      ("BAR0", type_0_header[-160:-128]),
+                      ("BAR1", type_0_header[-192:-160]),
+                      ("BAR2", type_0_header[-224:-192]),
+                      ("BAR3", type_0_header[-256:-224]),
+                      ("BAR4", type_0_header[-288:-256]),
+                      ("BAR5", type_0_header[-320:-288]),
+                      ("CardBus_CIS_Pointer", type_0_header[-352:-320]),
+                      ("Subsystem_Vendor_ID", type_0_header[-368:-352]),
+                      ("Subsystem_Device_ID", type_0_header[-384:-368]),
+                      ("Expansion_ROM_Base_Address", type_0_header[-416:-384]),
+                      ("Capability_Pointer", type_0_header[-424:-416]),
+                      ("Reserved0", type_0_header[-448:-424]),
+                      ("Reserved1", type_0_header[-480:-448]),
+                      ("Interrupt_Line", type_0_header[-488:-480]),
+                      ("Interrupt_Pin", type_0_header[-496:-488]),
+                      ("Min_Gnt", type_0_header[-504:-496]),
+                      ("Max_Lat", type_0_header[-512:-504])
 					 ]
 		# Print the table
 		#print(tabulate(table_data, headers=["Field", "Value"], tablefmt="grid"))

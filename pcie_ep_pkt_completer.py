@@ -16,7 +16,7 @@ class ep_pkt_completer(ep_base_pkt):
 		#print('packet {} \n' '{}'.format(pkt_num, valid_pkts))
 		#completer_rec.write('priting packet {} from completer\n' '{}\n'.format(pkt_num, valid_pkts))
 		#completer_rec.write('priting packet including flag {} from completer\n' '{}\n'.format(pkt_num, temp_valid_pkts))
-		completer_rec.write('\n priting cfg request TLP -- {} \n'.format(valid_pkts))
+		completer_rec.write('\n priting cfg request TLP {} -- {} \n'.format(pkt_num, valid_pkts))
 
 		base_TLP = ep_base_pkt.checker_fn_base(self, pkt_num)   # getting the request TLP directly from base
 
@@ -28,11 +28,9 @@ class ep_pkt_completer(ep_base_pkt):
 
 		
 			if(int(Fmt_l[1], 2) == 1):
-				Fmt = format(0, '03b')
-				ep_cfg_space_type0.ep_config_space_fn(pkt_num, data)                    # if request is write than send the data as an argument
+				Fmt = format(0, '03b')				
 			else:
-				Fmt = format(2, '03b')
-				data_from_cfg = ep_cfg_space_type0.ep_config_space_fn(pkt_num, None)    # if request is read than get the data from cfg space
+				Fmt = format(2, '03b')				
 
 			Type = format(10, '05b')
 			T9 = format(0, '01b')
@@ -60,6 +58,12 @@ class ep_pkt_completer(ep_base_pkt):
 			Rsv_11_7 = format(0, '01b')          # byte 11 bit 7 is reserved
 			Lower_address = format(0, '07b')     # excluding memory read compl & atomic compl, byte count must be 0
 		
+			if(int(Fmt_l[1], 2) == 1):
+				ep_cfg_space_type0.ep_config_space_fn(pkt_num, data, Compl_status)                    # if request is write/cmpl w/o data than send the data as an argument
+			else:
+				data_from_cfg = ep_cfg_space_type0.ep_config_space_fn(pkt_num, None, Compl_status)    # if request is read/cmpl w/ data than get the data from cfg space
+
+
 		else:
 			header = base_TLP[0:96]
 			data = base_TLP[96:128]
@@ -68,6 +72,7 @@ class ep_pkt_completer(ep_base_pkt):
 
 		
 			Fmt = format(0, '03b')
+			
 			Type = format(10, '05b')
 			T9 = format(0, '01b')
 			TC = base_TLP[9:12]                  # must be same as request
@@ -82,7 +87,7 @@ class ep_pkt_completer(ep_base_pkt):
 			Length = base_TLP[22:32]
 
 			Completion_Id = format(522, '016b')
-			Compl_status = format(3, '03b')      # status 3 if some occured in completer
+			Compl_status = format(0b100, '03b')      # status 3 if some occured in completer
 			BCM = format(0, '01b')               # only be set by PCI-x, so for PCIe its always 0
 			Byte_count = format(4, '012b')       # excluding memory read compl & atomic compl, byte count must be 4
 
@@ -90,6 +95,11 @@ class ep_pkt_completer(ep_base_pkt):
 			Tag = base_TLP[48:56]                # must be same as request
 			Rsv_11_7 = format(0, '01b')          # byte 11 bit 7 is reserved
 			Lower_address = format(0, '07b')     # excluding memory read compl & atomic compl, byte count must be 0
+
+			data_from_cfg = ep_cfg_space_type0.ep_config_space_fn(pkt_num, None, Compl_status)    # sending cmpl status
+			data_from_cfg = format(0, '032b')                                                     # make the data 0
+		
+
 
 
 
@@ -110,7 +120,7 @@ class ep_pkt_completer(ep_base_pkt):
 		
 		table = tabulate(data, headers=headers, tablefmt='orgtbl')
 		completer_rec.write(table)
-		completer_rec.write('\n priting complition TLP -- {} \n'.format(TLP))
+		completer_rec.write('\n priting complition TLP {} -- {} \n\n\n'.format(pkt_num, TLP))
 		
 		
 
@@ -118,7 +128,6 @@ class ep_pkt_completer(ep_base_pkt):
 
 		
 		
-
 
 
 

@@ -339,8 +339,8 @@ class ep_check_pkt(ep_base_pkt):
 			
 			received_valid_pkt.write('{}\n'.format(table))
 			
-      #need to modify it furthere just made it for checking purpose"
-      if(pkt_num==5):
+      		#need to modify it furthere just made it for checking purpose"
+			if(pkt_num==5):
 				print('pkt num is 5')
 				TLP = format((int(TLP, 2) + 0), tlp_size)  # if adding 1, than tlp is overriten 
 			v_tlp = TLP + '0'   # adding this 0 because, 0 indicates that the error_flag is 0 (as a indication for NO ERROR from requested TLP)

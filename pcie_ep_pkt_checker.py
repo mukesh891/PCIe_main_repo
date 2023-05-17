@@ -220,7 +220,9 @@ class ep_check_pkt(ep_base_pkt):
         
         
         
+			print('printing length of TLP from checker {}'.format(len(TLP)))
 			#checking for configuration request type possibilities
+			'''
 			if (int(Type[2], 2)):   #  bit 2 of type must be 1 for cfg request
 				if (TC_int==0):      # must be 0 for cfg
 					if (Attr1_int==0):   # must be reserved for cfg
@@ -312,8 +314,81 @@ class ep_check_pkt(ep_base_pkt):
 				else:
 					print('INVALID TLP: for CFG request, TC is not ZERO: Value {}'.format(TC_int))
 					received_invalid_pkt.write('INVALID TLP: for CFG request, TC is not ZERO: Value {}\n'.format(TC_int))
+					false_pkt += 1'''
+
+			if (int(Type[2], 2)):   #  bit 2 of type must be 1 for cfg request
+				if not (TC_int==0):      # must be 0 for cfg
+					print('INVALID TLP: for CFG request, TC is not ZERO: Value {}'.format(TC_int))
+					received_invalid_pkt.write('INVALID TLP: for CFG request, TC is not ZERO: Value {}\n'.format(TC_int))
 					false_pkt += 1
-			
+				if not (Attr1_int==0):   # must be reserved for cfg
+						print('INVALID TLP: for CFG request, ATTR(byte 1) is not ZERO: Value {}'.format(Attr1_int))
+						received_invalid_pkt.write('INVALID TLP: for CFG request, ATTR(byte 1) is not ZERO: Value {}\n'.format(Attr1_int))
+						false_pkt += 1
+				if not (TH_int==0):    # must be reserved for cfg
+							print('INVALID TLP: for CFG request, TH is not ZERO: Value {}'.format(TH_int))
+							received_invalid_pkt.write('INVALID TLP: for CFG request, TH is not ZERO: Value {}\n'.format(TH_int))
+							false_pkt += 1
+				if not (Attr0_int==0):   # must be 0 for cfg
+								print('INVALID TLP: for CFG request, ATTR(byte 2) is not ZERO: Value {}'.format(Attr0_int))
+								received_invalid_pkt.write('INVALID TLP: for CFG request, ATTR(byte 2) is not ZERO: Value {}\n'.format(Attr0_int))
+								false_pkt += 1
+				if not (AT_int==0):    # must be 0 for cfg
+									print('INVALID TLP: for CFG request, AT is not ZERO: Value {}'.format(AT_int))
+									received_invalid_pkt.write('INVALID TLP: for CFG request, AT is not ZERO: Value {}\n'.format(AT_int))
+									false_pkt += 1
+				if not (Last_DW_BE_int==0):  # must be 0 for cfg
+										print('INVALID TLP: for CFG request, last DW BE is not ZERO: Value {}'.format(Last_DW_BE_int))
+										received_invalid_pkt.write('INVALID TLP: for CFG request, last DW BE is not ZERO: Value {}\n'.format(Last_DW_BE_int))
+										false_pkt += 1
+				if not (int(Register_Num[-2:], 2) == 0):  # last two bits must be 0
+											print('INVALID TLP: for CFG request, last two bits of Register Number is not ZERO: Value {}'.format(Register_Num))
+											received_invalid_pkt.write('INVALID TLP: for CFG request, last two bits of Register Number is not ZERO: Value {}\n'.format(Register_Num))
+											false_pkt += 1
+				if not (Type == '00100'): #since this is an endpoint so request should be for type 0
+												print('INVALID TLP: for CFG request for EP, TYPE is not 00100: Value {}'.format(Type))
+												received_invalid_pkt.write('INVALID TLP: for CFG request for EP, TYPE is not 00100: Value {}\n'.format(Type))
+												false_pkt += 1
+				if not (Length_int == 1):   # must be 1 for cfg
+													print('INVALID TLP: for CFG request, Length is not 1: Value {}'.format(Length_int)) 
+													received_invalid_pkt.write('INVALID TLP: for CFG request, Length is not 1: Value {}\n'.format(Length_int))
+													false_pkt += 1
+				if not ((32*Length_int) == len(Data)):   # data must be equal to length in DW:
+														print('INVALID TLP: for CFG request, DATA should be 1DW: Value {} SIZE {}'.format(Data_int, len(Data))) 
+														received_invalid_pkt.write('INVALID TLP: for CFG request, DATA should be 1DW: Value {} SIZE {}\n'.format(Data_int, len(Data)))
+														false_pkt += 1
+				if not (Completion_Id_int == 0):    # completion ID must be 0 
+															print('INVALID TLP: for CFG request, Comepltion ID must be 0: Value {}'.format(Completion_Id_int)) 
+															received_invalid_pkt.write('INVALID TLP: for CFG request, Comepltion ID must be 0: Value {}\n'.format(Completion_Id_int))
+															false_pkt += 1
+				if not (len(TLP) == (32*4)):   #TLP  size must be 4DW (including 1DW data)
+																print('INVALID TLP: for CFG request, LENGTH of the TLP must be 4DW (including 1DW data): TLP size {} Data size {}'.format(len(TLP), len(Data))) 
+																received_invalid_pkt.write('INVALID TLP: for CFG request, LENGTH of the TLP must be 4DW (including 1DW data): TLP size {} Data size {}\n'.format(len(TLP), len(Data)))
+																false_pkt += 1
+				if not (LN_int == 0):  # must be reserved for cfg																														
+																	print('INVALID TLP: for CFG request, LN is reserved: value {}'.format(LN_int)) 
+																	received_invalid_pkt.write('INVALID TLP: for CFG request, LN is reserved: value {}\n'.format(LN_int))
+																	false_pkt += 1
+				if not (T9_int == 0):   # must be reserved for cfg
+																		print('INVALID TLP: for CFG request, T9 must be reserved: value {}'.format(T9_int)) 
+																		received_invalid_pkt.write('INVALID TLP: for CFG request, T9 must be reserved: value {}\n'.format(T9_int))
+																		false_pkt += 1
+				if not (T8_int == 0):   # must be reserved for cfg
+																			print('INVALID TLP: for CFG request, T8 must be reserved: value {}'.format(T8_int)) 
+																			received_invalid_pkt.write('INVALID TLP: for CFG request, T8 must be reserved: value {}\n'.format(T8_int))
+																			false_pkt += 1
+				if not (Rsv_10_7_int == 0):   # must be reserved for cfg
+																				print('INVALID TLP: for CFG request, byte 10 bit 7:4 must be reserved: value {}'.format(Rsv_10_7_int)) 
+																				received_invalid_pkt.write('INVALID TLP: for CFG request, byte 10 bit 7:4 must be reserved: value {}\n'.format(Rsv_10_7_int))
+																				false_pkt += 1
+				if not (Rsv_11_1_int == 0):  # must be reserved for cfg																											
+																					print('INVALID TLP: for CFG request, byte 11 bit 1:0 must be reserved: value {}'.format(Rsv_11_1_int)) 
+																					received_invalid_pkt.write('INVALID TLP: for CFG request, byte 11 bit 1:0 must be reserved: value {}\n'.format(Rsv_11_1_int))
+																					false_pkt += 1
+				if Fmt not in ['000', '010']:  # must be either 000 or 010																						
+					print('INVALID TLP: for CFG request, FMT must be either 000 or 010: value {}'.format(Fmt))
+					received_invalid_pkt.write('INVALID TLP: for CFG request, FMT must be either 000 or 010: value {}\n'.format(Fmt))
+					false_pkt += 1
 
 
 			

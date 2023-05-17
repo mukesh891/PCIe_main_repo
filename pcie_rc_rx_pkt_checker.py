@@ -93,7 +93,7 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                                                             if int(str_at          ,2) == 0:    # ep completer: at will be 0
                                                                 if int(str_length      ,2) ==1:                                # ep completer: length will be 1
                                                                     if int(str_completer_id        ,2) in range(0,2**16-1):                  # ep completer: commpleter id must be greater than 0
-                                                                        if int(str_compl_status                 ,2) in range(0,2**3-1):      # ep completer: completer status must be 1 for pass adn 0 for fail packet
+                                                                        if int(str_compl_status                 ,2) == 0:      # ep completer: completer status must be 1 for pass adn 0 for fail packet
                                                                             if int(str_bcm          ,2) == 0:                                # ep completer: bcm will be 0
                                                                                 if int(str_byte_count         ,2) in range(0,2**12-1):       # ep completer: byte_count must be within range 0 to 2**12-1
                                                                                     if (int(str_requester_id,2)  == int(line[32:48],2)):                 # ep completer: requester_id must be same as generated requester id
@@ -202,7 +202,7 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                                                                                 bad_pkts=bad_pkts+1                                                                                                
                                                                         #tag else
                                                                         else:
-                                                                            rc_checker_f.write("INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 2**8-1 [Note : Please check and assign the value with in the range(0,2**8-1)")
+                                                                            rc_checker_f.write("INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)")
                                                                             rc_checker_f.write("\n")
                                                                             bad_pkts=bad_pkts+1                                                                                                
                                                                     #completer_id else

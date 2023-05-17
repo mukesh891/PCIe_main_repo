@@ -28,15 +28,15 @@ class pcie_rc_driver:
                 # m is no. of iterations till num_pkts-1
                 if(self.m < num_pkts):
                     print(self.m)
+                    
                     # err_id_q is an array with size of err_pkt_no, You can get "err_pkt_no" and err_id_q in pcie_com_file.py
                     # checking whether m is lessthan the no. of erroe pkts injected
-                    if(self.m < len(err_id_q)):
-                        print("error id for the injection is-> ",err_id_q[self.m])
-                        err_id_f.write("error id for the injection is-> ")
-                        err_id_f.write(str(err_id_q[self.m]))
-                        err_id_f.write("\n")
+                    #if(self.m < len(err_id_q)):
+                    #    print("error id for the injection is-> ",err_id_q[self.m])
+                    #    err_id_f.write("error id for the injection is-> ")
+                    #    #err_id_f.write(str(err_id_q[self.m]))
+                    #    err_id_f.write("\n")
 
-                    logging.info("Entering err_eij if statement ")
                     err_eij_hdl = pcie_err_eij()
                     if self.m in arr:
                         print("m in arr",self.m)
@@ -44,23 +44,36 @@ class pcie_rc_driver:
                         ## randomly choose between bdf and fmt and type error
                         j = random.choice([0,1])
                         # If j==1 , then "fmt" will be injected with error 
-                        if(j==1):
+                        if(j==0):
                             fmt = err_eij_hdl.pcie_fmt_err_eij()
                             fmt_str                 =format(fmt, '03b')       
                             print("modified fmt->",fmt_str) 
                             ln =fmt_str+line[3:]
                             err_bin_f.write(ln)
                             pkt_queue.put(ln)
+                            err_id_f.write(ln)
+                            err_id_f.write("FMT_ERROR_")
+                            err_id_f.write(fmt_str)
+                            err_id_f.write(str(err_id_q[self.k][self.m]))
+                            err_id_f.write("\n")
                             
                         # If j==0 , then "type" will be injected with error
-                        if(j==2):
+                        if(j==1):
                             typ =err_eij_hdl.pcie_type_err_eij()
                             type_str=format(typ, '05b')       
                             print(type_str) 
                             ln = line[:3]+type_str+line[8:] 
                             err_bin_f.write(ln)
                             pkt_queue.put(ln)
+                            err_id_f.write(ln)
+                            err_id_f.write("TYPE_ERROR_")
+                            err_id_f.write(type_str)
+                            err_id_f.write(str(err_id_q[self.k][self.m]))
+                            err_id_f.write("\n")
+                        self.k=self.k+1
+                    # else statemnet: if "m"th iteration is not present in err_array then it will 0 
                     else:
+                        err_id_f.write(ln)
                         err_bin_f.write(line)
                         pkt_queue.put(line)
 
@@ -68,10 +81,9 @@ class pcie_rc_driver:
                 err_bin_f.write(line)
                 pkt_queue.put(line)
             #contents[self.m] = ln 
+            self.m=self.m+1
             err_bin_f.write("\n")
 
-
-            self.m=self.m+1
         err_bin_f.close()
 
 p = pcie_rc_driver()

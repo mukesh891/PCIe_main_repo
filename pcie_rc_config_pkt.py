@@ -65,20 +65,9 @@ class pcie_rc_config_pkt(pcie_pkg):
         self.ext_register_number    = 0
         ## TODO : register last 2 bit will be zero
         self.register_number        = random.choice([0,63])
-        self.register_number        = 0 
+        self.register_number        =  self.register_number and 0b111100 
 
 
-    #def bad_pkt_eij(self):
-    #    self.fmt                    = random.choice([1,3,4,5,6,7])
-      
-    #def fmt_eij_err(self):
-    #    for i in range(0,self.num_pkts-1):
-    #        for m in arr:
-    #            self.bad_pkt_eij()
-
-
-    #def print_f(self):
-    #    pprint(vars(self))
     def bin_file_handle(self):
         #for i in range(100):
         self.cfg0_pkt()

@@ -23,9 +23,13 @@ class pcie_rc_driver:
             line = line.strip('\n')
             print("binfile line[0]",line)
             print("length of line",len(line))
+            # error injection enable
             if(err_eij):
+                # m is no. of iterations till num_pkts-1
                 if(self.m < num_pkts):
                     print(self.m)
+                    # err_id_q is an array with size of err_pkt_no, You can get "err_pkt_no" and err_id_q in pcie_com_file.py
+                    # checking whether m is lessthan the no. of erroe pkts injected
                     if(self.m < len(err_id_q)):
                         print("error id for the injection is-> ",err_id_q[self.m])
                         err_id_f.write("error id for the injection is-> ")
@@ -38,16 +42,8 @@ class pcie_rc_driver:
                         print("m in arr",self.m)
                         logging.info("Entering err_eij array to inject ")
                         ## randomly choose between bdf and fmt and type error
-                        #j = random.choice([0,1,2])
-                        j = random.choice([1,2])
-                        #j = 1 
-                        if(j==0):
-                            print(str(bin(err_eij_hdl.pcie_requester_id_err_eij())))
-                            r_id = err_eij_hdl.pcie_requester_id_err_eij()
-                            r_id_str                 =format(r_id , '016b')       
-                            ln = str(line[:32])+r_id_str+line[48:]
-                            err_bin_f.write(ln)
-                            pkt_queue.put(ln)
+                        j = random.choice([0,1])
+                        # If j==1 , then "fmt" will be injected with error 
                         if(j==1):
                             fmt = err_eij_hdl.pcie_fmt_err_eij()
                             fmt_str                 =format(fmt, '03b')       
@@ -56,6 +52,7 @@ class pcie_rc_driver:
                             err_bin_f.write(ln)
                             pkt_queue.put(ln)
                             
+                        # If j==0 , then "type" will be injected with error
                         if(j==2):
                             typ =err_eij_hdl.pcie_type_err_eij()
                             type_str=format(typ, '05b')       

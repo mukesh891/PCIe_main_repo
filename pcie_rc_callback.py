@@ -7,13 +7,13 @@ class pcie_callbacks:
 
 class pcie_err_eij(pcie_callbacks):
     print("This is pcie_err_eij class")
-    def pcie_requester_id_err_eij(self):
-        print("This is bdf eij err callback ")
-        #pkt.cfg0_pkt()
-        tl_pkt=pcie_rc_config_pkt()
-        tl_pkt.requester_id=0xBADBDF
-        print(tl_pkt.requester_id)
-        return tl_pkt.requester_id
+    #def pcie_requester_id_err_eij(self):
+    #   print("This is bdf eij err callback ")
+    #   #pkt.cfg0_pkt()
+    #   tl_pkt=pcie_rc_config_pkt()
+    #   tl_pkt.requester_id=0xBADBDF
+    #   print(tl_pkt.requester_id)
+    #   return tl_pkt.requester_id
 
     def pcie_fmt_err_eij(self):
         print("This is  eij err callback ")

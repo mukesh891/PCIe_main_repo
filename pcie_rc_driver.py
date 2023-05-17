@@ -1,12 +1,12 @@
 from pcie_lib import *
-from pcie_com_file import *
-#from err_id_creation import *
+#from pcie_com_file import *
+from err_id_creation import *
 
 from pcie_rc_config_pkt import *
 logging.info("Entering Driver class of ROOT COMPLEX ")
 
 from pcie_rc_callback import *
-
+err_id_f = open("gen_logs/error_id_file.txt","w") 
 bin_f = open("gen_logs/bin_file.txt","r") 
 err_bin_f = open("gen_logs/err_bin_file.txt","w")
 class pcie_rc_driver:
@@ -24,14 +24,22 @@ class pcie_rc_driver:
             print("binfile line[0]",line)
             print("length of line",len(line))
             if(err_eij):
-                if(self.m<num_pkts):
+                if(self.m < num_pkts):
+                    print(self.m)
+                    if(self.m < len(err_id_q)):
+                        print("error id for the injection is-> ",err_id_q[self.m])
+                        err_id_f.write("error id for the injection is-> ")
+                        err_id_f.write(str(err_id_q[self.m]))
+                        err_id_f.write("\n")
+
                     logging.info("Entering err_eij if statement ")
                     err_eij_hdl = pcie_err_eij()
                     if self.m in arr:
                         print("m in arr",self.m)
                         logging.info("Entering err_eij array to inject ")
                         ## randomly choose between bdf and fmt and type error
-                        j = random.choice([0,1,2])
+                        #j = random.choice([0,1,2])
+                        j = random.choice([1,2])
                         #j = 1 
                         if(j==0):
                             print(str(bin(err_eij_hdl.pcie_requester_id_err_eij())))
@@ -79,6 +87,6 @@ p.drive_tx()
 #    file.writelines(contents)
 bin_f.close()
 err_bin_f.close()
-
+err_id_f.close() 
 
 

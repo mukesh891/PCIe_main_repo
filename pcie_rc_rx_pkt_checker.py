@@ -192,7 +192,7 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                                                                                         bad_pkts=bad_pkts+1                                                                                                
                                                                                 #byte_count else
                                                                                 else:
-                                                                                    rc_checker_f.write("INVALID BYTE_COUNT RECIEVED: byte_count CANNOT BE NEGATIVE or GREATER THAN 2**4-1 [Note : Please check and assign the value with in the range(0,2**12-1)")
+                                                                                    rc_checker_f.write("INVALID BYTE_COUNT RECIEVED: byte_count CANNOT BE NEGATIVE or GREATER THAN 2**12-1 [Note : Please check and assign the value with in the range(0,2**12-1)")
                                                                                     rc_checker_f.write("\n")
                                                                                     bad_pkts=bad_pkts+1                                                                                                
                                                                             #last_dw_be else

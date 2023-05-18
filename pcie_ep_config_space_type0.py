@@ -4,6 +4,8 @@ from pcie_com_file import *
 from pcie_ep_com_file import *
 from array import array
 from tabulate import tabulate
+import console_to_log
+
 
 print("ep_cfg_space_type0 block")
 
@@ -60,7 +62,7 @@ Interrupt_Pin = format(0, '08b')                      # offset 3d
 Min_Gnt = format(0, '08b')                            # offset 3e 
 Max_Lat = format(1, '08b')                            # offset 3f 
 
-BAR0 = format((int(BAR0, 2) & 0xFFFFC000), '032b')
+BAR0 = format((int(BAR0, 2) & 0xFFFFF000), '032b')
 BAR1 = format((int(BAR1, 2) & 0xFFFFFC00), '032b')
 BAR2 = format((int(BAR2, 2) & 0xFFFFC000), '032b')
 BAR3 = format((int(BAR3, 2) & 0xFFFFFC00), '032b')
@@ -112,11 +114,11 @@ class ep_cfg_space_type0():
 				data_sent = format(cfg_array[read_index], '032b')				
 			else:
 				data_sent = format(0, '032b')
-				write_index = pkt_num % 6
+				write_index = pkt_num % 1   # giving access only for BAR0 for 32-bit address
 				if(write_index == 0):
-					cfg_array[4] = int(data_rec, 2) & 0xFFFFC000
-					print('cfg 4 bar0 {}'.format(cfg_array[4]))
-				elif(write_index == 1):
+					cfg_array[4] = int(data_rec, 2) & 0xFFFFF000
+					cfg.write('*******************************************cfg 4 bar0 {}'.format(cfg_array[4]))
+				'''elif(write_index == 1):
 					cfg_array[5] = int(data_rec, 2) & 0xFFFFFC00
 				elif(write_index == 2):
 					cfg_array[6] = int(data_rec, 2) & 0xFFFFC000
@@ -125,7 +127,7 @@ class ep_cfg_space_type0():
 				elif(write_index == 4):
 					cfg_array[8] = int(data_rec, 2) & 0xFFFFC000
 				elif(write_index == 5):
-					cfg_array[9] = int(data_rec, 2) & 0xFFFFFC00
+					cfg_array[9] = int(data_rec, 2) & 0xFFFFFC00'''
 				
 		else:
 			data_sent = format(0, '032b')

@@ -8,6 +8,7 @@ from pcie_ep_pkt_checker import *
 from pcie_ep_pkt_completer import *
 from pcie_rc_rx_pkt_checker import *
 from pcie_ep_config_space_type0 import *
+from pcie_ep_memory_space import *
 
 import console_to_log
 c1 = ep_check_pkt()
@@ -82,6 +83,7 @@ rc_checker_f.close()
 #log_file.close()
 
 cfg.close()
+mem.close()
 # Stop redirecting console output to the log file
 console_to_log.reset_output()
 

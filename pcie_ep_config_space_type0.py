@@ -117,7 +117,7 @@ class ep_cfg_space_type0():
 				write_index = pkt_num % 1   # giving access only for BAR0 for 32-bit address
 				if(write_index == 0):
 					cfg_array[4] = int(data_rec, 2) & 0xFFFFF000
-					cfg.write('*******************************************cfg 4 bar0 {}'.format(cfg_array[4]))
+					#cfg.write('*******************************************cfg 4 bar0 {}'.format(cfg_array[4]))
 				'''elif(write_index == 1):
 					cfg_array[5] = int(data_rec, 2) & 0xFFFFFC00
 				elif(write_index == 2):

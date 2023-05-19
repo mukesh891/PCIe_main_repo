@@ -71,25 +71,25 @@ class ep_pkt_completer(ep_base_pkt):
 			Rsv_11_7 = format(0, '01b')          # byte 11 bit 7 is reserved
 			Lower_address = format(0, '07b')     # excluding memory read compl & atomic compl, byte count must be 0
 		
-			completer_rec.write('enabling type check\n')
+			#completer_rec.write('enabling type check\n')
 			if(Type_l[2] == '1'):
-				completer_rec.write('entered type check for cfg\n')
+				#completer_rec.write('entered type check for cfg\n')
 				if(Fmt_l == '010'):
-					completer_rec.write('entered fmt check for cfg\n')
+					#completer_rec.write('entered fmt check for cfg\n')
 					ep_cfg_space_type0.ep_config_space_fn(pkt_num, data, Compl_status)                    # if request is write/cmpl w/o data than send the data as an argument
-					completer_rec.write('cfg write done')
+					#completer_rec.write('cfg write done')
 				elif(Fmt_l == '000'):
 					completer_data = ep_cfg_space_type0.ep_config_space_fn(pkt_num, None, Compl_status)    # if request is read/cmpl w/ data than get the data from cfg space
-					completer_rec.write('cfg read done')
+					#completer_rec.write('cfg read done')
 			elif(Type_l[:-1] == '0000'):
-				completer_rec.write('entered type check for memory\n')
+				#completer_rec.write('entered type check for memory\n')
 				if(Fmt_l == '010'):
-					completer_rec.write('entered fmt check for memory\n')
+					#completer_rec.write('entered fmt check for memory\n')
 					pcie_ep_memory_space.write_request(pkt_num, int(Address_l, 2), int(data, 2))                    # if request is write/cmpl w/o data than send the data as an argument
-					completer_rec.write('memory write done\n')
+					#completer_rec.write('memory write done\n')
 				elif(Fmt_l == '000'):
 					completer_data = pcie_ep_memory_space.read_request(pkt_num, int(Address_l, 2))
-					completer_rec.write('memory read done\n')
+					#completer_rec.write('memory read done\n')
 					
 					
 

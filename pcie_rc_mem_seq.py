@@ -26,38 +26,38 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         '''
         super().__init__()
     def mem_pkt(self):
-            self.fmt                     = random.choice([0,2])  # 000 = MemRd without data, 010 = MemWr with data
+        self.fmt                     = random.choice([0,2])  # 000 = MemRd without data, 010 = MemWr with data
         ##    BDF format for requester and completer    ##
-            self.requester_id            = random.getrandbits(16)
+        self.requester_id            = random.getrandbits(16)
         ##################################################
-            self.type                   = random.choice([0])    # 0000b = Memory Read or write
-            self.ep                     = 0 
-            self.td                     = 0
-            self.tc                     = random.getrandbits(3) # 000b - 111b ( Higher TC value will be higher priority )
-            self.attr0                  = random.choice([0,2])  # 2bit, we need 00 and 10
-            self.attr1                  = random.getrandbits(1) # 1bit
-            self.at                     = 0
-            self.length                 = random.choice([1]) 
-            self.tag                    = random.getrandbits(8)
-            if(self.length > 1):
-              self.first_dw_be            = random.getrandbits(4)
-              self.last_dw_be             = random.getrandbits(4) 
-            elif(self.length ==1):
-                 self.first_dw_be            = random.getrandbits(4)
-                 self.last_dw_be             = 0 
+        self.type                   = random.choice([0])    # 0000b = Memory Read or write
+        self.ep                     = 0 
+        self.td                     = 0
+        self.tc                     = 0 
+        self.attr0                  = 0 
+        self.attr1                  = 0 
+        self.at                     = 0
+        self.length                 = 1 
+        self.tag                    = 0 
+        if(self.length > 1):
+          self.first_dw_be            = random.getrandbits(4)
+          self.last_dw_be             = random.getrandbits(4) 
+        elif(self.length ==1):
+             self.first_dw_be            = random.getrandbits(4)
+             self.last_dw_be             = 0 
         
-       ########## Only for FMT = 010b, there will be paylod###########
-            if (self.fmt==2):
-               self.payload                = random.getrandbits(32)
-            else:
-               self.payload                = 0
-       ######### initializing reserved bits to zero ########
-            self.reserve_bit1           = 0
-            self.reserve_bit2           = 0
-            self.reserve_bit3           = 0
-            self.reserve_bit4           = 0
-            self.reserve_bit5           = 0
-            self.addresses                =  random.getrandbits(30)
+       ###### Only for FMT = 010b, there will be paylod###########
+        if (self.fmt==2):
+           self.payload                = random.getrandbits(32)
+        else:
+           self.payload                = 0
+       ##### initializing reserved bits to zero ########
+        self.reserve_bit1           = 0
+        self.reserve_bit2           = 0
+        self.reserve_bit3           = 0
+        self.reserve_bit4           = 0
+        self.reserve_bit5           = 0
+        self.addresses                =  random.getrandbits(30)
 
     #def bin_file_handle(self):
     def run_mem(self):

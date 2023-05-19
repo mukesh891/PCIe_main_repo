@@ -1,292 +1,480 @@
 -------------------------------------------------------------------------- TLP 0 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =1
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x0
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0x95c7
+tag = 0x31
+lower_address = 0x0
+GOOD_PKTS RECIEVED =1
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 1 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =2
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x2
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0x4257
+tag = 0x7a
+lower_address = 0x0
+GOOD_PKTS RECIEVED =2
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 2 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =3
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x0
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0xd9fb
+tag = 0xdf
+lower_address = 0x0
+GOOD_PKTS RECIEVED =3
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 3 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =4
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x0
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0xe5d9
+tag = 0xb8
+lower_address = 0x0
+GOOD_PKTS RECIEVED =4
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 4 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =5
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x0
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0xff36
+tag = 0x75
+lower_address = 0x0
+GOOD_PKTS RECIEVED =5
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 5 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =6
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x2
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0x12dc
+tag = 0x25
+lower_address = 0x0
+GOOD_PKTS RECIEVED =6
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 6 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =7
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x0
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0x30ee
+tag = 0xbd
+lower_address = 0x0
+GOOD_PKTS RECIEVED =7
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 7 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =8
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x2
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0xad08
+tag = 0xc2
+lower_address = 0x0
+GOOD_PKTS RECIEVED =8
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 8 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =9
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x0
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0x6ff6
+tag = 0xe5
+lower_address = 0x0
+GOOD_PKTS RECIEVED =9
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 9 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =10
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x0
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0x9e88
+tag = 0x78
+lower_address = 0x0
+GOOD_PKTS RECIEVED =10
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 10 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =11
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x0
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0xfe72
+tag = 0x0
+lower_address = 0x0
+GOOD_PKTS RECIEVED =11
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 11 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =12
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x2
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0xcfcd
+tag = 0x0
+lower_address = 0x0
+GOOD_PKTS RECIEVED =12
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 12 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =13
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x2
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0x2320
+tag = 0x0
+lower_address = 0x0
+GOOD_PKTS RECIEVED =13
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 13 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =14
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x0
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0xdfd4
+tag = 0x0
+lower_address = 0x0
+GOOD_PKTS RECIEVED =14
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 14 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =15
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x0
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0xdaf6
+tag = 0x0
+lower_address = 0x0
+GOOD_PKTS RECIEVED =15
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 15 ------------------------------------------------------------------------- 
-INVALID T9 RECIEVED: t9 CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value of t9 as 0 (as it is unused)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =16
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x2
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0xd8d8
+tag = 0x0
+lower_address = 0x0
+GOOD_PKTS RECIEVED =16
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 16 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =17
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x2
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0x369c
+tag = 0x0
+lower_address = 0x0
+GOOD_PKTS RECIEVED =17
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 17 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =18
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x2
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0x567e
+tag = 0x0
+lower_address = 0x0
+GOOD_PKTS RECIEVED =18
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 18 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =19
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x2
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0x4ca3
+tag = 0x0
+lower_address = 0x0
+GOOD_PKTS RECIEVED =19
+BAD_PKT RECIEVED =0
 -------------------------------------------------------------------------- TLP 19 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =20
--------------------------------------------------------------------------- TLP 20 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =21
--------------------------------------------------------------------------- TLP 21 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =22
--------------------------------------------------------------------------- TLP 22 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =23
--------------------------------------------------------------------------- TLP 23 ------------------------------------------------------------------------- 
-INVALID TC RECIEVED: tc CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,7)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =24
--------------------------------------------------------------------------- TLP 24 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =25
--------------------------------------------------------------------------- TLP 25 ------------------------------------------------------------------------- 
-INVALID T8 RECIEVED: t8 CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value of t8 as 0 (as it is unused)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =26
--------------------------------------------------------------------------- TLP 26 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =27
--------------------------------------------------------------------------- TLP 27 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =28
--------------------------------------------------------------------------- TLP 28 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =29
--------------------------------------------------------------------------- TLP 29 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =30
--------------------------------------------------------------------------- TLP 30 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =31
--------------------------------------------------------------------------- TLP 31 ------------------------------------------------------------------------- 
-INVALID T9 RECIEVED: t9 CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value of t9 as 0 (as it is unused)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =32
--------------------------------------------------------------------------- TLP 32 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =33
--------------------------------------------------------------------------- TLP 33 ------------------------------------------------------------------------- 
-INVALID TC RECIEVED: tc CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,7)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =34
--------------------------------------------------------------------------- TLP 34 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =35
--------------------------------------------------------------------------- TLP 35 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =36
--------------------------------------------------------------------------- TLP 36 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =37
--------------------------------------------------------------------------- TLP 37 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =38
--------------------------------------------------------------------------- TLP 38 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =39
--------------------------------------------------------------------------- TLP 39 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =40
--------------------------------------------------------------------------- TLP 40 ------------------------------------------------------------------------- 
-INVALID COMPL_STATUS RECIEVED: compl_status CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,2**8-1)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =41
--------------------------------------------------------------------------- TLP 41 ------------------------------------------------------------------------- 
-INVALID TC RECIEVED: tc CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,7)
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =42
--------------------------------------------------------------------------- TLP 42 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =43
--------------------------------------------------------------------------- TLP 43 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =44
--------------------------------------------------------------------------- TLP 44 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =45
--------------------------------------------------------------------------- TLP 45 ------------------------------------------------------------------------- 
-INVALID FMT RECIEVED: fmt CANNOT BE NEGATIVE or GREATER THAN 2**3-1 [Note : Please check and assign the value with in the range(0,2**3-1), RECIEVED FMT value is :000000
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
-GOOD_PKTS RECIEVED =0
-BAD_PKT RECIEVED =46
+Config Type 0 WRITE Request (CfgRd0) with 3DW, with data
+fmt = 0x2
+type = 0xa
+t9 = 0x0
+tc = 0x0
+t8 = 0x0
+attr1 = 0x0
+ln = 0x0
+th = 0x0
+td = 0x0
+ep = 0x0
+attr0 = 0x0
+at = 0x0
+length = 0x1
+completer_id = 0x20a
+compl_status = 0x0
+bcm = 0x0
+byte_count = 0x4
+requester_id = 0xbb70
+tag = 0x0
+lower_address = 0x0
+GOOD_PKTS RECIEVED =20
+BAD_PKT RECIEVED =0

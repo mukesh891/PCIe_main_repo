@@ -73,16 +73,16 @@ class ep_pkt_completer(ep_base_pkt):
 			#completer_rec.write('enabling type check')
 			if(Type_l[2] == '1'):
 				#completer_rec.write('entered type check')
-				if(int(Fmt_l[1], 2) == 1):
+				if(Fmt_l == '010'):
 					#completer_rec.write('entered fmt check')
 					ep_cfg_space_type0.ep_config_space_fn(pkt_num, data, Compl_status)                    # if request is write/cmpl w/o data than send the data as an argument
-				else:
+				elif(Fmt_l == '000'):
 					completer_data = ep_cfg_space_type0.ep_config_space_fn(pkt_num, None, Compl_status)    # if request is read/cmpl w/ data than get the data from cfg space
 			elif(Type_l[:-1] == '0000'):
-				if(int(Fmt_l[1], 2) == 1):
-					pcie_ep_memory_space.write_request(pkt_num, Address_l, data)                    # if request is write/cmpl w/o data than send the data as an argument
-				else:
-					completer_data = pcie_ep_memory_space.read_request(pkt_num, Address_l)
+				if(Fmt_l == '010'):
+					pcie_ep_memory_space.write_request(pkt_num, int(Address_l, 2), int(data, 2))                    # if request is write/cmpl w/o data than send the data as an argument
+				elif(Fmt_l == '000'):
+					completer_data = pcie_ep_memory_space.read_request(pkt_num, int(Address_l, 2))
 
 		else:
 			completer_rec.write('\n Error injected in checker \n')

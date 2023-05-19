@@ -6,6 +6,11 @@ from tabulate import tabulate
 
 print("ep_memory_space block")
 
+
+
+MEMORY_SIZE = (1024*8)/32  # 1KB - Total number of memory locations
+Address_RANGE_START = 0  # Start Address of the desired range
+Address_RANGE_END = 255  # End Address of the desired range
 memory = {}
 mem= open('memory_contents.txt', 'w')
 '''def print_memory():
@@ -14,14 +19,23 @@ mem= open('memory_contents.txt', 'w')
 
 
 def def_write(Address, Data):
-        # Split the Data into 32-bit chunks
-        chunks = [(Data >> i) & 0xFFFFFFFF for i in range(0, 1024*8, 32)]    # 4KB = 4096(locations) * 8bit Data 
+    if Address < 0 or Address >= MEMORY_SIZE:
+        mem.write(f"Error: Address {hex(Address)} is out of bounds.")
+        return
+    if Address < Address_RANGE_START or Address > Address_RANGE_END:
+        mem.write(f"Warning: Address {hex(Address)} is outside the desired range. Range must be between 00 - ff. Ignoring Data.")
+        return
+    # Split the Data into 32-bit chunks
+    chunks = [(Data >> i) & 0xFFFFFFFF for i in range(0, 1024 * 8, 32)]  # 1024 bytes = 8KB = 256(locations) * 32bit Data
 
-        # Store the chunks in consecutive Addresses
-        for i, chunk in enumerate(chunks):
-            memory[Address + i] = chunk
+    # Calculate the number of chunks to write based on the available memory size
+    num_chunks_to_write = min(len(chunks), (Address_RANGE_END - Address + 1) // 4)
 
-def_write(int(hex(random.getrandbits(29)), 16), int(hex(random.getrandbits(1024*8)), 16))
+    # Store the chunks in consecutive Addresses within the desired range
+    for i, chunk in enumerate(chunks[:num_chunks_to_write]):
+        memory[Address + (i * 4)] = chunk
+
+def_write(int(hex(0), 16), int(hex(random.getrandbits(1024*8)), 16))
 #print_memory()
 
 
@@ -29,12 +43,7 @@ table_Data = []
 class pcie_ep_memory_space:
 
     def write_request(pkt_num, Address, Data):
-        # Split the Data into 32-bit chunks
-        chunks = [(Data >> i) & 0xFFFFFFFF for i in range(0, 1024*8, 32)]    # 4KB = 4096(locations) * 8bit Data 
-
-        # Store the chunks in consecutive Addresses
-        for i, chunk in enumerate(chunks):
-            memory[Address + i] = chunk
+        def_write(Address, Data)
         
         for Address, Data in memory.items():
             table_Data.append([hex(Address), hex(Data)])
@@ -48,7 +57,7 @@ class pcie_ep_memory_space:
         mem.write('\n\n printing memory read request packet {} \n\n' '{}\n'.format(pkt_num,table))
 
         if Address in memory:
-            return memory[Address]
+            return format(memory[Address], '032b')
         else:
             return None
 

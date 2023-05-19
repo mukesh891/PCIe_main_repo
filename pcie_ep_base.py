@@ -17,8 +17,8 @@ class ep_base_pkt():
 		TLP = format(0, '0128b')   #default set
 		TLP = pkt_queue.queue[pkt_num]
 
-		print('\n\n********************************************** base packet number {} ***********************************************'.format(pkt_num))
-		print('base header is {}'.format(TLP))
+		#print('\n\n********************************************** base packet number {} ***********************************************'.format(pkt_num))
+		#print('base header is {}'.format(TLP))
 
 		return TLP
 		

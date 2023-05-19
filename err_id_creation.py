@@ -1,5 +1,5 @@
 ## enum.py
-from pcie_com_file import *
+from pcie_rc_com_file import *
 err_pkt_no = argv.err_pkt_no
 err_id_q = [] 
 packet_errors = {} 

@@ -48,19 +48,28 @@ class ep_check_pkt(ep_base_pkt):
 			Ext_Register_Num = TLP[84:88]
 			Register_Num = TLP[88:94]
 			Rsv_11_1 = TLP[94:96]       # reserved byte 11- bit 1:0
-		elif(Type[:-1] == '0000'):      # for memory
+		elif(Type[:-1] == '0000'):      # for memo
 			Address = TLP[64:94]
-			Rsv_11_1 = TLP[94:96]       # reserved byte 11- bit 1:0
+			Rsv_11_1 = TLP[94:96] 
+			
+
+
 
 		Header = TLP[0:96]
 		Data = TLP[96:]
 
 
-		pkt_tlp_tb = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id,Rsv_10_7, Ext_Register_Num, Register_Num,Rsv_11_1,Data, '']]
-		names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id','Rsv_10_7', 'Ext_Register_Num', 'Register_Num','Rsv_11_1','Data', '']
-		table = tabulate(pkt_tlp_tb, headers=names, tablefmt='orgtbl')
-		print(table)
+		if (Type[2] == '1'):            # for cfg
+			pkt_tlp_tb = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id,Rsv_10_7, Ext_Register_Num, Register_Num,Rsv_11_1,Data, '']]
+			names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id','Rsv_10_7', 'Ext_Register_Num', 'Register_Num','Rsv_11_1','Data', '']
+			table = tabulate(pkt_tlp_tb, headers=names, tablefmt='orgtbl')
+			print(table)
 		#log_file.write(table)
+		elif(Type[:-1] == '0000'):      # for memory
+			pkt_tlp_tb = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Address, Rsv_11_1,Data, '']]
+			names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Address','Rsv_11_1','Data', '']
+			table = tabulate(pkt_tlp_tb, headers=names, tablefmt='orgtbl')
+			print(table)
 
 
 		
@@ -464,9 +473,11 @@ class ep_check_pkt(ep_base_pkt):
 			received_valid_pkt.write('{}\n'.format(table))
 			
       		#need to modify it furthere just made it for checking purpose"
-			if(pkt_num==5):
+			'''
+            if(pkt_num==5):
 				print('pkt num is 5')
 				TLP = format((int(TLP, 2) + 0), tlp_size)  # if adding 1, than tlp is overriten 
 			v_tlp = TLP + '0'   # adding this 0 because, 0 indicates that the error_flag is 0 (as a indication for NO ERROR from requested TLP)
 			pkt_with_flag_queue.put(v_tlp)  # sending TLPs(including flag) to another queue so that it will help me during completion process 
 			return True
+            '''

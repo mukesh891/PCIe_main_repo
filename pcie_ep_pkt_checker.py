@@ -177,20 +177,22 @@ class ep_check_pkt(ep_base_pkt):
 				if(int(Data, 2) == 0):
 					print('INVALID TLP: Data no received for Write request')
 					received_invalid_pkt.write('INVALID TLP: Data no received for Write request\n')
-					if Type not in ['00000', '00010', '00100', '00101', '01100', '01101', '01110']:
-						print('INVALID TLP: invalid Type for Write request: Value {}'.format(Type))
-						received_invalid_pkt.write('INVALID TLP: invalid Type for Write request: Value {}\n'.format(Type))
-						false_pkt += 1
+					false_pkt += 1
+				if Type not in ['00000', '00010', '00100', '00101', '01100', '01101', '01110']:
+					print('INVALID TLP: invalid Type for Write request: Value {}'.format(Type))
+					received_invalid_pkt.write('INVALID TLP: invalid Type for Write request: Value {}\n'.format(Type))
+					false_pkt += 1
 				'''else:
 					true_pkt += 1'''
 			else:
 				if(int(Data, 2) != 0):
 					print('INVALID TLP: Data received for Read request')
 					received_invalid_pkt.write('INVALID TLP: Data received for Read request\n')
-					if Type not in ['00000', '00001', '00010', '00100', '00101']:
-						print('INVALID TLP: invalid Type for Read request: Value {}'.format(Type))
-						received_invalid_pkt.write('INVALID TLP: invalid Type for Read request: Value {}\n'.format(Type))
-						false_pkt += 1
+					false_pkt += 1
+				if Type not in ['00000', '00001', '00010', '00100', '00101']:
+					print('INVALID TLP: invalid Type for Read request: Value {}'.format(Type))
+					received_invalid_pkt.write('INVALID TLP: invalid Type for Read request: Value {}\n'.format(Type))
+					false_pkt += 1
 				'''else:
 					true_pkt += 1'''
 
@@ -408,9 +410,9 @@ class ep_check_pkt(ep_base_pkt):
 					print('INVALID TLP: for Memory request, First_DW_BE is not as per length: Value {}'.format(First_DW_BE))
 					received_invalid_pkt.write('INVALID TLP: for Memory request, First_DW_BE is not as per length: Value {}\n'.format(First_DW_BE))
 					false_pkt += 1
-				if not (Address_int != 0):    # Address_int must be non-zero 
-					print('INVALID TLP: for Memory request, Address must be non-zero: Value {}'.format(Address_int)) 
-					received_invalid_pkt.write('INVALID TLP: for Memory request, Address must be non-zero: Value {}\n'.format(Address_int))
+				if not (0 <= Address_int < 2**30):    # Address_int must be non-zero 
+					print('INVALID TLP: for Memory request, Address must be between 0 to 2**30: Value {}'.format(Address_int)) 
+					received_invalid_pkt.write('INVALID TLP: for Memory request, Address must be between 0 to 2**30: Value {}\n'.format(Address_int))
 					false_pkt += 1
 				if not (Rsv_11_1_int == 0):  # must be reserved for Memory																											
 					print('INVALID TLP: for Memory request, byte 11 bit 1:0 must be reserved: value {}'.format(Rsv_11_1_int)) 

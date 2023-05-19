@@ -12,6 +12,7 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         self.err_eij = argv.err_eij
         self.err_pkt_no = argv.err_pkt_no
         self.tx_no = 0
+        self.iter = 0
         '''
         self.arr =[0]*self.err_pkt_no
         self.arr_t =[0]*self.err_pkt_no
@@ -25,6 +26,8 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         print(self.num_pkts)
         '''
         super().__init__()
+        self.raddr = 0
+        self.temp =0
     def mem_pkt(self):
         self.fmt                     = random.choice([0,2])  # 000 = MemRd without data, 010 = MemWr with data
         ##    BDF format for requester and completer    ##
@@ -57,7 +60,18 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         self.reserve_bit3           = 0
         self.reserve_bit4           = 0
         self.reserve_bit5           = 0
-        self.addresses                =  random.getrandbits(30)
+        if(self.iter % 2 ==0):
+            self.fmt = 2
+            self.addresses=random.getrandbits(30)
+            self.addresses -= self.addresses % 4
+        else:
+            self.fmt = 0
+            self.addresses = self.raddr
+        self.temp=self.addresses
+        print(self.temp,self.raddr,self.addresses) 
+        self.iter = self.iter+1
+
+        #self.addresses                =  random.getrandbits(30)
 
     #def bin_file_handle(self):
     def run_mem(self):

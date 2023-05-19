@@ -6,63 +6,60 @@ from tabulate import tabulate
 
 print("ep_memory_space block")
 
-
-
-MEMORY_SIZE = (1024*8)/32  # 1KB - Total number of memory locations
+MEMORY_SIZE = (256 * 8) // 32  # 1KB - Total number of memory locations
 Address_RANGE_START = 0  # Start Address of the desired range
-Address_RANGE_END = 255  # End Address of the desired range
+Address_RANGE_END = 63  # End Address of the desired range
 memory = {}
-mem= open('memory_contents.txt', 'w')
-'''def print_memory():
-        for Address, Data in memory.items():
-            print(f"Address: {hex(Address)}, Data: {hex(Data)}")'''
+mem = open('memory_contents.txt', 'w')
 
+def print_memory(type_i, pkt_num):
+    table_data = []
+    for Address, Data in memory.items():
+        table_data.append([hex(Address), hex(Data)])
+    table = tabulate(table_data, headers=["Address", "Data"], tablefmt="grid")
+    mem.write('\n\n printing memory {} request packet {} \n\n' '{}\n'.format(type_i, pkt_num,table))
 
 def def_write(Addr, data_rec):
-    '''if Address < 0 or Address >= MEMORY_SIZE:
-        mem.write(f"Error: Address {hex(Address)} is out of bounds.")
-        return'''
+    
     if Addr < Address_RANGE_START or Addr > Address_RANGE_END:
         mem.write(f"\nError: Address {hex(Addr)} is outside the desired range. Range must be between 00 - ff. Ignoring Data.\n")
         return
-    # Split the Data into 32-bit chunks
-    chunks = [(data_rec >> i) & 0xFFFFFFFF for i in range(0, 1024 * 8, 32)]  # 1024 bytes = 8KB = 256(locations) * 32bit Data
+    
+    chunks = [(data_rec >> i) & 0xFFFFFFFF for i in range(0, 256 * 8, 32)]  # 1024 bytes = 8KB = 256(locations) * 32bit Data
 
-    # Calculate the number of chunks to write based on the available memory size
+    
     num_chunks_to_write = min(len(chunks), (Address_RANGE_END - Addr + 1) // 4)
 
-    # Store the chunks in consecutive Addresses within the desired range
+    
     for i, chunk in enumerate(chunks[:num_chunks_to_write]):
         memory[Addr + (i * 4)] = chunk
 
-def_write(int(hex(0), 16), int(hex(random.getrandbits(1024*8)), 16))
-#print_memory()
+def_write(int(hex(0), 16), int(hex(random.getrandbits(256*8)), 16))
 
 
-table_Data = []
+
 class pcie_ep_memory_space:
 
     def write_request(pkt_num, Addr, data_rec):
-        def_write(Addr, data_rec)
+        if Addr < Address_RANGE_START or Addr > Address_RANGE_END:
+            mem.write(f"\nError: Address {hex(Addr)} is outside the desired range. Range must be between 00 - ff. Ignoring Data.\n")
+            return
+        else:
+            def_write(Addr, data_rec)
+            mem.write('write data packet {} from Address {} , data is {}'.format(pkt_num, Addr, hex(data_rec)))
+            print_memory('write', pkt_num)
+        #print_memory()
         
-        for Address, Data in memory.items():
-            table_Data.append([hex(Address), hex(Data)])
-        table = tabulate(table_Data, headers=["Address", "Data"], tablefmt="grid")
-        mem.write('\n\n printing memory write request packet {} \n\n' '{}\n'.format(pkt_num,table))
             
     def read_request(pkt_num, Addr):
         if Addr < Address_RANGE_START or Addr > Address_RANGE_END:
             mem.write(f"\nError: Address {hex(Addr)} is outside the desired range. Range must be between 00 - ff. Ignoring Data.\n")
             return
-    
 
-        for Address, Data in memory.items():
-            table_Data.append([hex(Address), hex(Data)])
-        table = tabulate(table_Data, headers=["Address", "Data"], tablefmt="grid")
-        mem.write('\n\n printing memory read request packet {} \n\n' '{}\n'.format(pkt_num,table))
-
-        if Address in memory:
-            return format(memory[Address], '032b')
+        if Addr in memory:
+            mem.write('read data packet {} from Address {} , data is {}'.format(pkt_num, Addr, hex(memory[Addr])))
+            print_memory('read', pkt_num)
+            return format(memory[Addr], '032b')
         else:
             return None
 

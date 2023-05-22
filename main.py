@@ -78,6 +78,7 @@ for i in range(valid_pkt_size):
 
 check.rc_rx_checker()
 completer_rec.close()
+binary_completer.close()
 rc_checker_f.close()
 
 #log_file.close()

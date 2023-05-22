@@ -7,6 +7,7 @@ from pcie_ep_memory_space import *
 from tabulate import tabulate
 
 completer_rec = open('ep_logs/completer_rec.txt', 'w')
+binary_completer = open('ep_logs/binary_completer.txt', 'w')
 
 class ep_pkt_completer(ep_base_pkt):
 	def pkt_compl_fn(self, pkt_num):
@@ -71,25 +72,34 @@ class ep_pkt_completer(ep_base_pkt):
 			Rsv_11_7 = format(0, '01b')          # byte 11 bit 7 is reserved
 			Lower_address = format(0, '07b')     # excluding memory read compl & atomic compl, byte count must be 0
 		
-			#completer_rec.write('enabling type check\n')
-			if(Type_l[2] == '1'):
-				#completer_rec.write('entered type check for cfg\n')
-				if(Fmt_l == '010'):
-					#completer_rec.write('entered fmt check for cfg\n')
-					ep_cfg_space_type0.ep_config_space_fn(pkt_num, data, Compl_status)                    # if request is write/cmpl w/o data than send the data as an argument
-					#completer_rec.write('cfg write done')
-				elif(Fmt_l == '000'):
-					completer_data = ep_cfg_space_type0.ep_config_space_fn(pkt_num, None, Compl_status)    # if request is read/cmpl w/ data than get the data from cfg space
-					#completer_rec.write('cfg read done')
-			elif(Type_l[:-1] == '0000'):
-				#completer_rec.write('entered type check for memory\n')
-				if(Fmt_l == '010'):
-					#completer_rec.write('entered fmt check for memory\n')
-					pcie_ep_memory_space.write_request(pkt_num, int(Address_l, 2), int(data, 2))                    # if request is write/cmpl w/o data than send the data as an argument
-					#completer_rec.write('memory write done\n')
-				elif(Fmt_l == '000'):
-					completer_data = pcie_ep_memory_space.read_request(pkt_num, int(Address_l, 2))
-					#completer_rec.write('memory read done\n')
+			
+			if(int(temp_valid_pkts[-1], 2) == 0):   # for valid packets
+				if(Type_l[2] == '1'):	# cfg request				
+					if(Fmt_l == '010'):						
+						ep_cfg_space_type0.ep_config_space_fn(pkt_num, data, Compl_status)                    # if request is write/cmpl w/o data than send the data as an argument						
+					elif(Fmt_l == '000'):
+						completer_data = ep_cfg_space_type0.ep_config_space_fn(pkt_num, None, Compl_status)    # if request is read/cmpl w/ data than get the data from cfg space	
+						#print('v/cfg/read  complter data = {}'.format(completer_data))
+				elif(Type_l[:-1] == '0000'):	 # memory request				
+					if(Fmt_l == '010'):						
+						pcie_ep_memory_space.write_request(pkt_num, int(Address_l, 2), int(data, 2))                    # if request is write/cmpl w/o data than send the data as an argument						
+					elif(Fmt_l == '000'):						
+						completer_data = pcie_ep_memory_space.read_request(pkt_num, int(Address_l, 2))		
+						#print('v/mem/read addr {}'.format(Address_l))
+						#print('v/mem/read complter data = {}'.format(completer_data))
+			else:                                   # for invalid packets
+				if(Type_l[2] == '1'):			# for cfg		
+					if(Fmt_l == '010'):						
+						ep_cfg_space_type0.ep_config_space_fn(pkt_num, None, Compl_status)                    # if request is write/cmpl w/o data than send the data as an argument			
+					elif(Fmt_l == '000'):
+						completer_data = ep_cfg_space_type0.ep_config_space_fn(pkt_num, None, Compl_status)    # if request is read/cmpl w/ data than get the data from cfg space
+						completer_data = format(0, '032b')	
+						#print('inv/cfg/read complter data = {}'.format(completer_data))
+				elif(Type_l[:-1] == '0000'):    # for memory
+					if(Fmt_l == '000'):
+						completer_data = format(0, '032b')
+						#print('inv/mem/read complter data = {}'.format(completer_data))
+						
 					
 					
 
@@ -143,7 +153,7 @@ class ep_pkt_completer(ep_base_pkt):
 			data = 0
 			TLP = TLP + format(data, data_size)
 		else:                                                     # else data is sent 
-			data = int(completer_data, 2)
+			data = int(str(completer_data), 2)
 			TLP = TLP + format(data, data_size)
 		
 		data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Completion_Id, Compl_status,BCM,Byte_count, Requester_Id,Tag,Rsv_11_7,Lower_address,'']]
@@ -152,6 +162,7 @@ class ep_pkt_completer(ep_base_pkt):
 		table = tabulate(data, headers=headers, tablefmt='orgtbl')
 		completer_rec.write(table)
 		completer_rec.write('\n priting complition TLP {} -- {} \n\n\n'.format(pkt_num, TLP))
+		binary_completer.write('{} \n'.format(TLP))
 		
 		
 		if not ((Type == '00000') & (Fmt == '010')):

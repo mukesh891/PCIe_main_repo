@@ -6,6 +6,7 @@ from array import array
 from tabulate import tabulate
 import console_to_log
 
+
 cfg = open('ep_logs/cfg_values.txt', 'w')
 print("ep_cfg_space_type0 block")
 
@@ -82,7 +83,6 @@ for i in range(16):
 
 
 
-
 class ep_cfg_space_type0():		
 	def ep_config_space_fn(pkt_num, data_rec, compl_st):
 		#print('ep_config_space header is {}'.format(TLP))
@@ -116,7 +116,10 @@ class ep_cfg_space_type0():
 				data_sent = format(0, '032b')
 				write_index = pkt_num % 1   # giving access only for BAR0 for 32-bit address
 				if(write_index == 0):
-					cfg_array[4] = int(data_rec, 2) & 0xFFFFF000
+					if(data_rec != None):
+						cfg_array[4] = int(data_rec, 2) & 0xFFFFF000
+					else:
+						cfg_array[4] = cfg_array[4]
 					#cfg.write('*******************************************cfg 4 bar0 {}'.format(cfg_array[4]))
 				'''elif(write_index == 1):
 					cfg_array[5] = int(data_rec, 2) & 0xFFFFFC00

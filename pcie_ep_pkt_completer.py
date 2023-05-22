@@ -6,7 +6,7 @@ from pcie_ep_config_space_type0 import *
 from pcie_ep_memory_space import *
 from tabulate import tabulate
 
-completer_rec = open('completer_rec.txt', 'w')
+completer_rec = open('ep_logs/completer_rec.txt', 'w')
 
 class ep_pkt_completer(ep_base_pkt):
 	def pkt_compl_fn(self, pkt_num):

@@ -5,9 +5,9 @@ from pcie_ep_com_file import *
 from tabulate import tabulate
 print("checker block")
 
-received_pkt = open("received_pkt.txt","w")
-received_valid_pkt = open("received_valid_pkt.txt","w")
-received_invalid_pkt = open("received_invalid_pkt.txt","w")
+received_pkt = open("ep_logs/received_pkt.txt","w")
+received_valid_pkt = open("ep_logs/received_valid_pkt.txt","w")
+received_invalid_pkt = open("ep_logs/received_invalid_pkt.txt","w")
 #log_file = open("log.txt", "w")
 
 class ep_check_pkt(ep_base_pkt):

@@ -10,7 +10,7 @@ MEMORY_SIZE = (256 * 8) // 32  # 1KB - Total number of memory locations
 Address_RANGE_START = 0  # Start Address of the desired range
 Address_RANGE_END = 63  # End Address of the desired range
 memory = {}
-mem = open('memory_contents.txt', 'w')
+mem = open('ep_logs/memory_contents.txt', 'w')
 
 def print_memory(type_i, pkt_num):
     table_data = []

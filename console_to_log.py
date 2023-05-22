@@ -1,6 +1,6 @@
 import sys
 
-def redirect_output_to_file(file_path="ep_checker.log"):
+def redirect_output_to_file(file_path="ep_logs/ep_checker.log"):
     sys.stdout = open(file_path, "w")
 
 def reset_output():

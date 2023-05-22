@@ -6,7 +6,7 @@ from array import array
 from tabulate import tabulate
 import console_to_log
 
-
+cfg = open('ep_logs/cfg_values.txt', 'w')
 print("ep_cfg_space_type0 block")
 
 cfg_array = array('Q', [0] * 16)   # Q = unsigned 8 bytes storage in each index
@@ -82,7 +82,7 @@ for i in range(16):
 
 
 
-cfg = open('cfg_values.txt', 'w')
+
 class ep_cfg_space_type0():		
 	def ep_config_space_fn(pkt_num, data_rec, compl_st):
 		#print('ep_config_space header is {}'.format(TLP))

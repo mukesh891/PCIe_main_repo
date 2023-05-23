@@ -4,7 +4,7 @@ from pcie_com_file import compl_pkt_queue
 print("hello ")
 # creating file for completion id check #
 rc_checker_f = open("gen_logs/rc_checker_log.txt","w")
-bin_f = open("gen_logs/bin_file.txt","r")
+bin_f = open("gen_logs/rc_tx_good_bin_file.txt","r")
 class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
     def rc_rx_checker(self):
         #num_pkts = argv.num_pkts
@@ -287,8 +287,8 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
             rc_checker_f.write(str(bad_pkts))
             rc_checker_f.write("\n")
 
-#check = pcie_rc_rx_pkt_checker()
-#check.rc_rx_checker()
-#
-#rc_checker_f.close()
+check = pcie_rc_rx_pkt_checker()
+check.rc_rx_checker()
+
+rc_checker_f.close()
 

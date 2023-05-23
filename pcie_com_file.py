@@ -17,19 +17,8 @@ err_eij = argv.err_eij
 err_pkt_no = argv.err_pkt_no 
 num_pkts= argv.num_pkts
 pkt_queue = queue.Queue()
-#g_pkt_queue = queue.Queue()
 seq_tx_no = 0
 
-#arr = []
 compl_pkt_queue = queue.Queue()
-#if(err_eij): 
-#    while len(arr) < err_pkt_no:
-#        num = random.randrange(0,num_pkts-1)
-#        if num not in arr:
-#            arr.append(num)
-#        arr.sort()
-#print(len(arr))
-#print(arr)
-#print(num_pkts)
 	
 

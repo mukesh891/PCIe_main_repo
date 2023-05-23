@@ -27,8 +27,9 @@ class pcie_rc_base_seq:
 
 base_seq =pcie_rc_base_seq()
 base_seq.run()
-bin_f.close()        
+#bin_f.close()        
 g_log=pcie_rc_generated_logs()
 g_log.bin_file_handle()
 g_log.hex_file_handle()
+g_log.gen_log()
 

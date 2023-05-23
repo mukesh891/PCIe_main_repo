@@ -175,7 +175,7 @@ class ep_check_pkt(ep_base_pkt):
 			#checking for fmt write/read and its respective type possibilities			
 			if(int(Fmt[1], 2)):
 				if(int(Data, 2) == 0):
-					print('INVALID TLP: Data no received for Write request')
+					print('INVALID TLP: Data not received for Write request')
 					received_invalid_pkt.write('INVALID TLP: Data no received for Write request\n')
 					false_pkt += 1
 				if Type not in ['00000', '00010', '00100', '00101', '01100', '01101', '01110']:

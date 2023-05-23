@@ -6,7 +6,6 @@ from array import array
 from tabulate import tabulate
 import console_to_log
 
-
 cfg = open('ep_logs/cfg_values.txt', 'w')
 print("ep_cfg_space_type0 block")
 
@@ -77,9 +76,6 @@ for i in range(16):
 		cfg_array[i%16] = int(type_0_header[-32:], 2)
 	else:
 		cfg_array[i%16] = int(type_0_header[-(32*(i+1)):-(32*(i))], 2)
-
-
-
 
 
 

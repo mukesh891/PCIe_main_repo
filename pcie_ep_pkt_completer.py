@@ -31,6 +31,19 @@ class ep_pkt_completer(ep_base_pkt):
 			Type_l = valid_pkts[3:8]
 			length_l = valid_pkts[22:32]
 			Address_l = valid_pkts[64:94]
+			fdb = valid_pkts[60:64]
+			if(fdb[-4:] == '0000'):         # LSB 2 bits of lower address must be as per FDB, mentioned in rev5 v1 page 173
+				LA_2 = '00'
+			elif(fdb[-1] == '1'):
+				LA_2 = '00'
+			elif(fdb[-2:] == '10'):
+				LA_2 = '01'
+			elif(fdb[-3:] == '100'):
+				LA_2 = '10'
+			elif(fdb[-4:] == '1000'):
+				LA_2 = '11'
+
+
 			'''if(temp_valid_pkts[-1] == '0'):
 				Address_l = valid_pkts[64:126] if int(Fmt_l[-1], 2) else valid_pkts[64:94]
 			else:
@@ -70,7 +83,10 @@ class ep_pkt_completer(ep_base_pkt):
 			Requester_Id = valid_pkts[32:48]     # must be same as request
 			Tag = valid_pkts[48:56]              # must be same as request
 			Rsv_11_7 = format(0, '01b')          # byte 11 bit 7 is reserved
-			Lower_address = format(0, '07b')     # excluding memory read compl & atomic compl, byte count must be 0
+			if((Type_l == '00000') & (Fmt_l == '000')):  # for memory read only lower address will be calculated, mentioned in rev5 v1 page 173, 154 
+				Lower_address = Address_l[-5:] + LA_2
+			else:
+				Lower_address = format(0, '07b')     # excluding memory read compl & atomic compl, byte count must be 0
 		
 			
 			if(int(temp_valid_pkts[-1], 2) == 0):   # for valid packets
@@ -109,7 +125,20 @@ class ep_pkt_completer(ep_base_pkt):
 			data = base_TLP[96:128]
 
 			Fmt_l = base_TLP[0:3]
-			#Type_l = base_TLP[3:8]
+			Type_l = base_TLP[3:8]
+			length_l = base_TLP[22:32]
+			Address_l = base_TLP[64:94]
+			fdb = base_TLP[60:64]
+			if(fdb[-4:] == '0000'):         # LSB 2 bits of lower address must be as per FDB, mentioned in rev5 v1 page 173
+				LA_2 = '00'
+			elif(fdb[-1] == '1'):
+				LA_2 = '00'
+			elif(fdb[-2:] == '10'):
+				LA_2 = '01'
+			elif(fdb[-3:] == '100'):
+				LA_2 = '10'
+			elif(fdb[-4:] == '1000'):
+				LA_2 = '11'
 
 		
 			Fmt = format(0, '03b')
@@ -135,7 +164,10 @@ class ep_pkt_completer(ep_base_pkt):
 			Requester_Id = base_TLP[32:48]       # must be same as request
 			Tag = base_TLP[48:56]                # must be same as request
 			Rsv_11_7 = format(0, '01b')          # byte 11 bit 7 is reserved
-			Lower_address = format(0, '07b')     # excluding memory read compl & atomic compl, byte count must be 0
+			if((Type_l == '00000') & (Fmt_l == '000')):  # for memory read only lower address will be calculated, mentioned in rev5 v1 page 173, 154 
+				Lower_address = Address_l[-5:] + LA_2
+			else:
+				Lower_address = format(0, '07b')     # excluding memory read compl & atomic compl, byte count must be 0
 
 			completer_data = ep_cfg_space_type0.ep_config_space_fn(pkt_num, None, Compl_status)    # sending cmpl status
 			completer_data = format(0, '032b')                                                     # make the data 0

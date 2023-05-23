@@ -430,16 +430,17 @@ class ep_check_pkt(ep_base_pkt):
 
 			
 
-			fdata0 = Data[-8:] if int(First_DW_BE[-4], 2) else format(0, '08b')
-			fdata1 = Data[-16:-8] if int(First_DW_BE[-3], 2) else format(0, '08b')
-			fdata2 = Data[-24:-16] if int(First_DW_BE[-2], 2) else format(0, '08b')
-			fdata3 = Data[-32:-24] if int(First_DW_BE[-1], 2) else format(0, '08b')
+			# following big endian rule
+			fdata0 = Data[-8:] if int(First_DW_BE[-1], 2) else format(0, '08b')
+			fdata1 = Data[-16:-8] if int(First_DW_BE[-2], 2) else format(0, '08b')
+			fdata2 = Data[-24:-16] if int(First_DW_BE[-3], 2) else format(0, '08b')
+			fdata3 = Data[-32:-24] if int(First_DW_BE[-4], 2) else format(0, '08b')
 			#Data = fdata3 + fdata2 + fdata1 + fdata0
 
-			ldata3 = Data[:8] if int(Last_DW_BE[-1], 2) else format(0, '08b')
-			ldata2 = Data[8:16] if int(Last_DW_BE[-2], 2) else format(0, '08b')
-			ldata1 = Data[16:24] if int(Last_DW_BE[-3], 2) else format(0, '08b')
-			ldata0 = Data[24:32] if int(Last_DW_BE[-4], 2) else format(0, '08b')
+			ldata3 = Data[:8] if int(Last_DW_BE[-4], 2) else format(0, '08b')
+			ldata2 = Data[8:16] if int(Last_DW_BE[-3], 2) else format(0, '08b')
+			ldata1 = Data[16:24] if int(Last_DW_BE[-2], 2) else format(0, '08b')
+			ldata0 = Data[24:32] if int(Last_DW_BE[-1], 2) else format(0, '08b')
 
 
 			if(Length_int == 1):

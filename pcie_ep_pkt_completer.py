@@ -194,10 +194,11 @@ class ep_pkt_completer(ep_base_pkt):
 		table = tabulate(data, headers=headers, tablefmt='orgtbl')
 		completer_rec.write(table)
 		completer_rec.write('\n priting complition TLP {} -- {} \n\n\n'.format(pkt_num, TLP))
-		binary_completer.write('{} \n'.format(TLP))
 		
 		
-		if not ((Type == '00000') & (Fmt == '010')):
+		
+		if not ((Type_l == '00000') & (Fmt_l == '010')):
+			binary_completer.write('{} \n'.format(TLP))
 			compl_pkt_queue.put(TLP)
 
 		

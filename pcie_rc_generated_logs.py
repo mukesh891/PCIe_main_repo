@@ -10,7 +10,6 @@ class pcie_rc_generated_logs:
             q = bin_q.get()
             f.write(str(q))
             f.write("\n")
-            print("rc_gen_q->",q)
         f.close()
     def hex_file_handle(self):
         bin_f = open("gen_logs/rc_tx_good_bin_file.txt","r")
@@ -24,7 +23,6 @@ class pcie_rc_generated_logs:
             else:
                 hex_val = ("0"*(32-len(hex_val)))+hex_val
                 hex_f.write(hex_val)
-            print(hex_val)
             hex_f.write("\n")
         hex_f.close()
         bin_f.close()
@@ -65,7 +63,7 @@ class pcie_rc_generated_logs:
                 addresses = line[64:94]
                 reserve_bit4 = line[94:96] 
                 payload = line[96:]
-        		
+        	
 
             '''
             Memory Read Request (MRd)                   000=3DW, no data 001=4DW, no data 00000
@@ -232,10 +230,6 @@ class pcie_rc_generated_logs:
             gen_f.write("first_dw_be = ")
             gen_f.write(str(hex(int(first_dw_be,2))))
             gen_f.write("\n")
-            #gen_f.write("reserve_bit4 = ")
-            #gen_f.write(str(hex(int(reserve_bit4,2))))
-            #gen_f.write("\n")
-            print(reserve_bit4)
             
             if (typ[2] == '1'):            # for cfg
                 gen_f.write("Completion_Id  = ")

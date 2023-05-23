@@ -13,8 +13,13 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
         i=0
         good_pkts = 0
         bad_pkts =0
-        for line in bin_f: 
+        rc_check_q = compl_pkt_queue
+        
+        for line in bin_f:
+            r =rc_check_q.get() 
+            print("rc_check_q -> ",r)
             if i < compl_pkt_queue.qsize():            
+                
                 # ep_queue is a string type -> reading data from compl_queue #
                 ep_queue = compl_pkt_queue.queue[i]
  
@@ -78,9 +83,9 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                 i=i+1
                 
                 # Checking all the completer fields for validation and range format #
-                if ((line[0:3] == '000' and str_fmt[0:3] == '010') or ((line[0:3]) == '010' and str_fmt[0:3] == '000')): # ep completer: fmt will be 0 or 2
+                if ((line[0:3] == '000' and str_fmt[0:3] == '010') or ((line[0:3] == '010') and str_fmt[0:3] == '000')): # ep completer: fmt will be 0 or 2
                     print("VALID fmt RECIEVED")
-                    if int(str_type        ,2) in [10]:         # ep completer: will be 10
+                    if int(str_type        ,2) in [10,0]:         # ep completer: will be 10
                         if int(str_t9,2) == 0:                  # ep completer:t9 must be 0
                             if int(str_tc          ,2) == 0:    # ep completer: tc will be 0 for time being
                                 if int(str_t8,2) == 0:          # ep completer: t8 will be 10
@@ -280,15 +285,15 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                     rc_checker_f.write("\n")
                     bad_pkts=bad_pkts+1                                                                                                
                                     
-            rc_checker_f.write("GOOD_PKTS RECIEVED =")
-            rc_checker_f.write(str(good_pkts))
-            rc_checker_f.write("\n")
-            rc_checker_f.write("BAD_PKT RECIEVED =")
-            rc_checker_f.write(str(bad_pkts))
-            rc_checker_f.write("\n")
+        rc_checker_f.write("GOOD_PKTS RECIEVED =")
+        rc_checker_f.write(str(good_pkts))
+        rc_checker_f.write("\n")
+        rc_checker_f.write("BAD_PKT RECIEVED =")
+        rc_checker_f.write(str(bad_pkts))
+        rc_checker_f.write("\n")
 
-check = pcie_rc_rx_pkt_checker()
-check.rc_rx_checker()
+#check = pcie_rc_rx_pkt_checker()
+#check.rc_rx_checker()
 
-rc_checker_f.close()
+#rc_checker_f.close()
 

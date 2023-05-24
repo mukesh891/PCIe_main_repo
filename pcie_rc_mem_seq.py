@@ -4,8 +4,6 @@ from pcie_rc_com_file import *
 from pcie_com_file import *
 import queue
 print("hello pcie_rc_mem_seq")
-#gen_f = open("gen_logs/generator_out.txt","w")
-#bin_f = open("gen_logs/bin_file.txt","a") #Openning a file in binary format
 class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
     def __init__(self):
         self.num_pkts=argv.num_pkts        
@@ -45,10 +43,10 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         self.tag                    = 0 
         self.addresses              = 0
         if(self.length > 1):
-            self.first_dw_be            = random.getrandbits(4)
+            self.first_dw_be            = random.choice([10,5,9,11,13])
             self.last_dw_be             = random.getrandbits(4) 
         elif(self.length ==1):
-            self.first_dw_be            = random.getrandbits(4)
+            self.first_dw_be            = random.choice([10,5,9,11,13])
             self.last_dw_be             = 0 
         
 
@@ -128,6 +126,4 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         ## puting the tlp_packet into queue ##
         g_pkt_queue.put(tlp_packet)
         self.iter = self.iter+1
-        #print("->",tlp_packet)
-        ## Writing the tlp_packet into the hex_fil.txt ##
 

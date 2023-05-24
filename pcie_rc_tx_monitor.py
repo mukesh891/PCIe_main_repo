@@ -4,8 +4,8 @@ from pcie_lib import *
 #bin_file = open("gen_logs/bin_file.txt","r") 
 #err_bin_file = open("gen_logs/err_bin_file.txt","w")
 
-rc_monitor_f=open("gen_logs/rc_tx_good_monitor_log.txt","w")
-rc_mixed_monitor_f=open("gen_logs/rc_tx_mixed_monitor_log.txt","w")
+rc_monitor_f=open("gen_logs/mon_logs/rc_tx_good_monitor_log.txt","w")
+rc_mixed_monitor_f=open("gen_logs/mon_logs/rc_tx_mixed_monitor_log.txt","w")
 class pcie_rc_tx_monitor:
     def pcie_rc_gen_monitor(self):
         bin_f = open("gen_logs/rc_tx_good_bin_file.txt","r")
@@ -121,8 +121,35 @@ class pcie_rc_tx_monitor:
             self.i=self.i+1
         mixed_bin_f.close()
 
+    def compare_files(self,file1_path, file2_path, output_file_path):
+        with open(file1_path, 'r') as file1, open(file2_path, 'r') as file2, open(output_file_path, 'w') as output_file:
+            #for line1 in file1,line2 in file2:
+            lines1 = file1.readlines()
+            lines2 = file2.readlines()
+            lines3 = file2.readlines()
+            #lines3 = output_file.writelines()
+            # Find the number of matching lines
+            num_matched_lines = sum(1 for line1, line2 in zip(lines1, lines2) if line1 == line2)
+            num_not_matched_lines=sum(1 for line1, line2 in zip(lines1, lines2) if line1 != line2)
+            # Write the lines with comments to the output file
+            for line1, line2 in zip(lines1, lines2):
+            #for line1 in file1 and line2 in file2:
+                    if line1 == line2:
+                        output_file.write(f"# Received: {num_matched_lines}\t{line1}") #output_file.write(f"# Received: {num_matched_lines}\t{line1}")
+                    else:
+                        output_file.write(f"# not Received: {num_not_matched_lines}\n (RC_SIDE packet send)\t {line1} (EP_SIDE packet recv)\t {line2} \n {lines3}")
+                        #output_file.write(lines2)
+        
+# Example path
+file1_path = 'gen_logs/rc_tx_mixed_bin_file.txt'
+file2_path = 'ep_logs/binary_completer.txt'
+output_file_path = 'gen_logs/mon_logs/mon_received_file.txt'
+
+
+
 gen_mon = pcie_rc_tx_monitor()
 gen_mon.pcie_rc_gen_monitor()
 gen_mon.pcie_rc_driver_monitor()
+gen_mon.compare_files(file1_path, file2_path, output_file_path)
 rc_monitor_f.close()
 rc_mixed_monitor_f.close()

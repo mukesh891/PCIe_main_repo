@@ -4,7 +4,7 @@ from tabulate import tabulate
 print("hello ")
 # creating file for completion id check #
 rc_checker_f = open("gen_logs/rc_checker_log.txt","w")
-bin_f = open("gen_logs/rc_tx_good_bin_file.txt","r")
+bin_f = open("gen_logs/rc_mem_bin_file.txt","r")
 class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
     def rc_rx_checker(self):
         #num_pkts = argv.num_pkts
@@ -16,8 +16,7 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
         for line in bin_f: 
             if i < compl_pkt_queue.qsize():            
                 # ep_queue is a string type -> reading data from compl_queue #
-                ep_queue = compl_pkt_queue.queue[i]
- 
+                ep_queue = compl_pkt_queue.queue[i] 
                 # assgning all filed value from ep_queue #
                 str_fmt                    = ep_queue[:3]
                 str_type                   = ep_queue[3:8]
@@ -41,34 +40,7 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                 str_reserved_r             = ep_queue[88]
                 #print(str_reserved_r) 
                 str_lower_address          = ep_queue[89:96]
-                #print(str_lower_address          ) 
-
-                '''print(
-                str_fmt          ,           
-                str_type        ,
-                str_t9          ,
-                str_tc          ,
-                str_t8          ,
-                str_attr1       ,
-                str_ln          ,
-                str_th          ,
-                str_td          ,
-                str_ep          ,
-                str_attr0       ,
-                str_at          ,
-                str_length        , 
-                str_completer_id  ,
-                str_compl_status  ,
-                str_bcm           ,
-                str_byte_count    ,
-                str_requester_id  ,
-                str_tag           ,
-                str_reserved_r    ,
-                str_lower_address ,
-                 )'''
-
-                #print("str_completer_id is ",int(str_completer_id,2))
-                #print("str_completer_id is ",hex(int(str_completer_id,2)))
+                str_payload = ep_queue[96:]
 
                 # printing header for rc_checker_log.txt file #
                 rc_checker_f.write("-------------------------------------------------------------------------- TLP ")
@@ -92,92 +64,85 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                                                         if int(str_attr0       ,2) == 0:        # ep completer: attr0 will be 0 
                                                             if int(str_at          ,2) == 0:    # ep completer: at will be 0
                                                                 if int(str_length      ,2) ==1:                                # ep completer: length will be 1
-                                                                    if int(str_completer_id        ,2) in range(0,2**16-1):                  # ep completer: commpleter id must be greater than 0
+                                                                    if int(str_completer_id        ,2) in range(0,2**16-1):    # ep completer: commpleter id must be greater than 0
                                                                         if int(str_compl_status                 ,2) == 0:      # ep completer: completer status must be 1 for pass adn 0 for fail packet
-                                                                            if int(str_bcm          ,2) == 0:                                # ep completer: bcm will be 0
+                                                                            if int(str_bcm          ,2) == 0:                  # ep completer: bcm will be 0
                                                                                 if int(str_byte_count         ,2) in range(0,2**12-1):       # ep completer: byte_count must be within range 0 to 2**12-1
-                                                                                    if (int(str_requester_id,2)  == int(line[32:48],2)):                 # ep completer: requester_id must be same as generated requester id
-                                                                                        if str_tag == line[48:56]:        # ep completer: tag will be within range 0 to 2**8-1
+                                                                                    if (int(str_requester_id,2)  == int(line[32:48],2)):     # ep completer: requester_id must be same as generated requester id
+                                                                                        if str_tag == line[48:56]:                   # ep completer: tag will be within range 0 to 2**8-1
                                                                                             if int(str_reserved_r,2) == 0:           # ep completer: reserved_bit will be 0 
                                                                                                 #print("reserved_bit--------->",str_reserved_r)
                                                                                                 if (int(str_lower_address             ,2)>0) in range(0,2**7-1): # ep completer: lower_address will be within 0 to 2**7-1
-                                                                                                    rc_checker_f.write("Config Type 0 WRITE Request (CfgRd0) with 3DW, with data")
+
+                                                                                                    rc_checker_f.write("fmt = ")
+                                                                                                    rc_checker_f.write(hex(int(str_fmt,2))) 
+                                                                                                    rc_checker_f.write("\n")                        
+                                                                                                    rc_checker_f.write("type = ")
+                                                                                                    rc_checker_f.write(hex(int(str_type,2)))
                                                                                                     rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("t9 = ")
+                                                                                                    rc_checker_f.write(hex(int(str_t9,2)))       
                                                                                                     rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("tc = ")
+                                                                                                    rc_checker_f.write(hex(int(str_tc,2       )))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("t8 = ")
+                                                                                                    rc_checker_f.write(hex(int(str_t8,2)))       
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("attr1 = ")
+                                                                                                    rc_checker_f.write(hex(int(str_attr1,2       )))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("ln = ")
+                                                                                                    rc_checker_f.write(hex(int(str_ln,2)))      
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("th = ")  
+                                                                                                    rc_checker_f.write(hex(int(str_th,2          )))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("td = ")  
+                                                                                                    rc_checker_f.write(hex(int(str_td,2          )))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("ep = ") 
+                                                                                                    rc_checker_f.write(hex(int(str_ep,2          )))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("attr0 = ")
+                                                                                                    rc_checker_f.write(hex(int(str_attr0,2       )))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("at = ")
+                                                                                                    rc_checker_f.write(hex(int(str_at,2          )))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("length = ")
+                                                                                                    rc_checker_f.write(hex(int(str_length,2      )))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("completer_id = ")
+                                                                                                    rc_checker_f.write(hex(int(str_completer_id,2)))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("compl_status = ")
+                                                                                                    rc_checker_f.write(hex(int(str_compl_status,2)))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("bcm = ")
+                                                                                                    rc_checker_f.write(hex(int(str_bcm,2)))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("byte_count = ")
+                                                                                                    rc_checker_f.write(hex(int(str_byte_count,2)))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("requester_id = ")
+                                                                                                    rc_checker_f.write(hex(int(str_requester_id,2)))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("tag = ")
+                                                                                                    rc_checker_f.write(hex(int(str_tag,2)))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write("lower_address = ")
+                                                                                                    rc_checker_f.write(hex(int(str_lower_address,2)))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    rc_checker_f.write(hex(int(str_payload,2)))
+                                                                                                    rc_checker_f.write("\n")
+                                                                                                    good_pkts=good_pkts+1
                                                                                                     
-                                                                                                elif (int(str_lower_address             ,2)==0) and int(str_fmt,2)==0:
-                                                                                                    rc_checker_f.write("Config Type 0 READ Request (CfgRd0) with 3DW, no data")
-                                                                                                    rc_checker_f.write("\n")
-                                                                                                    rc_checker_f.write("\n")
+                                                                                                else:
+                                                                                                    rc_checker_f.write("INVALID LOWER_ADDRESS RECIEVED: lower_address CANNOT BE NEGATIVE [Note : Please check and declare the value")
 
-                                                                                                elif(int(str_lower_address             ,2)<0):
-                                                                                                    rc_checker_f.write("INVALID LOWER_ADDRESS RECIEVED: lower_address CANNOT BE NEGATIVE [Note : Please check and declare the lower_address with range 0 to (2**32)-1] ")
-                                                                                                    rc_checker_f.write("\n")
-                                                                                                    rc_checker_f.write("\n")
 
-                                                                                                rc_checker_f.write("fmt = ")
-                                                                                                rc_checker_f.write(hex(int(str_fmt,2))) 
-                                                                                                rc_checker_f.write("\n")                        
-                                                                                                rc_checker_f.write("type = ")
-                                                                                                rc_checker_f.write(hex(int(str_type,2)))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("t9 = ")
-                                                                                                rc_checker_f.write(hex(int(str_t9,2)))       
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("tc = ")
-                                                                                                rc_checker_f.write(hex(int(str_tc,2       )))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("t8 = ")
-                                                                                                rc_checker_f.write(hex(int(str_t8,2)))       
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("attr1 = ")
-                                                                                                rc_checker_f.write(hex(int(str_attr1,2       )))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("ln = ")
-                                                                                                rc_checker_f.write(hex(int(str_ln,2)))      
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("th = ")  
-                                                                                                rc_checker_f.write(hex(int(str_th,2          )))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("td = ")  
-                                                                                                rc_checker_f.write(hex(int(str_td,2          )))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("ep = ") 
-                                                                                                rc_checker_f.write(hex(int(str_ep,2          )))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("attr0 = ")
-                                                                                                rc_checker_f.write(hex(int(str_attr0,2       )))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("at = ")
-                                                                                                rc_checker_f.write(hex(int(str_at,2          )))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("length = ")
-                                                                                                rc_checker_f.write(hex(int(str_length,2      )))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("completer_id = ")
-                                                                                                rc_checker_f.write(hex(int(str_completer_id,2)))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("compl_status = ")
-                                                                                                rc_checker_f.write(hex(int(str_compl_status,2)))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("bcm = ")
-                                                                                                rc_checker_f.write(hex(int(str_bcm,2)))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("byte_count = ")
-                                                                                                rc_checker_f.write(hex(int(str_byte_count,2)))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("requester_id = ")
-                                                                                                rc_checker_f.write(hex(int(str_requester_id,2)))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("tag = ")
-                                                                                                rc_checker_f.write(hex(int(str_tag,2)))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                rc_checker_f.write("lower_address = ")
-                                                                                                rc_checker_f.write(hex(int(str_lower_address,2)))
-                                                                                                rc_checker_f.write("\n")
-                                                                                                good_pkts=good_pkts+1
-
-                                                                                            ## reserved_r else
+                                                                                            # reserved_r else
                                                                                             else:
                                                                                                 rc_checker_f.write("INVALID RESERVE_R RECIEVED: reserve_r CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value of reserve_bit r as 0 (as it is unused)")
                                                                                                 rc_checker_f.write("\n")

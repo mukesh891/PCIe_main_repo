@@ -256,7 +256,6 @@ class pcie_rc_driver:
                 err_id_f.write(line)
                 err_id_f.write("\n")
                 err_bin_f.write(line)
-                err_bin_f.write("\n")
                 pkt_queue.put(line)
             #contents[self.m] = ln 
             self.m=self.m+1

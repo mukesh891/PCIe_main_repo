@@ -39,11 +39,11 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                 str_requester_id           = ep_queue[64:80]
                 str_tag                    = ep_queue[80:88]
                 str_reserved_r             = ep_queue[88]
-                print(str_reserved_r) 
+                #print(str_reserved_r) 
                 str_lower_address          = ep_queue[89:96]
-                print(str_lower_address          ) 
+                #print(str_lower_address          ) 
 
-                print(
+                '''print(
                 str_fmt          ,           
                 str_type        ,
                 str_t9          ,
@@ -65,10 +65,10 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                 str_tag           ,
                 str_reserved_r    ,
                 str_lower_address ,
-                 )
+                 )'''
 
-                print("str_completer_id is ",int(str_completer_id,2))
-                print("str_completer_id is ",hex(int(str_completer_id,2)))
+                #print("str_completer_id is ",int(str_completer_id,2))
+                #print("str_completer_id is ",hex(int(str_completer_id,2)))
 
                 # printing header for rc_checker_log.txt file #
                 rc_checker_f.write("-------------------------------------------------------------------------- TLP ")
@@ -79,7 +79,7 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                 
                 # Checking all the completer fields for validation and range format #
                 if ((line[0:3] == '000' and str_fmt[0:3] == '010') or ((line[0:3]) == '010' and str_fmt[0:3] == '000')): # ep completer: fmt will be 0 or 2
-                    print("VALID fmt RECIEVED")
+                    #print("VALID fmt RECIEVED")
                     if int(str_type        ,2) in [10]:         # ep completer: will be 10
                         if int(str_t9,2) == 0:                  # ep completer:t9 must be 0
                             if int(str_tc          ,2) == 0:    # ep completer: tc will be 0 for time being
@@ -99,7 +99,7 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                                                                                     if (int(str_requester_id,2)  == int(line[32:48],2)):                 # ep completer: requester_id must be same as generated requester id
                                                                                         if str_tag == line[48:56]:        # ep completer: tag will be within range 0 to 2**8-1
                                                                                             if int(str_reserved_r,2) == 0:           # ep completer: reserved_bit will be 0 
-                                                                                                print("reserved_bit--------->",str_reserved_r)
+                                                                                                #print("reserved_bit--------->",str_reserved_r)
                                                                                                 if (int(str_lower_address             ,2)>0) in range(0,2**7-1): # ep completer: lower_address will be within 0 to 2**7-1
                                                                                                     rc_checker_f.write("Config Type 0 WRITE Request (CfgRd0) with 3DW, with data")
                                                                                                     rc_checker_f.write("\n")

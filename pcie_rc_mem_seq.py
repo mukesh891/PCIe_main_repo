@@ -28,6 +28,7 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         super().__init__()
         self.raddr = 0
         self.temp =0
+        self.temp_1 = 0
     def mem_pkt(self):
         self.fmt                     = random.choice([0,2])  # 000 = MemRd without data, 010 = MemWr with data
         ##    BDF format for requester and completer    ##
@@ -65,14 +66,16 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
             #print("write",self.iter)
             self.fmt = 2
             self.type = 0
+            self.temp_1=self.first_dw_be # Purpose of this logic is to ensure that for Mem read req first DW = write req FristDW
             self.payload    = random.getrandbits(32)
             self.addresses = random.getrandbits(30)
-            self.addresses -= self.addresses % 4
+            self.addresses -= self.addresses % 4  #The purpose of this code is to ensure that self.addresses is a multiple of 4 or 4 byte aligned
             #print(self.addresses)
         elif (self.iter %2==1):
             #print("->read ",self.iter)
             self.type = 0
             self.fmt = 0
+            self.first_dw_be = self.temp_1
             self.addresses = self.raddr
             #print(self.addresses)
             self.payload    = 0

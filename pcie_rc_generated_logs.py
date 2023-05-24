@@ -27,6 +27,16 @@ class pcie_rc_generated_logs:
         hex_f.close()
         bin_f.close()
 
+    def mem_rd_file_handle(self):
+        bin_f =open("gen_logs/rc_tx_good_bin_file.txt","r")
+        mem_bin_f =open("gen_logs/rc_mem_bin_file.txt","w")
+        for line in bin_f:
+            if (line[0:8] not in ["01000000"]): #
+                print(line)
+                mem_bin_f.write(line)
+        bin_f.close()
+        mem_bin_f.close()
+        
     def gen_log(self):
         bin_f = open("gen_logs/rc_tx_good_bin_file.txt","r")
         gen_f = open("gen_logs/rc_tx_generator_out.txt","w")

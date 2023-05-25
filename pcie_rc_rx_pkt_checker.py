@@ -52,7 +52,13 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                 # Checking all the completer fields for validation and range format #
                 if ((line[0:3] == '000' and str_fmt[0:3] == '010') or ((line[0:3]) == '010' and str_fmt[0:3] == '000')): # ep completer: fmt will be 0 or 2
                     #print("VALID fmt RECIEVED")
-                    if int(str_type        ,2) in [10]:         # ep completer: will be 10
+                    if int(str_type        ,2) in [10]:
+                        if int(str_type        ,2) in [10] and line[3:8] == '00000':         # ep completer: will be 10
+                            rc_checker_f.write("MEMORY READ request MemRD \n")
+                        elif int(str_type        ,2) in [10] and line[3:8] == '00100' and line[:3] == "000":         # ep completer: will be 10
+                            rc_checker_f.write("CONFIG READ request CfgRD \n")  
+                        elif int(str_type        ,2) in [10] and line[3:8] == '00100' and line[:3] == "010":         # ep completer: will be 10
+                            rc_checker_f.write("CONFIG WRITE request CfgWR \n")  
                         if int(str_t9,2) == 0:                  # ep completer:t9 must be 0
                             if int(str_tc          ,2) == 0:    # ep completer: tc will be 0 for time being
                                 if int(str_t8,2) == 0:          # ep completer: t8 will be 10

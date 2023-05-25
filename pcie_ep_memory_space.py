@@ -54,7 +54,7 @@ class pcie_ep_memory_space:
         else:
             write_data_to_memory(Addr, data_rec)
             mem.write(f'\n *******************  packet {pkt_num} ***************** \n')
-            mem.write(f'\n Write request at Address {Addr}, data is {hex(data_rec)}\n')
+            mem.write(f'\n Write request at Address {hex(Addr)}, data is {hex(data_rec)}\n')
             print_memory('write', pkt_num)
         
     def read_request(pkt_num, Addr):
@@ -65,7 +65,7 @@ class pcie_ep_memory_space:
         else:
             if Addr in memory:
                 mem.write(f'\n *******************  packet {pkt_num} ***************** \n')
-                mem.write(f'Read request at Address {Addr}, data is {hex(memory[Addr])}\n')
+                mem.write(f'Read request at Address {hex(Addr)}, data is {hex(memory[Addr])}\n')
                 print_memory('Read', pkt_num)
                 return format(memory[Addr], '032b')
             else:

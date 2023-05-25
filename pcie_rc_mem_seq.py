@@ -11,18 +11,6 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         self.err_pkt_no = argv.err_pkt_no
         self.tx_no = 0
         self.iter = 0
-        '''
-        self.arr =[0]*self.err_pkt_no
-        self.arr_t =[0]*self.err_pkt_no
-        for i in range(0,self.err_pkt_no):
-            self.arr_t[i] = random.randrange(self.num_pkts)
-            self.arr = list(set(self.arr_t))
-            self.arr.sort()
-        
-        print(self.arr)
-        print(len(self.arr))
-        print(self.num_pkts)
-        '''
         super().__init__()
         self.raddr = 0
         self.temp =0
@@ -66,7 +54,7 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
             self.type = 0
             self.temp_1=self.first_dw_be # Purpose of this logic is to ensure that for Mem read req first DW = write req FristDW
             self.payload    = random.getrandbits(32)
-            self.addresses = random.getrandbits(30)
+            self.addresses = random.randint(0,63)
             self.addresses -= self.addresses % 4  #The purpose of this code is to ensure that self.addresses is a multiple of 4 or 4 byte aligned
             #print(self.addresses)
         elif (self.iter %2==1):

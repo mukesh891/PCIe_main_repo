@@ -3,7 +3,7 @@ import console_to_log
 from pcie_ep_base import *
 from pcie_ep_com_file import *
 from tabulate import tabulate
-print("checker block")
+print("end_point block")
 
 received_pkt = open("ep_logs/received_pkt.txt","w")
 received_valid_pkt = open("ep_logs/received_valid_pkt.txt","w")
@@ -232,7 +232,7 @@ class ep_check_pkt(ep_base_pkt):
 			else:
 				LDB = 0
         
-			print('printing length of TLP from checker {}'.format(len(TLP)))
+			print('printing length of TLP from end-point {}'.format(len(TLP)))
 			#checking for configuration request type possibilities
 			if (int(Type[2], 2)):   #  bit 2 of type must be 1 for cfg request
 				if Fmt not in ['000', '010']:  # must be either 000 or 010																						

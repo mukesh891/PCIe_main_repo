@@ -76,16 +76,24 @@ check = pcie_rc_rx_pkt_checker()
 for i in range(valid_pkt_size):
 	comp1.pkt_compl_fn(i)
 
-check.rc_rx_checker()
+#check.rc_rx_checker()
 completer_rec.close()
 binary_completer.close()
-rc_checker_f.close()
+#rc_checker_f.close()
 
 #log_file.close()
 
 cfg.close()
 mem.close()
 # Stop redirecting console output to the log file
+
+
+
+from pcie_ep_err_call_fn import *     # doing import here for err-injection to come in a flow
+
+check.rc_rx_checker()
+rc_checker_f.close()
+#from pcie_ep_err_id import *
 console_to_log.reset_output()
 
 

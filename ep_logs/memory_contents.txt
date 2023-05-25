@@ -3,454 +3,672 @@
 +-----------+------------+
 | Address   | Data       |
 +===========+============+
-| 0x0       | 0x262b10fd |
+| 0x0       | 0x3d4e3180 |
 +-----------+------------+
-| 0x1       | 0x5435da08 |
+| 0x1       | 0xa37ee30b |
 +-----------+------------+
-| 0x2       | 0x326e4c56 |
+| 0x2       | 0x590c6e28 |
 +-----------+------------+
-| 0x3       | 0xb9be0b48 |
+| 0x3       | 0xf11c642e |
 +-----------+------------+
-| 0x4       | 0x1e185d7d |
+| 0x4       | 0x898882ce |
 +-----------+------------+
-| 0x5       | 0xc1d35cb0 |
+| 0x5       | 0xefc85604 |
 +-----------+------------+
-| 0x6       | 0x405d977a |
+| 0x6       | 0x4e4e126  |
 +-----------+------------+
-| 0x7       | 0xd031f6b4 |
+| 0x7       | 0x6ebe0b4  |
 +-----------+------------+
-| 0x8       | 0x71d118c9 |
+| 0x8       | 0x93775ab6 |
 +-----------+------------+
-| 0x9       | 0x323ac353 |
+| 0x9       | 0x48e4593c |
 +-----------+------------+
-| 0xa       | 0x70bf0cf3 |
+| 0xa       | 0xc84c0dbc |
 +-----------+------------+
-| 0xb       | 0xa1dd57f7 |
+| 0xb       | 0xca17c66f |
 +-----------+------------+
-| 0xc       | 0xc45c269f |
+| 0xc       | 0x9c295842 |
 +-----------+------------+
-| 0xd       | 0x5f3145e9 |
+| 0xd       | 0x68c982cf |
 +-----------+------------+
-| 0xe       | 0x6eb7c63f |
+| 0xe       | 0x59e6a691 |
 +-----------+------------+
-| 0xf       | 0x99651e76 |
+| 0xf       | 0xcbe82ec6 |
 +-----------+------------+
-| 0x10      | 0x1c17f685 |
+| 0x10      | 0x58a26c0b |
 +-----------+------------+
-| 0x11      | 0x83ae6a3c |
+| 0x11      | 0x665e5241 |
 +-----------+------------+
-| 0x12      | 0x29432e61 |
+| 0x12      | 0x909f974  |
 +-----------+------------+
-| 0x13      | 0xc84b2139 |
+| 0x13      | 0xb4b8faa2 |
 +-----------+------------+
-| 0x14      | 0xcf5bf71  |
+| 0x14      | 0x9ae4001  |
 +-----------+------------+
-| 0x15      | 0x1c496147 |
+| 0x15      | 0x583f30c0 |
 +-----------+------------+
-| 0x16      | 0x23857cb9 |
+| 0x16      | 0xd9da6f18 |
 +-----------+------------+
-| 0x17      | 0x49c5c7f9 |
+| 0x17      | 0xcaa6d347 |
 +-----------+------------+
-| 0x18      | 0x556e561a |
+| 0x18      | 0xb7eae912 |
 +-----------+------------+
-| 0x19      | 0xb66221a2 |
+| 0x19      | 0x6ec7ce9  |
 +-----------+------------+
-| 0x1a      | 0x7306a466 |
+| 0x1a      | 0x82388927 |
 +-----------+------------+
-| 0x1b      | 0x31ba5b71 |
+| 0x1b      | 0x40ad88fb |
 +-----------+------------+
-| 0x1c      | 0xc1736e94 |
+| 0x1c      | 0x3fa93212 |
 +-----------+------------+
-| 0x1d      | 0x7f1594a1 |
+| 0x1d      | 0x58fd7883 |
 +-----------+------------+
-| 0x1e      | 0x7aaf9fb2 |
+| 0x1e      | 0xa208ee9b |
 +-----------+------------+
-| 0x1f      | 0xa9ab7eb3 |
+| 0x1f      | 0xae061c18 |
 +-----------+------------+
-| 0x20      | 0x4c494af9 |
+| 0x20      | 0xd10929bc |
 +-----------+------------+
-| 0x21      | 0xe1673adf |
+| 0x21      | 0x29c0b4e9 |
 +-----------+------------+
-| 0x22      | 0xec952670 |
+| 0x22      | 0xb55c5ffe |
 +-----------+------------+
-| 0x23      | 0x528bf82f |
+| 0x23      | 0xca968a8b |
 +-----------+------------+
-| 0x24      | 0x5ed13b09 |
+| 0x24      | 0xecb5a63  |
 +-----------+------------+
-| 0x25      | 0x42021362 |
+| 0x25      | 0x8292f2db |
 +-----------+------------+
-| 0x26      | 0xed7f925e |
+| 0x26      | 0x6b367c65 |
 +-----------+------------+
-| 0x27      | 0x7f5ab3fa |
+| 0x27      | 0xbe7b22b0 |
 +-----------+------------+
-| 0x28      | 0x99b89855 |
+| 0x28      | 0xae7d1917 |
 +-----------+------------+
-| 0x29      | 0x51d2c366 |
+| 0x29      | 0xea8c35   |
 +-----------+------------+
-| 0x2a      | 0xe925e5dd |
+| 0x2a      | 0xf7111ebf |
 +-----------+------------+
-| 0x2b      | 0xe09ca139 |
+| 0x2b      | 0x7750f545 |
 +-----------+------------+
-| 0x2c      | 0x16433e7b |
+| 0x2c      | 0x35536ad8 |
 +-----------+------------+
-| 0x2d      | 0x43a22616 |
+| 0x2d      | 0x1edf4455 |
 +-----------+------------+
-| 0x2e      | 0x4ef071e7 |
+| 0x2e      | 0x977581fa |
 +-----------+------------+
-| 0x2f      | 0x12d7a3d5 |
+| 0x2f      | 0x5d7be8fa |
 +-----------+------------+
-| 0x30      | 0x3d623c4c |
+| 0x30      | 0xebb4ed34 |
 +-----------+------------+
-| 0x31      | 0xc6dfa4e7 |
+| 0x31      | 0xf19d9843 |
 +-----------+------------+
-| 0x32      | 0x93e9871c |
+| 0x32      | 0xa021500f |
 +-----------+------------+
-| 0x33      | 0xaf0c1c5f |
+| 0x33      | 0x3552818  |
 +-----------+------------+
-| 0x34      | 0x37d26aa4 |
+| 0x34      | 0x6a5f23d1 |
 +-----------+------------+
-| 0x35      | 0xcf700ae0 |
+| 0x35      | 0x44121e5c |
 +-----------+------------+
-| 0x36      | 0x4423382d |
+| 0x36      | 0x61cb967f |
 +-----------+------------+
-| 0x37      | 0x7086b191 |
+| 0x37      | 0xfd29a4df |
 +-----------+------------+
-| 0x38      | 0x99294eb0 |
+| 0x38      | 0xbe1ba525 |
 +-----------+------------+
-| 0x39      | 0xc727df60 |
+| 0x39      | 0x672c3ffd |
 +-----------+------------+
-| 0x3a      | 0x9cd4814d |
+| 0x3a      | 0x9978f2e0 |
 +-----------+------------+
-| 0x3b      | 0x1935ed3a |
+| 0x3b      | 0x6a67332e |
 +-----------+------------+
-| 0x3c      | 0x889f4c5a |
+| 0x3c      | 0xff4907f4 |
 +-----------+------------+
-| 0x3d      | 0x3463ed7a |
+| 0x3d      | 0xb737d25b |
 +-----------+------------+
-| 0x3e      | 0x35f45099 |
+| 0x3e      | 0x55150c4e |
 +-----------+------------+
-| 0x3f      | 0xa05aca00 |
+| 0x3f      | 0x5ea405ea |
 +-----------+------------+
- *******************  packet 10 ***************** 
-
- Error: For Write Request, Address 0x3fc602c0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
  *******************  packet 11 ***************** 
+Read request at Address 0x1c, data is 0x3fa93212
 
- Error: For Read Request, Address 0x3fc602c0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
+ Memory contents for Read packet 11:
++-----------+------------+
+| Address   | Data       |
++===========+============+
+| 0x0       | 0x3d4e3180 |
++-----------+------------+
+| 0x1       | 0xa37ee30b |
++-----------+------------+
+| 0x2       | 0x590c6e28 |
++-----------+------------+
+| 0x3       | 0xf11c642e |
++-----------+------------+
+| 0x4       | 0x898882ce |
++-----------+------------+
+| 0x5       | 0xefc85604 |
++-----------+------------+
+| 0x6       | 0x4e4e126  |
++-----------+------------+
+| 0x7       | 0x6ebe0b4  |
++-----------+------------+
+| 0x8       | 0x93775ab6 |
++-----------+------------+
+| 0x9       | 0x48e4593c |
++-----------+------------+
+| 0xa       | 0xc84c0dbc |
++-----------+------------+
+| 0xb       | 0xca17c66f |
++-----------+------------+
+| 0xc       | 0x9c295842 |
++-----------+------------+
+| 0xd       | 0x68c982cf |
++-----------+------------+
+| 0xe       | 0x59e6a691 |
++-----------+------------+
+| 0xf       | 0xcbe82ec6 |
++-----------+------------+
+| 0x10      | 0x58a26c0b |
++-----------+------------+
+| 0x11      | 0x665e5241 |
++-----------+------------+
+| 0x12      | 0x909f974  |
++-----------+------------+
+| 0x13      | 0xb4b8faa2 |
++-----------+------------+
+| 0x14      | 0x9ae4001  |
++-----------+------------+
+| 0x15      | 0x583f30c0 |
++-----------+------------+
+| 0x16      | 0xd9da6f18 |
++-----------+------------+
+| 0x17      | 0xcaa6d347 |
++-----------+------------+
+| 0x18      | 0xb7eae912 |
++-----------+------------+
+| 0x19      | 0x6ec7ce9  |
++-----------+------------+
+| 0x1a      | 0x82388927 |
++-----------+------------+
+| 0x1b      | 0x40ad88fb |
++-----------+------------+
+| 0x1c      | 0x3fa93212 |
++-----------+------------+
+| 0x1d      | 0x58fd7883 |
++-----------+------------+
+| 0x1e      | 0xa208ee9b |
++-----------+------------+
+| 0x1f      | 0xae061c18 |
++-----------+------------+
+| 0x20      | 0xd10929bc |
++-----------+------------+
+| 0x21      | 0x29c0b4e9 |
++-----------+------------+
+| 0x22      | 0xb55c5ffe |
++-----------+------------+
+| 0x23      | 0xca968a8b |
++-----------+------------+
+| 0x24      | 0xecb5a63  |
++-----------+------------+
+| 0x25      | 0x8292f2db |
++-----------+------------+
+| 0x26      | 0x6b367c65 |
++-----------+------------+
+| 0x27      | 0xbe7b22b0 |
++-----------+------------+
+| 0x28      | 0xae7d1917 |
++-----------+------------+
+| 0x29      | 0xea8c35   |
++-----------+------------+
+| 0x2a      | 0xf7111ebf |
++-----------+------------+
+| 0x2b      | 0x7750f545 |
++-----------+------------+
+| 0x2c      | 0x35536ad8 |
++-----------+------------+
+| 0x2d      | 0x1edf4455 |
++-----------+------------+
+| 0x2e      | 0x977581fa |
++-----------+------------+
+| 0x2f      | 0x5d7be8fa |
++-----------+------------+
+| 0x30      | 0xebb4ed34 |
++-----------+------------+
+| 0x31      | 0xf19d9843 |
++-----------+------------+
+| 0x32      | 0xa021500f |
++-----------+------------+
+| 0x33      | 0x3552818  |
++-----------+------------+
+| 0x34      | 0x6a5f23d1 |
++-----------+------------+
+| 0x35      | 0x44121e5c |
++-----------+------------+
+| 0x36      | 0x61cb967f |
++-----------+------------+
+| 0x37      | 0xfd29a4df |
++-----------+------------+
+| 0x38      | 0xbe1ba525 |
++-----------+------------+
+| 0x39      | 0x672c3ffd |
++-----------+------------+
+| 0x3a      | 0x9978f2e0 |
++-----------+------------+
+| 0x3b      | 0x6a67332e |
++-----------+------------+
+| 0x3c      | 0xff4907f4 |
++-----------+------------+
+| 0x3d      | 0xb737d25b |
++-----------+------------+
+| 0x3e      | 0x55150c4e |
++-----------+------------+
+| 0x3f      | 0x5ea405ea |
++-----------+------------+
  *******************  packet 12 ***************** 
 
- Error: For Write Request, Address 0x4511b6c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 13 ***************** 
-
- Error: For Read Request, Address 0x4511b6c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 14 ***************** 
-
- Error: For Write Request, Address 0xd12b510 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 15 ***************** 
-
- Error: For Read Request, Address 0xd12b510 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 16 ***************** 
-
- Error: For Write Request, Address 0x3e654750 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 18 ***************** 
-
- Error: For Write Request, Address 0x109e5a7c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 20 ***************** 
-
- Error: For Write Request, Address 0x267486d0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 21 ***************** 
-
- Error: For Read Request, Address 0x267486d0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 22 ***************** 
-
- Error: For Write Request, Address 0x96a4adc is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 23 ***************** 
-
- Error: For Read Request, Address 0x96a4adc is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 24 ***************** 
-
- Error: For Write Request, Address 0x6ba1c24 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 25 ***************** 
-
- Error: For Read Request, Address 0x6ba1c24 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 27 ***************** 
-
- Error: For Read Request, Address 0x269450bc is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 28 ***************** 
-
- Error: For Write Request, Address 0x2a8807c0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 29 ***************** 
-
- Error: For Read Request, Address 0x2a8807c0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 30 ***************** 
-
- Error: For Write Request, Address 0x18ff95b0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 31 ***************** 
-
- Error: For Read Request, Address 0x18ff95b0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 32 ***************** 
-
- Error: For Write Request, Address 0x6f1c890 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 33 ***************** 
-
- Error: For Read Request, Address 0x6f1c890 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 34 ***************** 
-
- Error: For Write Request, Address 0x3894ddd8 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 35 ***************** 
-
- Error: For Read Request, Address 0x3894ddd8 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 37 ***************** 
-
- Error: For Read Request, Address 0x243fb0c0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 38 ***************** 
-
- Error: For Write Request, Address 0x2d920228 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 39 ***************** 
-
- Error: For Read Request, Address 0x2d920228 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 40 ***************** 
-
- Error: For Write Request, Address 0x3daef2bc is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 41 ***************** 
-
- Error: For Read Request, Address 0x3daef2bc is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 42 ***************** 
-
- Error: For Write Request, Address 0x39bf8068 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 43 ***************** 
-
- Error: For Read Request, Address 0x39bf8068 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 44 ***************** 
-
- Error: For Write Request, Address 0x2dddbda4 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 45 ***************** 
-
- Error: For Read Request, Address 0x2dddbda4 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 46 ***************** 
-
- Error: For Write Request, Address 0x16fc158c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 47 ***************** 
-
- Error: For Read Request, Address 0x16fc158c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 48 ***************** 
-
- Error: For Write Request, Address 0xb24fbc0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 49 ***************** 
-
- Error: For Read Request, Address 0xb24fbc0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 50 ***************** 
-
- Error: For Write Request, Address 0x1ed94e8c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 51 ***************** 
-
- Error: For Read Request, Address 0x1ed94e8c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 52 ***************** 
-
- Error: For Write Request, Address 0x177daacc is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 53 ***************** 
-
- Error: For Read Request, Address 0x177daacc is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 54 ***************** 
-
- Error: For Write Request, Address 0x1e474040 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 55 ***************** 
-
- Error: For Read Request, Address 0x1e474040 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 56 ***************** 
-
- Error: For Write Request, Address 0x6d62f04 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 57 ***************** 
-
- Error: For Read Request, Address 0x6d62f04 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 58 ***************** 
-
- Error: For Write Request, Address 0x16866c4c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 59 ***************** 
-
- Error: For Read Request, Address 0x16866c4c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 60 ***************** 
-
- Error: For Write Request, Address 0x317dfd54 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 61 ***************** 
-
- Error: For Read Request, Address 0x317dfd54 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 62 ***************** 
-
- Error: For Write Request, Address 0x381b4b78 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 63 ***************** 
-
- Error: For Read Request, Address 0x381b4b78 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 64 ***************** 
-
- Error: For Write Request, Address 0xd25b428 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 66 ***************** 
-
- Error: For Write Request, Address 0x20fb9b84 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 67 ***************** 
-
- Error: For Read Request, Address 0x20fb9b84 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 68 ***************** 
-
- Error: For Write Request, Address 0x4e55c34 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 69 ***************** 
-
- Error: For Read Request, Address 0x4e55c34 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 70 ***************** 
-
- Error: For Write Request, Address 0x1fc8912c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 71 ***************** 
-
- Error: For Read Request, Address 0x1fc8912c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 72 ***************** 
-
- Error: For Write Request, Address 0x15a2faa4 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 73 ***************** 
-
- Error: For Read Request, Address 0x15a2faa4 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 74 ***************** 
-
- Error: For Write Request, Address 0x240fa0c4 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 75 ***************** 
-
- Error: For Read Request, Address 0x240fa0c4 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 76 ***************** 
-
- Error: For Write Request, Address 0x2a8d8298 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 77 ***************** 
-
- Error: For Read Request, Address 0x2a8d8298 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 78 ***************** 
-
- Error: For Write Request, Address 0x293f91b0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 81 ***************** 
-
- Error: For Read Request, Address 0x18427e04 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 82 ***************** 
-
- Error: For Write Request, Address 0x26366218 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 83 ***************** 
-
- Error: For Read Request, Address 0x26366218 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 84 ***************** 
-
- Error: For Write Request, Address 0x3e70e3d0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 85 ***************** 
-
- Error: For Read Request, Address 0x3e70e3d0 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 88 ***************** 
-
- Error: For Write Request, Address 0x4dadbac is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 89 ***************** 
-
- Error: For Read Request, Address 0x4dadbac is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 90 ***************** 
-
- Error: For Write Request, Address 0x358a76b8 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 91 ***************** 
-
- Error: For Read Request, Address 0x358a76b8 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 92 ***************** 
-
- Error: For Write Request, Address 0x34a5fc88 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 93 ***************** 
-
- Error: For Read Request, Address 0x34a5fc88 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 94 ***************** 
-
- Error: For Write Request, Address 0x115f347c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 95 ***************** 
-
- Error: For Read Request, Address 0x115f347c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 96 ***************** 
-
- Error: For Write Request, Address 0x28c2c37c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 97 ***************** 
-
- Error: For Read Request, Address 0x28c2c37c is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 98 ***************** 
-
- Error: For Write Request, Address 0x24e97548 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
-
- *******************  packet 99 ***************** 
-
- Error: For Read Request, Address 0x24e97548 is outside the desired range. Range must be between 0x00 - 0x40. Ignoring Data.
+ Write request at Address 0x38, data is 0x28006799
+
+ Memory contents for write packet 12:
++-----------+------------+
+| Address   | Data       |
++===========+============+
+| 0x0       | 0x3d4e3180 |
++-----------+------------+
+| 0x1       | 0xa37ee30b |
++-----------+------------+
+| 0x2       | 0x590c6e28 |
++-----------+------------+
+| 0x3       | 0xf11c642e |
++-----------+------------+
+| 0x4       | 0x898882ce |
++-----------+------------+
+| 0x5       | 0xefc85604 |
++-----------+------------+
+| 0x6       | 0x4e4e126  |
++-----------+------------+
+| 0x7       | 0x6ebe0b4  |
++-----------+------------+
+| 0x8       | 0x93775ab6 |
++-----------+------------+
+| 0x9       | 0x48e4593c |
++-----------+------------+
+| 0xa       | 0xc84c0dbc |
++-----------+------------+
+| 0xb       | 0xca17c66f |
++-----------+------------+
+| 0xc       | 0x9c295842 |
++-----------+------------+
+| 0xd       | 0x68c982cf |
++-----------+------------+
+| 0xe       | 0x59e6a691 |
++-----------+------------+
+| 0xf       | 0xcbe82ec6 |
++-----------+------------+
+| 0x10      | 0x58a26c0b |
++-----------+------------+
+| 0x11      | 0x665e5241 |
++-----------+------------+
+| 0x12      | 0x909f974  |
++-----------+------------+
+| 0x13      | 0xb4b8faa2 |
++-----------+------------+
+| 0x14      | 0x9ae4001  |
++-----------+------------+
+| 0x15      | 0x583f30c0 |
++-----------+------------+
+| 0x16      | 0xd9da6f18 |
++-----------+------------+
+| 0x17      | 0xcaa6d347 |
++-----------+------------+
+| 0x18      | 0xb7eae912 |
++-----------+------------+
+| 0x19      | 0x6ec7ce9  |
++-----------+------------+
+| 0x1a      | 0x82388927 |
++-----------+------------+
+| 0x1b      | 0x40ad88fb |
++-----------+------------+
+| 0x1c      | 0x3fa93212 |
++-----------+------------+
+| 0x1d      | 0x58fd7883 |
++-----------+------------+
+| 0x1e      | 0xa208ee9b |
++-----------+------------+
+| 0x1f      | 0xae061c18 |
++-----------+------------+
+| 0x20      | 0xd10929bc |
++-----------+------------+
+| 0x21      | 0x29c0b4e9 |
++-----------+------------+
+| 0x22      | 0xb55c5ffe |
++-----------+------------+
+| 0x23      | 0xca968a8b |
++-----------+------------+
+| 0x24      | 0xecb5a63  |
++-----------+------------+
+| 0x25      | 0x8292f2db |
++-----------+------------+
+| 0x26      | 0x6b367c65 |
++-----------+------------+
+| 0x27      | 0xbe7b22b0 |
++-----------+------------+
+| 0x28      | 0xae7d1917 |
++-----------+------------+
+| 0x29      | 0xea8c35   |
++-----------+------------+
+| 0x2a      | 0xf7111ebf |
++-----------+------------+
+| 0x2b      | 0x7750f545 |
++-----------+------------+
+| 0x2c      | 0x35536ad8 |
++-----------+------------+
+| 0x2d      | 0x1edf4455 |
++-----------+------------+
+| 0x2e      | 0x977581fa |
++-----------+------------+
+| 0x2f      | 0x5d7be8fa |
++-----------+------------+
+| 0x30      | 0xebb4ed34 |
++-----------+------------+
+| 0x31      | 0xf19d9843 |
++-----------+------------+
+| 0x32      | 0xa021500f |
++-----------+------------+
+| 0x33      | 0x3552818  |
++-----------+------------+
+| 0x34      | 0x6a5f23d1 |
++-----------+------------+
+| 0x35      | 0x44121e5c |
++-----------+------------+
+| 0x36      | 0x61cb967f |
++-----------+------------+
+| 0x37      | 0xfd29a4df |
++-----------+------------+
+| 0x38      | 0x28006799 |
++-----------+------------+
+| 0x39      | 0x672c3ffd |
++-----------+------------+
+| 0x3a      | 0x9978f2e0 |
++-----------+------------+
+| 0x3b      | 0x6a67332e |
++-----------+------------+
+| 0x3c      | 0xff4907f4 |
++-----------+------------+
+| 0x3d      | 0xb737d25b |
++-----------+------------+
+| 0x3e      | 0x55150c4e |
++-----------+------------+
+| 0x3f      | 0x5ea405ea |
++-----------+------------+
+ *******************  packet 17 ***************** 
+Read request at Address 0x4, data is 0x898882ce
+
+ Memory contents for Read packet 17:
++-----------+------------+
+| Address   | Data       |
++===========+============+
+| 0x0       | 0x3d4e3180 |
++-----------+------------+
+| 0x1       | 0xa37ee30b |
++-----------+------------+
+| 0x2       | 0x590c6e28 |
++-----------+------------+
+| 0x3       | 0xf11c642e |
++-----------+------------+
+| 0x4       | 0x898882ce |
++-----------+------------+
+| 0x5       | 0xefc85604 |
++-----------+------------+
+| 0x6       | 0x4e4e126  |
++-----------+------------+
+| 0x7       | 0x6ebe0b4  |
++-----------+------------+
+| 0x8       | 0x93775ab6 |
++-----------+------------+
+| 0x9       | 0x48e4593c |
++-----------+------------+
+| 0xa       | 0xc84c0dbc |
++-----------+------------+
+| 0xb       | 0xca17c66f |
++-----------+------------+
+| 0xc       | 0x9c295842 |
++-----------+------------+
+| 0xd       | 0x68c982cf |
++-----------+------------+
+| 0xe       | 0x59e6a691 |
++-----------+------------+
+| 0xf       | 0xcbe82ec6 |
++-----------+------------+
+| 0x10      | 0x58a26c0b |
++-----------+------------+
+| 0x11      | 0x665e5241 |
++-----------+------------+
+| 0x12      | 0x909f974  |
++-----------+------------+
+| 0x13      | 0xb4b8faa2 |
++-----------+------------+
+| 0x14      | 0x9ae4001  |
++-----------+------------+
+| 0x15      | 0x583f30c0 |
++-----------+------------+
+| 0x16      | 0xd9da6f18 |
++-----------+------------+
+| 0x17      | 0xcaa6d347 |
++-----------+------------+
+| 0x18      | 0xb7eae912 |
++-----------+------------+
+| 0x19      | 0x6ec7ce9  |
++-----------+------------+
+| 0x1a      | 0x82388927 |
++-----------+------------+
+| 0x1b      | 0x40ad88fb |
++-----------+------------+
+| 0x1c      | 0x3fa93212 |
++-----------+------------+
+| 0x1d      | 0x58fd7883 |
++-----------+------------+
+| 0x1e      | 0xa208ee9b |
++-----------+------------+
+| 0x1f      | 0xae061c18 |
++-----------+------------+
+| 0x20      | 0xd10929bc |
++-----------+------------+
+| 0x21      | 0x29c0b4e9 |
++-----------+------------+
+| 0x22      | 0xb55c5ffe |
++-----------+------------+
+| 0x23      | 0xca968a8b |
++-----------+------------+
+| 0x24      | 0xecb5a63  |
++-----------+------------+
+| 0x25      | 0x8292f2db |
++-----------+------------+
+| 0x26      | 0x6b367c65 |
++-----------+------------+
+| 0x27      | 0xbe7b22b0 |
++-----------+------------+
+| 0x28      | 0xae7d1917 |
++-----------+------------+
+| 0x29      | 0xea8c35   |
++-----------+------------+
+| 0x2a      | 0xf7111ebf |
++-----------+------------+
+| 0x2b      | 0x7750f545 |
++-----------+------------+
+| 0x2c      | 0x35536ad8 |
++-----------+------------+
+| 0x2d      | 0x1edf4455 |
++-----------+------------+
+| 0x2e      | 0x977581fa |
++-----------+------------+
+| 0x2f      | 0x5d7be8fa |
++-----------+------------+
+| 0x30      | 0xebb4ed34 |
++-----------+------------+
+| 0x31      | 0xf19d9843 |
++-----------+------------+
+| 0x32      | 0xa021500f |
++-----------+------------+
+| 0x33      | 0x3552818  |
++-----------+------------+
+| 0x34      | 0x6a5f23d1 |
++-----------+------------+
+| 0x35      | 0x44121e5c |
++-----------+------------+
+| 0x36      | 0x61cb967f |
++-----------+------------+
+| 0x37      | 0xfd29a4df |
++-----------+------------+
+| 0x38      | 0x28006799 |
++-----------+------------+
+| 0x39      | 0x672c3ffd |
++-----------+------------+
+| 0x3a      | 0x9978f2e0 |
++-----------+------------+
+| 0x3b      | 0x6a67332e |
++-----------+------------+
+| 0x3c      | 0xff4907f4 |
++-----------+------------+
+| 0x3d      | 0xb737d25b |
++-----------+------------+
+| 0x3e      | 0x55150c4e |
++-----------+------------+
+| 0x3f      | 0x5ea405ea |
++-----------+------------+
+ *******************  packet 19 ***************** 
+Read request at Address 0x34, data is 0x6a5f23d1
+
+ Memory contents for Read packet 19:
++-----------+------------+
+| Address   | Data       |
++===========+============+
+| 0x0       | 0x3d4e3180 |
++-----------+------------+
+| 0x1       | 0xa37ee30b |
++-----------+------------+
+| 0x2       | 0x590c6e28 |
++-----------+------------+
+| 0x3       | 0xf11c642e |
++-----------+------------+
+| 0x4       | 0x898882ce |
++-----------+------------+
+| 0x5       | 0xefc85604 |
++-----------+------------+
+| 0x6       | 0x4e4e126  |
++-----------+------------+
+| 0x7       | 0x6ebe0b4  |
++-----------+------------+
+| 0x8       | 0x93775ab6 |
++-----------+------------+
+| 0x9       | 0x48e4593c |
++-----------+------------+
+| 0xa       | 0xc84c0dbc |
++-----------+------------+
+| 0xb       | 0xca17c66f |
++-----------+------------+
+| 0xc       | 0x9c295842 |
++-----------+------------+
+| 0xd       | 0x68c982cf |
++-----------+------------+
+| 0xe       | 0x59e6a691 |
++-----------+------------+
+| 0xf       | 0xcbe82ec6 |
++-----------+------------+
+| 0x10      | 0x58a26c0b |
++-----------+------------+
+| 0x11      | 0x665e5241 |
++-----------+------------+
+| 0x12      | 0x909f974  |
++-----------+------------+
+| 0x13      | 0xb4b8faa2 |
++-----------+------------+
+| 0x14      | 0x9ae4001  |
++-----------+------------+
+| 0x15      | 0x583f30c0 |
++-----------+------------+
+| 0x16      | 0xd9da6f18 |
++-----------+------------+
+| 0x17      | 0xcaa6d347 |
++-----------+------------+
+| 0x18      | 0xb7eae912 |
++-----------+------------+
+| 0x19      | 0x6ec7ce9  |
++-----------+------------+
+| 0x1a      | 0x82388927 |
++-----------+------------+
+| 0x1b      | 0x40ad88fb |
++-----------+------------+
+| 0x1c      | 0x3fa93212 |
++-----------+------------+
+| 0x1d      | 0x58fd7883 |
++-----------+------------+
+| 0x1e      | 0xa208ee9b |
++-----------+------------+
+| 0x1f      | 0xae061c18 |
++-----------+------------+
+| 0x20      | 0xd10929bc |
++-----------+------------+
+| 0x21      | 0x29c0b4e9 |
++-----------+------------+
+| 0x22      | 0xb55c5ffe |
++-----------+------------+
+| 0x23      | 0xca968a8b |
++-----------+------------+
+| 0x24      | 0xecb5a63  |
++-----------+------------+
+| 0x25      | 0x8292f2db |
++-----------+------------+
+| 0x26      | 0x6b367c65 |
++-----------+------------+
+| 0x27      | 0xbe7b22b0 |
++-----------+------------+
+| 0x28      | 0xae7d1917 |
++-----------+------------+
+| 0x29      | 0xea8c35   |
++-----------+------------+
+| 0x2a      | 0xf7111ebf |
++-----------+------------+
+| 0x2b      | 0x7750f545 |
++-----------+------------+
+| 0x2c      | 0x35536ad8 |
++-----------+------------+
+| 0x2d      | 0x1edf4455 |
++-----------+------------+
+| 0x2e      | 0x977581fa |
++-----------+------------+
+| 0x2f      | 0x5d7be8fa |
++-----------+------------+
+| 0x30      | 0xebb4ed34 |
++-----------+------------+
+| 0x31      | 0xf19d9843 |
++-----------+------------+
+| 0x32      | 0xa021500f |
++-----------+------------+
+| 0x33      | 0x3552818  |
++-----------+------------+
+| 0x34      | 0x6a5f23d1 |
++-----------+------------+
+| 0x35      | 0x44121e5c |
++-----------+------------+
+| 0x36      | 0x61cb967f |
++-----------+------------+
+| 0x37      | 0xfd29a4df |
++-----------+------------+
+| 0x38      | 0x28006799 |
++-----------+------------+
+| 0x39      | 0x672c3ffd |
++-----------+------------+
+| 0x3a      | 0x9978f2e0 |
++-----------+------------+
+| 0x3b      | 0x6a67332e |
++-----------+------------+
+| 0x3c      | 0xff4907f4 |
++-----------+------------+
+| 0x3d      | 0xb737d25b |
++-----------+------------+
+| 0x3e      | 0x55150c4e |
++-----------+------------+
+| 0x3f      | 0x5ea405ea |
++-----------+------------+

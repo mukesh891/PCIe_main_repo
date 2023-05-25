@@ -1,9 +1,12 @@
 #from pcie_ep_com_file import *
 #from pcie_ep_base import *
-#from pcie_com_file import compl_pkt_queue
+from pcie_ep_com_file import *
 from pcie_ep_pkt_checker import *
 from pcie_ep_config_space_type0 import *
 from pcie_ep_memory_space import *
+from pcie_ep_err_id import *
+
+
 from tabulate import tabulate
 
 completer_rec = open('ep_logs/completer_rec.txt', 'w')
@@ -203,8 +206,8 @@ class ep_pkt_completer(ep_base_pkt):
 		
 		
 		if not ((Type_l == '00000') & (Fmt_l == '010')):
-			binary_completer.write('{} \n'.format(TLP))
-			compl_pkt_queue.put(TLP)
+			binary_completer.write('{}\n'.format(TLP))
+			pkt_valid_queue.put(TLP)
 
 		
 		

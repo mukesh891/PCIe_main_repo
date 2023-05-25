@@ -14,7 +14,8 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
         good_pkts = 0
         bad_pkts =0
         for line in bin_f: 
-            if i < compl_pkt_queue.qsize():            
+            if i < compl_pkt_queue.qsize():       
+                rc_checker_f.write('qsize from completion is {}\n'.format(compl_pkt_queue.qsize()))
                 # ep_queue is a string type -> reading data from compl_queue #
                 ep_queue = compl_pkt_queue.queue[i] 
                 # assgning all filed value from ep_queue #

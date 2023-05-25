@@ -477,7 +477,7 @@ class ep_check_pkt(ep_base_pkt):
 			
       		#need to modify it furthere just made it for checking purpose"
 			if(pkt_num==5):
-				print('pkt num is 5')
+				#print('pkt num is 5')
 				TLP = format((int(TLP, 2) + 0), tlp_size)  # if adding 1, than tlp is overriten 
 			v_tlp = TLP + '0'   # adding this 0 because, 0 indicates that the error_flag is 0 (as a indication for NO ERROR from requested TLP)
 			pkt_with_flag_queue.put(v_tlp)  # sending TLPs(including flag) to another queue so that it will help me during completion process 

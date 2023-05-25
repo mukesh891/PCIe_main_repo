@@ -30,7 +30,7 @@ Class_Code = format(0, '024b')					      # offset 09 r-only
 Cache_line_Size = format(64, '08b')                   # offset 0c software
 Latency_Timer = format(0, '08b')					  # offset 0d 
 
-Header_Type = format(0b10000000, '08b')				  # offset 0e 
+Header_Type = format(0b00000000, '08b')				  # offset 0e  #8th bit indicates that the Device may contain multiple Functions spec page-693
 BIST = format(0, '08b')		             			  # offset 0f 
 #DW4
 BAR0 = format(0xffffffff, '032b')					  # offset 10 
@@ -60,10 +60,10 @@ Reserved1 = format(1, '032b')                         # offset 38
 Interrupt_Line = format(0, '08b')                     # offset 3c 
 Interrupt_Pin = format(0, '08b')                      # offset 3d 
 Min_Gnt = format(0, '08b')                            # offset 3e 
-Max_Lat = format(1, '08b')                            # offset 3f 
+Max_Lat = format(0, '08b')                            # offset 3f 
 
-BAR0 = format((int(BAR0, 2) & 0xFFFFF000), '032b')
-BAR1 = format((int(BAR1, 2) & 0xFFFFFC00), '032b')
+BAR0 = format((int(BAR0, 2) & 0xFFFFFF00), '032b')            #we are doing this because of we have made memory 256 bytes accoring to that last 8 bits must be 0.
+BAR1 = format((int(BAR1, 2) & 0xFFFFFC00), '032b')            # other BARS are not using currently so set it as some random values 
 BAR2 = format((int(BAR2, 2) & 0xFFFFC000), '032b')
 BAR3 = format((int(BAR3, 2) & 0xFFFFFC00), '032b')
 BAR4 = format((int(BAR4, 2) & 0xFFFFC000), '032b')
@@ -88,11 +88,11 @@ class ep_cfg_space_type0():
 
 
 		
-		if(int(compl_st, 2) == 0):
+		if(int(compl_st, 2) == 0):                   # doing this for A value of 0000b means that the Function has passed its test. Non-zero values mean the Function failed.
 			compl_code = format(0, '04b')
 		else:
 			compl_code = format(int(compl_st, 2), '04b')
-		Bist = '1' + '1' + '00' + compl_code
+		Bist = '1' + '0' + '00' + compl_code         #1--BIST Capable + 0--Start BIST+ reserve(00)+ complition code[3:0]    
  
 		BIST = format(int(Bist, 2), '08b')					  # offset 0f 
 		
@@ -103,7 +103,7 @@ class ep_cfg_space_type0():
 
 
 		data_sent = format(0, '032b')
-		if ((int(error_flag, 2) == 0) & (int(compl_code, 2) == 0)):			
+		if ((int(error_flag, 2) == 0) & (int(compl_code, 2) == 0)):		#erro_flag=0(good)	 & complition_code=0
 			if(valid_pkts[1] == '0'):
 				#write_count += 1		
 				read_index = pkt_num % 16		
@@ -113,7 +113,7 @@ class ep_cfg_space_type0():
 				write_index = pkt_num % 1   # giving access only for BAR0 for 32-bit address
 				if(write_index == 0):
 					if(data_rec != None):
-						cfg_array[4] = int(data_rec, 2) & 0xFFFFF000
+						cfg_array[4] = int(data_rec, 2) & 0xFFFFFF00
 					else:
 						cfg_array[4] = cfg_array[4]
 					#cfg.write('*******************************************cfg 4 bar0 {}'.format(cfg_array[4]))

@@ -43,7 +43,7 @@ class pcie_rc_driver:
                         #print("m in arr",self.m)
                         logging.info("Entering err_eij array to inject ")
                         ## randomly choose between bdf and fmt and type error
-                        j = random.choice([0,1])
+                        j = random.choice([3])
                         # If j==1 , then "fmt" will be injected with error 
                         if(j==0):
                             fmt = err_eij_hdl.pcie_fmt_err_eij()
@@ -275,5 +275,7 @@ p.drive_tx()
 #    file.writelines(contents)
 #err_bin_f.close()
 err_id_f.close() 
+from pcie_rc_tx_monitor import *
+
 
 

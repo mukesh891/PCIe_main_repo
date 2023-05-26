@@ -34,7 +34,7 @@ class pcie_err_eij(pcie_callbacks):
         print("This is  eij err callback ")
         #pkt.cfg0_pkt()
         tl_pkt=pcie_rc_config_pkt()
-        tl_pkt.TC = random.choice([0,2,3,5])
+        tl_pkt.TC = random.choice([2,3,5])
         print(tl_pkt.TC)
         return tl_pkt.TC
     def pcie_attr1_err_eij(self):

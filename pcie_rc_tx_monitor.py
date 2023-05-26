@@ -72,14 +72,15 @@ class pcie_rc_tx_monitor:
             rc_monitor_f.write("\n")
             self.i=self.i+1
             #lines = bin_f.readlines()
-            #for line_num, line in enumerate(lines, start=1):
             line = line.strip()  # Remove leading/trailing whitespace
             line_length = len(line)
               #total_lines = pcie_rc_gen_monitor(bin_f)
               #rc_monitor_f.write(f"#  Packet generated from RC!: {line_num}\n Length = {line_length}\n (Generated TLP:)\t {line}\n")
-            #line_count = len(lines)
-            #return line_count
             rc_monitor_f.write(f"#  Packet generated from RC! \n Generated TLP:\t {line}\n Length of TLP: {line_length}\n")
+            #for line_num, line in enumerate(lines, start=1):
+                #line_count = line(line_num)
+            #return line_count
+        #rc_monitor_f.write(f"#  Total Packets:\t {line_count}\n")
         bin_f.close()
 
     def pcie_rc_driver_monitor(self):

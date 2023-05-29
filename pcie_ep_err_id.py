@@ -20,7 +20,7 @@ lines.close()
 ep_err_arr = []
 if(ep_err_eij): 
     while len(ep_err_arr) < ep_err_pkt_no:
-        num = random.randrange(0,line_count-1)
+        num = random.randrange(0,line_count)
         #err_bin_compl.write('giving error {}, total pkts {}\n'.format(num, num_pkts))
         if num not in ep_err_arr:
             ep_err_arr.append(num)

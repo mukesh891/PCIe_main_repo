@@ -1,2 +1,0 @@
-number of invalid packets are 0
-invalid packet numbers are []

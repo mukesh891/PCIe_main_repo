@@ -5,7 +5,8 @@ from pcie_rc_generated_logs import *
 
 #from pcie_rc_config_pkt import *
 from pcie_rc_base_seq import *
-logging.info("Entering Driver class of ROOT COMPLEX ")
+
+logging.info("ROOT COMPLEX : Compiling pcie_rc_driver.py file")
 
 from pcie_rc_callback import *
 err_id_f = open("gen_logs/error_id_file.txt","w") 
@@ -18,26 +19,15 @@ class pcie_rc_driver:
     def drive_tx(self):
         num_pkts= argv.num_pkts
         ln = ""
-        logging.info("Entering Driver class of ROOT COMPLEX ")
         ## INFO :Erro injection using commandline arg "--err_eij=1" ##
         for line in bin_f:
             line = line.strip('\n')
-            #print("binfile line[0]",line)
-            #print("length of line",len(line))
             # error injection enable
             if(err_eij):
                 # m is no. of iterations till num_pkts-1
+                # checking whether m is lessthan the no. of error pkts injected
                 if(self.m < num_pkts):
-                    #print(self.m)
-                    
                     # err_id_q is an array with size of err_pkt_no, You can get "err_pkt_no" and err_id_q in pcie_com_file.py
-                    # checking whether m is lessthan the no. of erroe pkts injected
-                    #if(self.m < len(err_id_q)):
-                    #    print("error id for the injection is-> ",err_id_q[self.m])
-                    #    err_id_f.write("error id for the injection is-> ")
-                    #    #err_id_f.write(str(err_id_q[self.m]))
-                    #    err_id_f.write("\n")
-
                     err_eij_hdl = pcie_err_eij()
                     if self.m in arr:
                         #print("m in arr",self.m)

@@ -3,13 +3,16 @@ from pcie_rc_mem_seq import *
 from pcie_com_file import *
 from pcie_rc_com_file import *
 from pcie_rc_generated_logs import *
+
+logging.info("ROOT COMPLEX : Compiling pcie_rc_base_seq.py file")
+
 class pcie_rc_base_seq:
     def __init__(self):
         num_pkts = argv.num_pkts
         super().__init__()
         self.which_seq = 0
     def run(self):
-        print("Main sequence executed")
+        #print("Main sequence executed")
         cfg_seq = pcie_rc_config_pkt()
         mem_seq = pcie_rc_mem_seq()
         for i in range(num_pkts): # as we are sending 128bits
@@ -20,10 +23,6 @@ class pcie_rc_base_seq:
                 cfg_seq.run_cfg()
             #    if __name__ == "__main__":
             #        seq.run()
-#for i in range(g_pkt_queue.qsize()):
-#            bin_q = g_pkt_queue
-#            q = bin_q.get()
-#            print("the g pkt q is ->",q)
 
 base_seq =pcie_rc_base_seq()
 base_seq.run()

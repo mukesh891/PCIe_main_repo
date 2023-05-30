@@ -1,10 +1,12 @@
 from pcie_rc_config_pkt import * 
 #from try_pcie_rc_cfg_base_seq import * 
-
 from pprint import pprint
-class pcie_callbacks:
-    print("This is pcie callback class")
 
+logging.info("ROOT COMPLEX : Compiling pcie_rc_callback.py file")
+
+class pcie_callbacks:
+    def __init__():
+       print("") 
 class pcie_err_eij(pcie_callbacks):
     print("This is pcie_err_eij class")
     #def pcie_requester_id_err_eij(self):

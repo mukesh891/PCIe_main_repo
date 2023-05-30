@@ -1,12 +1,8 @@
-#class cfg_type(IntEnum):
-#   type0 =0
-#   type1 =1
-
+from pcie_lib import *
 import random 
-from pprint import pprint
-
 from enum import IntEnum
-#from bitarray import bitarray
+
+logging.info("ROOT COMPLEX : Compiling pcie_seq_tlp_item_base_pkg.py file")
 
 class pcie_pkg:
     def __init__(self, name="", size_in_bytes=0, xwr=0):

@@ -3,7 +3,8 @@ from pcie_seq_tlp_item_base_pkg import *
 from pcie_rc_com_file import *
 from pcie_com_file import *
 import queue
-print("hello pcie_rc_mem_seq")
+logging.info("ROOT COMPLEX : Compiling pcie_rc_mem_seq.py file")
+
 class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
     def __init__(self):
         self.num_pkts=argv.num_pkts        

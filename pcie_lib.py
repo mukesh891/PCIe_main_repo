@@ -6,4 +6,4 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 from pprint import pprint
 import argparse
-logging.info("HELLO THERE YOU ARE USING LIBRARY_RC")
+logging.info("ROOT COMPLEX : Compiling pcie_lib.py file")

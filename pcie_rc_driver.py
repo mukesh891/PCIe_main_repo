@@ -4,7 +4,7 @@ from err_id_creation import *
 from pcie_rc_generated_logs import *
 
 #from pcie_rc_config_pkt import *
-from pcie_rc_base_seq import *
+from pcie_rc_base_test import *
 
 logging.info("ROOT COMPLEX : Compiling pcie_rc_driver.py file")
 

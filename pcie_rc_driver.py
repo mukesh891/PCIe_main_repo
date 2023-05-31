@@ -19,6 +19,7 @@ class pcie_rc_driver:
     def drive_tx(self):
         num_pkts= argv.num_pkts
         ln = ""
+        err_eij_hdl = pcie_err_eij()
         ## INFO :Erro injection using commandline arg "--err_eij=1" ##
         for line in bin_f:
             line = line.strip('\n')
@@ -28,7 +29,6 @@ class pcie_rc_driver:
                 # checking whether m is lessthan the no. of error pkts injected
                 if(self.m < num_pkts):
                     # err_id_q is an array with size of err_pkt_no, You can get "err_pkt_no" and err_id_q in pcie_com_file.py
-                    err_eij_hdl = pcie_err_eij()
                     if self.m in arr:
                         #print("m in arr",self.m)
                         ## randomly choose between bdf and fmt and type error

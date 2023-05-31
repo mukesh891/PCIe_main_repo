@@ -2,6 +2,16 @@
 #from try_pcie_rc_cfg_base_seq import * 
 import random 
 from pprint import pprint
+#from pcie_ep_err_id import *
+
+
+
+
+'''lines = open("ep_logs/binary_completer.txt","r")
+line_count = 0
+for i in lines:
+            line_count = line_count + 1
+lines.close()'''
 
 error = open("ep_logs/error_inj.txt","w")
 class pcie_callbacks:

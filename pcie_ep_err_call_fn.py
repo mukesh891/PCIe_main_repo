@@ -1,7 +1,7 @@
 #import sys
 #sys.path.append('/home/shanmukh/shanmukh_cell/1_PCIe/checker_temp')
-#from pcie_com_file import *
-#from pcie_ep_com_file import *
+from pcie_com_file import *
+
 from pcie_ep_err_id import *
 #from ep_logs import binary_completer
 from pcie_ep_field_fn import *
@@ -18,7 +18,19 @@ class pcie_ep_err_call:
         self.k=0
         self.err_id=0
     def ep_err_call_fn(self):
-        
+        compl_qsize = pkt_valid_queue.qsize()
+        ep_err_arr = []
+
+        if(ep_err_eij): 
+            while len(ep_err_arr) < ep_err_pkt_no:
+                num = random.randrange(0, compl_qsize)
+                #err_bin_compl.write('giving error {}, total pkts {}\n'.format(num, num_pkts))
+                if num not in ep_err_arr:
+                    ep_err_arr.append(num)
+                    error.write('Injecting error in pkt number {}, total pkts {}\n'.format(num, compl_qsize))
+                ep_err_arr.sort()
+        error.write('print the error list {}\n'.format(ep_err_arr))
+
         #num_pkts= argv.num_pkts
         TLP_error = ""
         
@@ -27,7 +39,7 @@ class pcie_ep_err_call:
             line = line.strip('\n')        
             #err_bin_compl.write('priting pkt from bin compl {}\n'.format(line)) ###############
 
-            compl_qsize = pkt_valid_queue.qsize()
+            
             #err_bin_compl.write('priting num okts from queue {}\n'.format(compl_qsize)) ###############
 
 

@@ -6,6 +6,11 @@ from array import array
 from tabulate import tabulate
 import console_to_log
 
+###### Giving info about the log files###############
+logging.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_config_type0.py file")
+logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The config type transaction : ep_logs/cfg_values.txt")
+
+
 cfg = open('ep_logs/cfg_values.txt', 'w')
 print("ep_cfg_space_type0 block")
 

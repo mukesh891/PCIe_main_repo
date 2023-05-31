@@ -6,6 +6,10 @@ from pcie_ep_err_id import *
 #from ep_logs import binary_completer
 from pcie_ep_field_fn import *
 
+###### Giving info about the log files###############
+logging.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_err_call_fn.py file")
+logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The error injected TLPs : ep_logs/err_binary_completer.txt")
+
 good_compl = open("ep_logs/binary_completer.txt","r") 
 err_bin_compl = open("ep_logs/err_binary_completer.txt","w")
 '''for line1 in good_compl:

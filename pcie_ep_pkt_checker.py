@@ -5,6 +5,13 @@ from pcie_ep_com_file import *
 from tabulate import tabulate
 print("end_point block")
 
+###### Giving info about the log files############### 
+logging.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_pkt_checker.py file")
+logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing howmany pkt recived : ep_logs/received_pkt.txt ")
+logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing howmany valid pkt recived : ep_logs/received_valid_pkt.txt ")
+logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing howmany Invalid pkt recived : ep_logs/received_invalid_pkt.txt ")
+
+
 received_pkt = open("ep_logs/received_pkt.txt","w")
 received_valid_pkt = open("ep_logs/received_valid_pkt.txt","w")
 received_invalid_pkt = open("ep_logs/received_invalid_pkt.txt","w")

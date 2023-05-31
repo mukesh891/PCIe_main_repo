@@ -1,3 +1,13 @@
  pcie callback class
  pcie_ep_field class
-print the error list []
+Injecting error in pkt number 30, total pkts 40
+Injecting error in pkt number 35, total pkts 40
+Injecting error in pkt number 27, total pkts 40
+Injecting error in pkt number 34, total pkts 40
+Injecting error in pkt number 25, total pkts 40
+print the error list [25, 27, 30, 34, 35]
+ TC eij err is 1
+ TH eij err is 1
+ TH eij err is 1
+ TH eij err is 1
+ TH eij err is 1

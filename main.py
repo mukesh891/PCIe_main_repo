@@ -73,8 +73,13 @@ comp1 = ep_pkt_completer()
 #comp1 = tlp_compl_fn()
 check = pcie_rc_rx_pkt_checker()
 
+
+
 for i in range(valid_pkt_size):
 	comp1.pkt_compl_fn(i)
+for i in range(num_ep_pkt_tx):
+	comp1.ep_pkt_tx_fn(i)
+
 
 #check.rc_rx_checker()
 completer_rec.close()
@@ -85,6 +90,13 @@ binary_completer.close()
 
 cfg.close()
 mem.close()
+
+from pcie_ep_cfg_pkt import *
+#cfg_tx.close()
+from pcie_ep_mem_pkt import *
+#mem_tx.close()
+tx_send_ep.close()
+tx_send_ep_bin.close()
 # Stop redirecting console output to the log file
 
 

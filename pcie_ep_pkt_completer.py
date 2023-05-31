@@ -5,7 +5,7 @@ from pcie_ep_pkt_checker import *
 from pcie_ep_config_space_type0 import *
 from pcie_ep_memory_space import *
 from pcie_ep_err_id import *
-
+from pcie_ep_pkt_transmitter import *
 
 from tabulate import tabulate
 
@@ -213,6 +213,12 @@ class ep_pkt_completer(ep_base_pkt):
 		if not ((Type_l == '00000') & (Fmt_l == '010')):
 			binary_completer.write('{}\n'.format(TLP))
 			pkt_valid_queue.put(TLP)
+
+	def ep_pkt_tx_fn(self, pkt_num):
+		TLP = pcie_ep_pkt_transmitter.cfg_mem_tx_fn(self, pkt_num)
+		binary_completer.write('{}\n'.format(TLP))
+		#print('start of ep_tx')
+		pkt_valid_queue.put(TLP)
 
 		
 		

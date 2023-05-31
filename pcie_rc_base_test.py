@@ -30,7 +30,7 @@ class basic_seq_test(pcie_rc_base_test):
         logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX: RUNNING \"cfg_seq_test\"")
         print("---cfg test")
         for i in range(num_pkts):  # as we are sending 128 bits
-            mem_seq.run_mem()
+            cfg_seq.run_cfg()
 
     def cfg_with_mem_seq_test(self):
         logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX: RUNNING \"cfg_with_mem_seq_test\"")

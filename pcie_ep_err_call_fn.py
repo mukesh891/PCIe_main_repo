@@ -27,7 +27,7 @@ class pcie_ep_err_call:
 
         if(ep_err_eij): 
             while len(ep_err_arr) < ep_err_pkt_no:
-                num = random.randrange(0, compl_qsize)
+                num = random.randrange(compl_qsize - num_ep_pkt_tx, compl_qsize)
                 #err_bin_compl.write('giving error {}, total pkts {}\n'.format(num, num_pkts))
                 if num not in ep_err_arr:
                     ep_err_arr.append(num)
@@ -52,7 +52,7 @@ class pcie_ep_err_call:
                     ep_err_inj_hdl = pcie_ep_field()
                     if self.err_id in ep_err_arr:          
                         #err_bin_compl.write('priting error id {}\n'.format(self.err_id))
-                        j = random.choice([0,1])                      
+                        j = random.choice([3, 5])                      
                         if(j==0):
                 
                             fmt = ep_err_inj_hdl.pcie_fmt_err_eij(self.err_id)

@@ -4,7 +4,7 @@ from pcie_com_file import *
 from pcie_rc_com_file import *
 from pcie_rc_generated_logs import *
 
-logging.info("ROOT COMPLEX : Compiling pcie_rc_base_seq.py file")
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_base_test.py file")
 
 class pcie_rc_base_test:
     def __init__(self):
@@ -22,18 +22,18 @@ class pcie_rc_base_test:
         else:
             print(f"Method '{test_name}' not found or not callable.")
 
-class cfg_seq_test(pcie_rc_base_test):
+class basic_seq_test(pcie_rc_base_test):
     def run(self, test_name):
         super().run(test_name)
 
     def cfg_test(self):
-        logging.info("ROOT COMPLEX: RUNNING \"cfg_seq_test\"")
+        logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX: RUNNING \"cfg_seq_test\"")
         print("---cfg test")
-        mem_seq.run_mem()
+        for i in range(num_pkts):  # as we are sending 128 bits
+            mem_seq.run_mem()
 
     def cfg_with_mem_seq_test(self):
-        logging.info("ROOT COMPLEX: Compiling pcie_rc_base_seq.py file")
-        print("memory test")
+        logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX: RUNNING \"cfg_with_mem_seq_test\"")
         for i in range(num_pkts):  # as we are sending 128 bits
             # First 10 packets have to be config type
             if i > 9:
@@ -43,8 +43,8 @@ class cfg_seq_test(pcie_rc_base_test):
 
 cfg_seq = pcie_rc_config_pkt()
 mem_seq = pcie_rc_mem_seq()
-config_test = cfg_seq_test()
-config_test.run(test)
+basic_test = basic_seq_test()
+basic_test.run(test)
 
 g_log=pcie_rc_generated_logs()
 g_log.bin_file_handle()

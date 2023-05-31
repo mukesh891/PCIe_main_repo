@@ -1,8 +1,8 @@
 from pcie_lib import *
 import random 
 from enum import IntEnum
-
-logging.info("ROOT COMPLEX : Compiling pcie_seq_tlp_item_base_pkg.py file")
+from pcie_com_file import *
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_seq_tlp_item_base_pkg.py file")
 
 class pcie_pkg:
     def __init__(self, name="", size_in_bytes=0, xwr=0):

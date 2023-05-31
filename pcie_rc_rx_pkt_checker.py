@@ -1,7 +1,9 @@
-from pcie_com_file import compl_pkt_queue
+from pcie_com_file import *
 #from pcie_seq_rc_config_pkt import *
 from tabulate import tabulate
-print("hello ")
+from pcie_lib import *
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_rx_pkt_checker.py file")
+
 # creating file for completion id check #
 rc_checker_f = open("gen_logs/rc_checker_log.txt","w")
 bin_f = open("gen_logs/rc_mem_bin_file.txt","r")

@@ -6,7 +6,7 @@ from pcie_rc_generated_logs import *
 #from pcie_rc_config_pkt import *
 from pcie_rc_base_test import *
 
-logging.info("ROOT COMPLEX : Compiling pcie_rc_driver.py file")
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_driver.py file")
 
 from pcie_rc_callback import *
 err_id_f = open("gen_logs/error_id_file.txt","w") 
@@ -31,7 +31,6 @@ class pcie_rc_driver:
                     err_eij_hdl = pcie_err_eij()
                     if self.m in arr:
                         #print("m in arr",self.m)
-                        logging.info("Entering err_eij array to inject ")
                         ## randomly choose between bdf and fmt and type error
                         j = random.choice([3])
                         # If j==1 , then "fmt" will be injected with error 

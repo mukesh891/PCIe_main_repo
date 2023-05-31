@@ -1,5 +1,5 @@
 from pcie_rc_com_file import *
-logging.info("ROOT COMPLEX : Compiling pcie_rc_generated_logs.py file")
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_generated_logs.py file")
 class pcie_rc_generated_logs:
     def __init__(self):
         self.tx_no = 0
@@ -10,7 +10,7 @@ class pcie_rc_generated_logs:
             q = bin_q.get()
             f.write(str(q))
             f.write("\n")
-        logging.info("ROOT COMPLEX : Generating gen_logs/rc_tx_good_bin_file.txt log")
+        logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Generating gen_logs/rc_tx_good_bin_file.txt log")
         f.close()
     def hex_file_handle(self):
         bin_f = open("gen_logs/rc_tx_good_bin_file.txt","r")
@@ -26,7 +26,7 @@ class pcie_rc_generated_logs:
                 hex_f.write(hex_val)
             hex_f.write("\n")
         hex_f.close()
-        logging.info("ROOT COMPLEX : Generating gen_logs/rc_tx_good_hex_file.txt log")
+        logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Generating gen_logs/rc_tx_good_hex_file.txt log")
         bin_f.close()
 
     def mem_rd_file_handle(self):
@@ -37,7 +37,7 @@ class pcie_rc_generated_logs:
                 mem_bin_f.write(line)
         bin_f.close()
         mem_bin_f.close()
-        logging.info("ROOT COMPLEX : Generating gen_logs/rc_mem_bin_file.txt log")
+        logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Generating gen_logs/rc_mem_bin_file.txt log")
         
     def gen_log(self):
         bin_f = open("gen_logs/rc_tx_good_bin_file.txt","r")
@@ -276,7 +276,7 @@ class pcie_rc_generated_logs:
 
             self.tx_no=self.tx_no+1
         gen_f.close()
-        logging.info("ROOT COMPLEX : Generating gen_logs/rc_tx_generator_out.txt log")
+        logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Generating gen_logs/rc_tx_generator_out.txt log")
         bin_f.close()
 
       

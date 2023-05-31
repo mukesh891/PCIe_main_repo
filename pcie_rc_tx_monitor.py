@@ -1,8 +1,10 @@
 from tabulate import tabulate
 from pcie_lib import *
+from pcie_com_file import *
 #err_id_f = open("gen_logs/error_id_file.txt","w") 
 #bin_file = open("gen_logs/bin_file.txt","r") 
 #err_bin_file = open("gen_logs/err_bin_file.txt","w")
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_tx_monitor.py file")
 
 rc_monitor_f=open("gen_logs/mon_logs/rc_tx_good_monitor_log.txt","w")
 rc_mixed_monitor_f=open("gen_logs/mon_logs/rc_tx_mixed_monitor_log.txt","w")
@@ -33,7 +35,6 @@ class pcie_rc_tx_monitor:
             Attr0 = line[18:20]
             AT = line[20:22]
             Length = line[22:32]
-            
             #if Fmt == '010' or Fmt=='000' and Typ == '00100':
             #	print("Its a config request")
             #if Fmt == '010' or Fmt=='000' and Typ == '00000':
@@ -48,7 +49,7 @@ class pcie_rc_tx_monitor:
                 Ext_Register_Num = line[84:88]
                 Register_Num = line[88:94]
                 Rsv_11_1 = line[94:96] # reserved byte 11- bit 1:0
-            elif(Type[:-1] == '0000'): # for memo
+            elif(Type == '00000'): # for memo
                 Address = line[64:94]
                 Rsv_11_1 = line[94:96]
             
@@ -64,23 +65,16 @@ class pcie_rc_tx_monitor:
             #else:                                                     # else data is sent 
                 	#	data = int(data_from_cfg, 2)
             #line = line + format(data, data_size)
-            data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id,Tag,Last_DW_BE, First_DW_BE, Completion_Id, Rsv_10_7,Ext_Register_Num, Rsv_11_1, Header, Data]] 
             headers = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id', 'Rsv_10_7', 'Ext_Register_Num', 'Register_Num', 'Rsv_11_1', 'Header', 'Data']
+            if (Type[2] == '1'): # for cfg
+                data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id,Tag,Last_DW_BE, First_DW_BE, Completion_Id, Rsv_10_7,Ext_Register_Num, Rsv_11_1, Header, Data]] 
+            elif(Type == '00000'): # for memo
+                data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id,Tag,Last_DW_BE, First_DW_BE, Address, Rsv_11_1, Header, Data]] 
                 	
             table = tabulate(data, headers=headers, tablefmt='orgtbl')
             rc_monitor_f.write(table)
             rc_monitor_f.write("\n")
             self.i=self.i+1
-            #lines = bin_f.readlines()
-            line = line.strip()  # Remove leading/trailing whitespace
-            line_length = len(line)
-              #total_lines = pcie_rc_gen_monitor(bin_f)
-              #rc_monitor_f.write(f"#  Packet generated from RC!: {line_num}\n Length = {line_length}\n (Generated TLP:)\t {line}\n")
-            rc_monitor_f.write(f"#  Packet generated from RC! \n Generated TLP:\t {line}\n Length of TLP: {line_length}\n")
-            #for line_num, line in enumerate(lines, start=1):
-                #line_count = line(line_num)
-            #return line_count
-        #rc_monitor_f.write(f"#  Total Packets:\t {line_count}\n")
         bin_f.close()
 
     def pcie_rc_driver_monitor(self):
@@ -88,9 +82,9 @@ class pcie_rc_tx_monitor:
         self.i=0
         for line in mixed_bin_f:
         #line = "00000100000000000000000000000001000001011100001001011000000000110000000000000000000000001111000000000000000000000000000000000000"
-            rc_mixed_monitor_f.write("\n\n------------------------------------------------------------------- TLP ")
+            rc_mixed_monitor_f.write("------------------------------------------------------------------- TLP ")
             rc_mixed_monitor_f.write(str(self.i))
-            rc_mixed_monitor_f.write("----------------------------------------------------------------------------------------\n ")
+            rc_mixed_monitor_f.write("---------------------------------------------------------------------------------------- ")
             Fmt = line[0:3]
             Type = line[3:8]
             T9 = line[8]
@@ -127,19 +121,20 @@ class pcie_rc_tx_monitor:
             Header = line[0:96]
             Data = line[96:]
             #data_size = len(line[96:])
-            data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id,Tag,Last_DW_BE, First_DW_BE, Completion_Id, Rsv_10_7,Ext_Register_Num, Rsv_11_1, Header, Data]] 
             headers = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id', 'Rsv_10_7', 'Ext_Register_Num', 'Register_Num', 'Rsv_11_1', 'Header', 'Data']
+            if (Type[2] == '1'): # for cfg
+                data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id,Tag,Last_DW_BE, First_DW_BE, Completion_Id, Rsv_10_7,Ext_Register_Num, Rsv_11_1, Header, Data]] 
+                table = tabulate(data, headers=headers, tablefmt='orgtbl')
+                rc_mixed_monitor_f.write(table)
+            elif(Type == '00000'): # for memo
+                data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id,Tag,Last_DW_BE, First_DW_BE, Address, Rsv_11_1, Header, Data]] 
+                table = tabulate(data, headers=headers, tablefmt='orgtbl')
+                rc_mixed_monitor_f.write(table)
+                
                 	
-            table = tabulate(data, headers=headers, tablefmt='orgtbl')
-            rc_mixed_monitor_f.write(table)
             rc_mixed_monitor_f.write("\n")
             rc_mixed_monitor_f.write("\n")
             self.i=self.i+1
-            #lines1 = mixed_bin_f.readlines()
-            #for line_num, line in enumerate(lines1, start=1):
-            line = line.strip()  # Remove leading/trailing whitespace
-            line_length = len(line)
-            rc_mixed_monitor_f.write(f"#  Packet generated from RC! \n Generated TLP:\t {line}\n Length of TLP: {line_length}\n")
         mixed_bin_f.close()
 
     def compare_files(self,file1_path, file2_path, output_file_path):
@@ -172,5 +167,7 @@ gen_mon = pcie_rc_tx_monitor()
 gen_mon.pcie_rc_gen_monitor()
 gen_mon.pcie_rc_driver_monitor()
 gen_mon.compare_files(file1_path, file2_path, output_file_path)
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Generating gen_logs/mon_logs/rc_tx_good_monitor_log.txt log")
 rc_monitor_f.close()
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Generating gen_logs/mon_logs/rc_tx_mixed_monitor_log.txt log")
 rc_mixed_monitor_f.close()

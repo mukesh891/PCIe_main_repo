@@ -4,7 +4,7 @@ from pcie_com_file import *
 from err_id_creation import *
 #from pcie_com_file import seq_tx_no
 import queue
-logging.info("ROOT COMPLEX : Compiling pcie_rc_config_pkt.py file")
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_config_pkt.py file")
 class pcie_rc_config_pkt(pcie_pkg):
     def __init__(self):
         self.num_pkts=argv.num_pkts        

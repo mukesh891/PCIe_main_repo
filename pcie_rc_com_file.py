@@ -5,7 +5,7 @@ from pcie_com_file import *
 cwd = os.getcwd()
 g_pkt_queue = queue.Queue()
 seq_tx_no = 0
-logging.info("ROOT COMPLEX : Compiling pcie_rc_com_file.py file")
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_com_file.py file")
 
 arr = []
 if(err_eij): 

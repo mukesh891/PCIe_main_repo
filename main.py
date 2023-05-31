@@ -94,6 +94,7 @@ from pcie_ep_err_call_fn import *     # doing import here for err-injection to c
 check.rc_rx_checker()
 rc_checker_f.close()
 #from pcie_ep_err_id import *
+from pcie_rc_memory_space import *
 console_to_log.reset_output()
 
 

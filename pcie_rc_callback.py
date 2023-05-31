@@ -2,7 +2,7 @@ from pcie_rc_config_pkt import *
 #from try_pcie_rc_cfg_base_seq import * 
 from pprint import pprint
 
-logging.info("ROOT COMPLEX : Compiling pcie_rc_callback.py file")
+logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_callback.py file")
 
 class pcie_callbacks:
     def __init__():

@@ -24,7 +24,7 @@ console_to_log.redirect_output_to_file()
 size = pkt_queue.qsize()
 for i in range(size):
 	if not c1.ep_fn(i):
-		print('\n Packet failed the end-point!\n')
+		print('Packet failed the end-point!\n\n\n\n')
     #print('\033[31mPacket failed the end-point!\033[0m')          #for printing in red colour
 		#log_file.write('\n Packet failed the end-point!\n')
 		received_pkt.write('Packet failed the end-point!\n\n')
@@ -32,7 +32,7 @@ for i in range(size):
 		inval_pkt += 1
 		inval_pkt_num.append(i)
 	else:
-		print('\n Packet passed the end-point!\n')
+		print('Packet passed the end-point!\n\n\n\n')
     #print('\033[32mPacket passed the end-point!\n\033[0m')       #for printing in green colour
 		#log_file.write('\n Packet passed the end-point!\n')
 		received_pkt.write('Packet passed the end-point!\n\n')

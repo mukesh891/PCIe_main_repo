@@ -38,7 +38,7 @@ class ep_pkt_completer(ep_base_pkt):
 		if((int(base_TLP[:96], 2) == int(valid_pkts[:96], 2))):		#here i am checking if the packet received from rc and ep_checker is same, because might be some fields got overriten, in that case completion status will be 100 and fmt: 000
 			completer_rec.write('\n Error not injected in end-point \n')
 			header = valid_pkts[0:96]
-			data = valid_pkts[96:128]
+			data = valid_pkts[96:]
 
 			Fmt_l = valid_pkts[0:3]
 			Type_l = valid_pkts[3:8]
@@ -111,9 +111,9 @@ class ep_pkt_completer(ep_base_pkt):
 						#print('v/cfg/read  complter data = {}'.format(completer_data))
 				elif(Type_l[:-1] == '0000'):	 # memory request				
 					if(Fmt_l == '010'):						
-						pcie_ep_memory_space.write_request(pkt_num, int(Address_l, 2), int(data, 2))                    # if request is write/cmpl w/o data than send the data as an argument						
+						pcie_ep_memory_space.write_request(pkt_num, int(Address_l, 2), int(data, 2), int(Length, 2))                    # if request is write/cmpl w/o data than send the data as an argument						
 					elif(Fmt_l == '000'):						
-						completer_data = pcie_ep_memory_space.read_request(pkt_num, int(Address_l, 2))		
+						completer_data = pcie_ep_memory_space.read_request(pkt_num, int(Address_l, 2), int(Length, 2))		
 						#print('v/mem/read addr {}'.format(Address_l))
 						#print('v/mem/read complter data = {}'.format(completer_data))
 			else:                                   # for invalid packets

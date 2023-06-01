@@ -34,68 +34,65 @@ class pcie_ep_field(pcie_callbacks):
         type_l = random.choice([1])
         error.write('PKt num {}: TYPE eij err is {}\n'.format(pkt_num, type_l))
         return type_l
-    def pcie_TC_err_eij(self):
+    def pcie_TC_err_eij(self, pkt_num):
         TC = random.choice([1])
-        error.write(' TC eij err is {}\n'.format(TC))
+        error.write('PKt num {}:  TC eij err is {}\n'.format(pkt_num, TC))
         return TC
-    def pcie_attr1_err_eij(self):
+    def pcie_attr1_err_eij(self, pkt_num):
         Attr1 = random.choice([1])
-        error.write(' ATTR_byte_1_bit_2 eij err is {}\n'.format(Attr1))
+        error.write('PKt num {}:  ATTR_byte_1_bit_2 eij err is {}\n'.format(pkt_num, Attr1))
         return Attr1
-    def pcie_TH_err_eij(self):
+    def pcie_TH_err_eij(self, pkt_num):
         TH = random.choice([1])
-        error.write(' TH eij err is {}\n'.format(TH))
+        error.write('PKt num {}:  TH eij err is {}\n'.format(pkt_num, TH))
         return TH
-    def pcie_TD_err_eij(self):
+    def pcie_TD_err_eij(self, pkt_num):
         TD = random.choice([0])
-        error.write(' TD eij err is {}\n'.format(TD))
+        error.write('PKt num {}:  TD eij err is {}\n'.format(pkt_num, TD))
         return TD
-    def pcie_EP_err_eij(self):
+    def pcie_EP_err_eij(self, pkt_num):
         error.write(" EP eij err\n")
         EP = random.choice([1]) 
-        error.write(' EP eij err is {}\n'.format(EP))
+        error.write('PKt num {}:  EP eij err is {}\n'.format(pkt_num, EP))
         return EP
-    def pcie_attr0_err_eij(self):
+    def pcie_attr0_err_eij(self, pkt_num):
         attr0 = random.choice([3])
-        error.write(' ATTR_byte_3_bit5_4 eij err is {}\n'.format(attr0))
+        error.write('PKt num {}:  ATTR_byte_3_bit5_4 eij err is {}\n'.format(pkt_num, attr0))
         return attr0
-    def pcie_AT_err_eij(self):
+    def pcie_AT_err_eij(self, pkt_num):
         AT = random.choice([1])
-        error.write(' AT eij err is {}\n'.format(AT))
+        error.write('PKt num {}:  AT eij err is {}\n'.format(pkt_num, AT))
         return AT
-    '''def pcie_length_err_eij(self):
+    '''def pcie_length_err_eij(self, pkt_num):
         length = random.choice([0])
-        error.write(' length eij err is {}\n'.format(length))
+        error.write('PKt num {}:  length eij err is {}\n'.format(pkt_num, length))
         return length'''
-    def pcie_Completer_ID_err_eij(self):
+    def pcie_Completer_ID_err_eij(self, pkt_num):
         Completer_ID = random.choice([0])
-        error.write(' Completer_ID eij err is {}\n'.format(Completer_ID))
+        error.write('PKt num {}:  Completer_ID eij err is {}\n'.format(pkt_num, Completer_ID))
         return Completer_ID
-    '''def pcie_Compl_Status_err_eij(self):
+    '''def pcie_Compl_Status_err_eij(self, pkt_num):
         Compl_Status = random.choice([0,2,3,5])
-        error.write(' Compl_Status eij err is {}'.format(Compl_Status))
+        error.write('PKt num {}:  Compl_Status eij err is {}'.format(pkt_num, Compl_Status))
         return Compl_Status'''
-    def pcie_BCM_err_eij(self):
-        error.write(" BCM eij err\n")
+    def pcie_BCM_err_eij(self, pkt_num):
         BCM = random.choice([1])
-        error.write(' BCM eij err is {}\n'.format(BCM))
+        error.write('PKt num {}:  BCM eij err is {}\n'.format(pkt_num, BCM))
         return BCM
-    '''def pcie_Byte_Count_err_eij(self):
+    '''def pcie_Byte_Count_err_eij(self, pkt_num):
         Byte_Count = random.choice([0,2,3,5])
-        error.write(' Byte_Count eij err is {}\n'.format(Byte_Count))
+        error.write('PKt num {}:  Byte_Count eij err is {}\n'.format(pkt_num, Byte_Count))
         return Byte_Count'''
-    def pcie_Requester_ID_err_eij(self):
+    def pcie_Requester_ID_err_eij(self, pkt_num):
         Requester_ID = random.choice([0])
-        error.write(' Requester_ID eij err is {}\n'.format(Requester_ID))
+        error.write('PKt num {}:  Requester_ID eij err is {}\n'.format(pkt_num, Requester_ID))
         return Requester_ID
     '''def pcie_Tag_err_eij(self):
-        error.write(" Tag eij err ")
         Tag = random.choice([13])
-        error.write(' Tag eij err is {}\n'.format(Tag))
+        error.write('PKt num {}:  Tag eij err is {}\n'.format(pkt_num, Tag))
         return Tag'''
     '''def pcie_Lower_Address_err_eij(self):
-        error.write("  eij err ")
         Lower_Address = random.choice([0,1,2,3,5,6,7])
-        error.write(' Lower_Address eij err is {}\n'.format(Lower_Address)))
+        error.write('PKt num {}:  Lower_Address eij err is {}\n'.format(Lower_Address)))
         return Lower_Address'''
     

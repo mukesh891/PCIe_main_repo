@@ -409,7 +409,7 @@ class ep_check_pkt(ep_base_pkt):
 					print('INVALID TLP: for Memory request, Type must be from 0 to 2**8: Value {}'.format(Type_int)) 
 					received_invalid_pkt.write('INVALID TLP: for Memory request, Type must be from 0 to 2**8: Value {}\n'.format(Type_int))
 					false_pkt += 1
-				if not (((Last_DW_BE_int!=0 & LDB!=0) | (Last_DW_BE_int==0 & LDB==0)) == 1):  # must be as per length
+				if not (((Last_DW_BE_int!=0) & (LDB!=0)) | ((Last_DW_BE_int==0) & (LDB==0))):  # must be as per length
 					print('INVALID TLP: for Memory request, last DW BE not as per length: Value {}'.format(Last_DW_BE_int))
 					received_invalid_pkt.write('INVALID TLP: for Memory request, last DW BE not as per length: Value {}\n'.format(Last_DW_BE_int))
 					false_pkt += 1
@@ -473,13 +473,15 @@ class ep_check_pkt(ep_base_pkt):
 			received_invalid_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:])))
 			received_invalid_pkt.write('header is {}, Data is {}\n'.format(hex(Header_int), hex(Data_int)))
 			received_invalid_pkt.write('{}\n'.format(table))
+
+			print('\n*** EP_CHECKER_ERR_ID_{} ***'.format(pkt_num))
+
 			inv_tlp = TLP + '1'   # adding this 1 because, 1 indicates that the error_flag is 1 (as a indication for ERROR from requested TLP)
 			pkt_with_flag_queue.put(inv_tlp)  # sending TLPs(including flag) to another queue so that it will help me during completion process 
 			return False
 		else:
 			received_valid_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:])))
-			received_valid_pkt.write('header is {}, Data is {}\n'.format(hex(Header_int), hex(Data_int)))
-			
+			received_valid_pkt.write('header is {}, Data is {}\n'.format(hex(Header_int), hex(Data_int)))			
 			received_valid_pkt.write('{}\n'.format(table))
 			
       		#need to modify it furthere just made it for checking purpose"

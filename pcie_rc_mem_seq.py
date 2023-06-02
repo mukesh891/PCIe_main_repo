@@ -16,6 +16,7 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         self.raddr = 0
         self.temp =0
         self.temp_1 = 0
+        self.mps = ''
     def mem_pkt(self):
         self.fmt                     = random.choice([0,2])  # 000 = MemRd without data, 010 = MemWr with data
         ##    BDF format for requester and completer    ##
@@ -31,14 +32,7 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         self.length                 = 1 
         self.tag                    = 0 
         self.addresses              = 0
-        if(self.length > 1):
-            self.first_dw_be            = random.choice([10,5,9,11,13])
-            self.last_dw_be             = random.getrandbits(4) 
-        elif(self.length ==1):
-            self.first_dw_be            = random.choice([10,5,9,11,13])
-            self.last_dw_be             = 0 
         
-
        ##### initializing reserved bits to zero ########
         self.reserve_bit1           = 0
         self.reserve_bit2           = 0
@@ -48,25 +42,46 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         ###### Only for FMT = 010b, there will be paylod###########
         self.raddr = self.temp
 
-
+        ## Note: Check for memory write 
         if (self.iter%2 ==0):
             #print("write",self.iter)
             self.fmt = 2
             self.type = 0
             self.temp_1=self.first_dw_be # Purpose of this logic is to ensure that for Mem read req first DW = write req FristDW
-            self.payload    = random.getrandbits(32)
+            ## TODO : Implement the asme code in base file pcie_pkg
+            ## Note: check for payload size
+            if(DW):
+                self.mps = DW 
+                ## Note: max payload = 1024
+                if(self.mps==1024):
+                    self.length = 0                
+                else:
+                    self.length = self.mps                
+                self.payload    = random.getrandbits(32*self.mps)
+
             self.addresses = random.randint(0,63)
             self.addresses -= self.addresses % 4  #The purpose of this code is to ensure that self.addresses is a multiple of 4 or 4 byte aligned
             #print(self.addresses)
+        ## Note: else do for memory read
         elif (self.iter %2==1):
             #print("->read ",self.iter)
             self.type = 0
             self.fmt = 0
             self.first_dw_be = self.temp_1
             self.addresses = self.raddr
+            self.length=self.temp_2
             #print(self.addresses)
             self.payload    = 0
+        if(self.length > 1):
+            self.first_dw_be            = random.choice([10,5,9,11,13])
+            self.last_dw_be             = random.randrange(1,15) 
+        elif(self.length ==1):
+            self.first_dw_be            = random.choice([10,5,9,11,13])
+            self.last_dw_be             = 0 
+        
+
         self.temp=self.addresses
+        self.temp_2=self.length
 
 
     def run_mem(self):
@@ -88,7 +103,11 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         reserve_bit4_str        =format(self.reserve_bit4, '01b')               
         addresses_str           =format(self.addresses, '030b')
         reserve_bit5_str        =format(self.reserve_bit5, '01b') 
-        payload_str             = format(self.payload, '032b')
+        payload_size = f'0{32*self.mps}b'
+        if(self.mps):
+            payload_str             = format(self.payload, payload_size)
+        else:
+            payload_str             = format(self.payload, payload_size )
         ###############################################
         
         ## Concatenating all the value into tlp_pkt in string format of binary value ##

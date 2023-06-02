@@ -19,6 +19,8 @@ class pcie_config_obj:
         parser.add_argument('--ep_err_pkt_no', type= int , help = 'Total no. of error pkt to be injected in completer', default = 0)
         parser.add_argument('--test', type= str , help = 'Total no. of error pkt to be injected in completer', default = 'cfg_test')
         parser.add_argument('--num_ep_pkt_tx', type= int , help = 'Total number of packets generated from end-point', default = 0)
+        parser.add_argument('--DW', type= int , help = 'Maximum payload size to be sent', default = 1,choices=range(1,1024))
+        
 
         return parser.parse_args()
 c=pcie_config_obj
@@ -31,16 +33,17 @@ ep_err_eij = argv.ep_err_eij
 ep_err_pkt_no = argv.ep_err_pkt_no 
 test = argv.test
 num_ep_pkt_tx = argv.num_ep_pkt_tx
-
+DW = argv.DW
 pkt_queue = queue.Queue()
 seq_tx_no = 0
 
 compl_pkt_queue = queue.Queue()
 
-## Format the date and time as a string
-#formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-#
-## Print the formatted date and time using logging.info
-#logging.info(f"Current date and time: {formatted_datetime}")
-	
+
+if(err_pkt_no > num_pkts):
+    logging.fatal("err_pkt_no cannot be grater than num_pkts")
+    sys.exit()
+if(ep_err_pkt_no > num_pkts):
+    logging.fatal("err_pkt_no cannot be grater than num_pkts")
+    sys.exit()
 

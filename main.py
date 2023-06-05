@@ -21,8 +21,10 @@ console_to_log.redirect_output_to_file()
 #bin_f.close()                              #not required here as the its closing inside the generator
 
 
-size = pkt_queue.qsize()
+#size = pkt_queue.qsize()
+size = num_pkts
 for i in range(size):
+	#c1.ep_fn(i)
 	if not c1.ep_fn(i):
 		print('Packet failed the end-point!\n\n\n\n')
     #print('\033[31mPacket failed the end-point!\033[0m')          #for printing in red colour
@@ -92,11 +94,14 @@ cfg.close()
 mem.close()
 
 from pcie_ep_cfg_pkt import *
-#cfg_tx.close()
+
 from pcie_ep_mem_pkt import *
-#mem_tx.close()
+tx_send_ep.write('TOTAL TRANSMITTED TLPs {}\n\n'.format(num_ep_pkt_tx))
 tx_send_ep.close()
 tx_send_ep_bin.close()
+
+
+
 # Stop redirecting console output to the log file
 
 

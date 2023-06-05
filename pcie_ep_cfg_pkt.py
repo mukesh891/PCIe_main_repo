@@ -108,9 +108,9 @@ class pcie_ep_cfg_pkt(ep_base_pkt):
 		#cfg_tx.write(table)
 		#cfg_tx.write('\n\n\n\n')
 
-		tx_send_ep.write('CFG TLP {} : {}\n\n'.format(pkt_num, TLP))
+		tx_send_ep.write('EP_TRANSMITTING CFG TLP {} : {}\n\n'.format(pkt_num, TLP))
 		tx_send_ep.write(table)
-		tx_send_ep.write('\n\n\n\n')
+		tx_send_ep.write('\n\n\n\n\n')
 
 
 

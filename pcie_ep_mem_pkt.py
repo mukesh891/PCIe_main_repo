@@ -95,9 +95,9 @@ class pcie_ep_mem_pkt(ep_base_pkt):
 		#mem_tx.write(table)
 		#mem_tx.write('\n\n\n\n')
 
-		tx_send_ep.write('MEMORY TLP {} : {}\n\n'.format(pkt_num, TLP))
+		tx_send_ep.write('EP_TRANSMITTING MEMORY TLP {} : {}\n\n'.format(pkt_num, TLP))
 		tx_send_ep.write(table)
-		tx_send_ep.write('\n\n\n\n')
+		tx_send_ep.write('\n\n\n\n\n')
 
 		#print('start of mem ep_tx {}'.format(pkt_num))
 		#print('TLP {}'.format(TLP))

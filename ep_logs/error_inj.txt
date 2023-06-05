@@ -1,13 +1,21 @@
- pcie callback class
- pcie_ep_field class
-Injecting error in pkt number 30, total pkts 40
-Injecting error in pkt number 35, total pkts 40
-Injecting error in pkt number 27, total pkts 40
-Injecting error in pkt number 34, total pkts 40
-Injecting error in pkt number 25, total pkts 40
-print the error list [25, 27, 30, 34, 35]
- TC eij err is 1
- TH eij err is 1
- TH eij err is 1
- TH eij err is 1
- TH eij err is 1
+print the error list [21, 22, 24, 26, 27, 28, 29, 31, 33, 34, 35, 36, 37, 38, 40, 43, 44, 46, 48, 49]
+*** EP_TRANSMITTER_ERR_ID_21 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_22 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_24 ***:  TC eij err is 1
+*** EP_TRANSMITTER_ERR_ID_26 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_27 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_28 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_29 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_31 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_33 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_34 ***:  TC eij err is 1
+*** EP_TRANSMITTER_ERR_ID_35 ***:  TC eij err is 1
+*** EP_TRANSMITTER_ERR_ID_36 ***:  TC eij err is 1
+*** EP_TRANSMITTER_ERR_ID_37 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_38 ***:  TC eij err is 1
+*** EP_TRANSMITTER_ERR_ID_40 ***:  TC eij err is 1
+*** EP_TRANSMITTER_ERR_ID_43 ***:  TC eij err is 1
+*** EP_TRANSMITTER_ERR_ID_44 ***:  TC eij err is 1
+*** EP_TRANSMITTER_ERR_ID_46 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_48 ***:  TH eij err is 1
+*** EP_TRANSMITTER_ERR_ID_49 ***:  TC eij err is 1

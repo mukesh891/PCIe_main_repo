@@ -33,7 +33,8 @@ class ep_pkt_completer(ep_base_pkt):
 
 		completer_rec.write('\n priting {} request TLP from RC {} -- {} \n'.format(req, pkt_num, valid_pkts))
 
-		base_TLP = ep_base_pkt.checker_fn_base(self, pkt_num)   # getting the request TLP directly from base
+		#base_TLP = ep_base_pkt.checker_fn_base(self, pkt_num)   # getting the request TLP directly from base
+		base_TLP = base_rec_queue.queue[pkt_num]
 
 		if((int(base_TLP[:96], 2) == int(valid_pkts[:96], 2))):		#here i am checking if the packet received from rc and ep_checker is same, because might be some fields got overriten, in that case completion status will be 100 and fmt: 000
 			completer_rec.write('\n Error not injected in end-point \n')
@@ -101,7 +102,7 @@ class ep_pkt_completer(ep_base_pkt):
 			else:
 				Lower_address = format(0, '07b')     # excluding memory read compl & atomic compl, byte count must be 0
 		
-			
+			#completer_data = data
 			if(int(temp_valid_pkts[-1], 2) == 0):   # for valid packets
 				if(Type_l[2] == '1'):	# cfg request				
 					if(Fmt_l == '010'):						

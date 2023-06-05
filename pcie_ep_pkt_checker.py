@@ -29,7 +29,8 @@ class ep_check_pkt(ep_base_pkt):
 		log_file.write('inherited TLP is {}\n'.format(TLP))'''
 
 		print('********************************* TLP number {} **********************************'.format(pkt_num))
-		print('inherited TLP is {}\n'.format(TLP))
+		#print('inherited TLP is {}\n'.format(TLP))
+		print('TLP {} from EP checker : {}\n'.format(pkt_num, TLP))
 		Fmt = TLP[0:3]		
 		Type = TLP[3:8]
 		T9 = TLP[8]

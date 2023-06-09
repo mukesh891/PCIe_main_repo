@@ -9,7 +9,7 @@ MAX_PAYLOAD = 32 # 3DW
 CFG_SPACE = 256 * 2**3
 # Define the queue as a dictionary with offset addresses as keys and values as lists of random data
 
-logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_memory_space.py file")
+logger.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_memory_space.py file")
 
 def memory_space():
     ## Note : to open the rc_rx_good_bin_file.txt in read format to get the payload to be written to ep memory

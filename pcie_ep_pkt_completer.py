@@ -10,9 +10,9 @@ from pcie_ep_err_call_fn import *
 from tabulate import tabulate
 import time, random
 ###### Giving info about the log files###############
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_pkt_completer.py file")
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The complition TLP : ep_logs/completer_rec.txt")
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing compltion TLP present in the queue which is transmiting to RC : ep_logs/binary_completer.txt  ")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_pkt_completer.py file")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The complition TLP : ep_logs/completer_rec.txt")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing compltion TLP present in the queue which is transmiting to RC : ep_logs/binary_completer.txt  ")
 
 completer_rec = open('ep_logs/completer_rec.txt', 'w')
 binary_completer = open('ep_logs/binary_completer.txt', 'w')

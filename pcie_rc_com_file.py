@@ -1,11 +1,12 @@
 import os,queue
 import argparse
-import random,logging 
+import random 
 from pcie_com_file import *
+from pcie_lib import *
 cwd = os.getcwd()
 g_pkt_queue = queue.Queue()
 seq_tx_no = 0
-logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_com_file.py file")
+logger.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_com_file.py file")
 
 rc_error_count_for_write_mem = 0
 rc_error_count_for_read_mem = 0

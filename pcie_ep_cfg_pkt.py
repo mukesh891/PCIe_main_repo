@@ -4,9 +4,9 @@ import random
 from tabulate import tabulate
 from pcie_com_file import *
 
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_cfg_pkt.py file")
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For Generation of CFG/MEM TLP : ep_logs/ep_tx_send_pkt.txt")
-#logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For Generation of CFG TLP : ep_logs/ep_cfg_pkt.txt")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_cfg_pkt.py file")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For Generation of CFG/MEM TLP : ep_logs/ep_tx_send_pkt.txt")
+#logger.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For Generation of CFG TLP : ep_logs/ep_cfg_pkt.txt")
 
 
 

@@ -6,7 +6,7 @@ from pcie_rc_generated_logs import *
 #from pcie_rc_config_pkt import *
 from pcie_rc_base_test import *
 
-logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_driver.py file")
+logger.info(f"{formatted_datetime} \t\t\t\tROOT COMPLEX : Compiling pcie_rc_driver.py file")
 
 bin_f = open("gen_logs/rc_tx_good_bin_file.txt","r") 
 err_id_f = open("gen_logs/error_id_file.txt","w") 

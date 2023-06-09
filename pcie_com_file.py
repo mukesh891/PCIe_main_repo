@@ -3,9 +3,16 @@ import argparse
 import random 
 import logging
 import datetime
+import inspect
 current_datetime = datetime.datetime.now()
-formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+file_path = inspect.currentframe().f_code.co_filename
+line_no = inspect.currentframe().f_lineno
+file_name = os.path.basename(file_path)
+
+formatted_dt = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+formatted_datetime = f"{formatted_dt} \t"#- {file_name}:{line_no}"
 cwd = os.getcwd()
+
 
 
 class pcie_config_obj:
@@ -48,9 +55,9 @@ fixed_ecrc_divisor = '10101010101010101010101010101010'
 
 
 if(err_pkt_no > num_pkts):
-    logging.fatal("err_pkt_no cannot be grater than num_pkts")
+    logger.fatal("err_pkt_no cannot be grater than num_pkts")
     sys.exit()
 if(ep_err_pkt_no > num_pkts):
-    logging.fatal("err_pkt_no cannot be grater than num_pkts")
+    logger.fatal("err_pkt_no cannot be grater than num_pkts")
     sys.exit()
 

@@ -1,13 +1,14 @@
 #from pcie_rc_config_pkt import * 
 #from try_pcie_rc_cfg_base_seq import * 
 import random 
+from pcie_lib import *
 from pprint import pprint
 from pcie_com_file import *
 #from pcie_ep_err_id import *
 
 ###### Giving info about the log files###############
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_field_fn.py file")
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The error injected IDs : ep_logs/error_inj.txt")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_field_fn.py file")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The error injected IDs : ep_logs/error_inj.txt")
 
 
 

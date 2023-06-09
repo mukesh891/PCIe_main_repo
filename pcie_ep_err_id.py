@@ -3,7 +3,7 @@ from pcie_ep_field_fn import *
 import random
 
 ###### Giving info about the log files###############
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Entering to pcie_ep_err_id.py file")
+logger.info(f"{formatted_datetime} \t\t\t\t END-POINT : Entering to pcie_ep_err_id.py file")
 
 pkt_valid_queue = queue.Queue()
 #//////////////////////////////////////////

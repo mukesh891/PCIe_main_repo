@@ -6,8 +6,8 @@ from pcie_ep_com_file import *
 from tabulate import tabulate
 
 ###### Giving info about the log files###############
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_memory_space.py file")
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The memory transaction : ep_logs/memory_contents.txt")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_memory_space.py file")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The memory transaction : ep_logs/memory_contents.txt")
 
 print("ep_memory_space block")
 

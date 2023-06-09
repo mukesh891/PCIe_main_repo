@@ -2,7 +2,8 @@ from pcie_com_file import *
 from pcie_rc_com_file import *
 from tabulate import tabulate
 from pcie_lib import *
-logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_rx_pkt_checker.py file")
+logger.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_rx_pkt_checker.py file")
+logger.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_rx_pkt_checker.py file")
 import queue
 req_queue = queue.Queue()
 tag_queue = queue.Queue()
@@ -379,6 +380,13 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                         str_payload= ep_queue[96:len(ep_queue)-32]       #        
                         str_ecrc = ep_queue[len(ep_queue)-32:]       #        
 
+                    if(len(str_payload)%32 == 0):
+                        pass
+                    else:
+                        logger.error("PAYLOAD SIZE IS UNALLIGNED, LENGTH OF PAYLOAD IS : {}".format(len(str_payload)))
+
+
+
                     tlp_packet_without_ecrc  = ep_queue[:len(ep_queue)-32]
                     integer_tlp_value = int(tlp_packet_without_ecrc , 2)
                     ecrc_divisor = int(fixed_ecrc_divisor, 2)
@@ -387,11 +395,11 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                     ecrc_value = bin(integer_ecrc_value)[2:].zfill(32)
                     print("----------------->",str_ecrc, ecrc_value)
                     if(ecrc_value == str_ecrc):
-                        logging.info("EP ecrc value MISMATCHES with calculated ecrc value : EP ECRC : {} , CALCULATED ECRC : {} \n".format(int(ecrc_value,2) , int(str_ecrc,2)))
-                        rc_checker_f.write("EP ecrc value MATCHES with calculated ecrc value : EP ECRC : {} , CALCULATED ECRC : {} \n".format(int(ecrc_value,2) , int(str_ecrc,2)))
+                        logger.info("EP ecrc value MISMATCHES with calculated ecrc value : Recieved pkt : {} \n EP ECRC : {} , CALCULATED ECRC : {} \n".format(ep_queue,int(ecrc_value,2) , int(str_ecrc,2)))
+                        rc_checker_f.write("EP ecrc value MATCHES with calculated ecrc value : Recieved pkt : {} \n EP ECRC : {} , CALCULATED ECRC : {} \n".format(ep_queue,int(ecrc_value,2) , int(str_ecrc,2)))
                     else:
-                        rc_checker_f.write("EP ecrc value MISMATCHES with calculated ecrc value : EP ECRC : {} , CALCULATED ECRC : {} \n".format(int(ecrc_value,2) , int(str_ecrc,2)))
-                        #logging.error("EP ecrc value MISMATCHES with calculated ecrc value : EP ECRC : {} , CALCULATED ECRC : {} \n".format(int(ecrc_value,2) , int(str_ecrc,2)))
+                        rc_checker_f.write("EP ecrc value MISMATCHES with calculated ecrc value : Recieved pkt : {} \n EP ECRC : {} , CALCULATED ECRC : {} \n".format(ep_queue,int(ecrc_value,2) , int(str_ecrc,2)))
+                        #logger.error("EP ecrc value MISMATCHES with calculated ecrc value : EP ECRC : {} , CALCULATED ECRC : {} \n".format(int(ecrc_value,2) , int(str_ecrc,2)))
                         
                     
                     ##
@@ -586,7 +594,7 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                                                         ep_err_pkts_with_compl.append(iteration)       
                                                 # else :str_th
                                                 else:
-                                                    rc_checker_f.write("INVALID  RECIEVED:  CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,1)] VALUE RECIEVED : {}".format(int(str_ln,2)))
+                                                    rc_checker_f.write("INVALID TH RECIEVED: th CANNOT BE NEGATIVE or GREATER THAN 1 [Note : Please check and assign the value with in the range(0,1)] VALUE RECIEVED : {}".format(int(str_th,2)))
                                                     rc_checker_f.write("\n")
                                                     rc_checker_f.write("\n")
                                                     bad_pkts=bad_pkts+1                                                                                                
@@ -691,9 +699,9 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
                     total_pkts_from_ep =ep_cfg_read_req_pkts_rcvd + ep_cfg_write_req_pkts_rcvd + ep_mem_read_req_rcvd + ep_mem_write_req_rcvd
                     if(total_pkts_from_ep == num_ep_pkt_tx):
                         rc_checker_f.write("total_pkts_from_ep = {}\n".format(str(total_pkts_from_ep)))
-                        logging.info("Total packets transmitted from EP side matches with total packet recieved et RC side: EP num pkts: {} , RC recieved num pkts: {}\n".format(str(total_pkts_from_ep),str(num_ep_pkt_tx)))
+                        logger.info("Total packets transmitted from EP side matches with total packet recieved et RC side: EP num pkts: {} , RC recieved num pkts: {}\n".format(str(total_pkts_from_ep),str(num_ep_pkt_tx)))
                 #else:
-                #    logging.error("Total packets transmitted from EP side doesnt matcthes with total packet recieved et RC side: EP num pkts: {} , RC recieved num pkts: {}\n".format(str(total_pkts_from_ep),str(num_ep_pkt_tx)))
+                #    logger.error("Total packets transmitted from EP side doesnt matcthes with total packet recieved et RC side: EP num pkts: {} , RC recieved num pkts: {}\n".format(str(total_pkts_from_ep),str(num_ep_pkt_tx)))
                  
                 final_err_eij = err_pkt_no - rc_error_count_for_write_mem
                 rc_checker_f.write("RC_error_injected = err_pkt_no : {}\n".format(str(err_pkt_no)))  
@@ -709,7 +717,7 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
         bin_f.close()
            
             #for j in range(len(ep_err_pkts_with_compl)):
-            #    logging.info("error error entering arr_error")
+            #    logger.info("error error entering arr_error")
             #    
             #    ep_err_arr_positive = [abs(num) for num in ep_err_arr]
           
@@ -720,7 +728,7 @@ class pcie_rc_rx_pkt_checker:#(pcie_seq_rc_config_pkt):
         #        rc_checker_f.write("injected packet from ep side MATCHES with detected error packet from RC checker side : EP injected pkt no : {} , RC detected error pke no : {}\n".format(str(ep_err_pkts_with_compl[j],str(ep_err_arr_sorted[j]))))  
         #    else:
         #        rc_checker_f.write("injected packet from ep side MISMATCH with detected error packet from RC checker side : EP injected pkt no : {} , RC detected error pke no : {}\n".format(str(ep_err_pkts_with_compl[j],str(ep_err_arr_sorted[j]))))  
-        #        logging.warning("injected packet from ep side MISMATCH with detected error packet from RC checker side : EP injected pkt no : {} , RC detected error pke no : {}\n".format(str(ep_err_pkts_with_compl[j],str(ep_err_arr_sorted[j]))))  
+        #        logger.warning("injected packet from ep side MISMATCH with detected error packet from RC checker side : EP injected pkt no : {} , RC detected error pke no : {}\n".format(str(ep_err_pkts_with_compl[j],str(ep_err_arr_sorted[j]))))  
 
 
                  

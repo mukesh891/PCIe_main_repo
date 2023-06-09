@@ -9,8 +9,8 @@ from pcie_final_ep_tx_table_file import *
 
 
 ###### Giving info about the log files###############
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_err_call_fn.py file")
-logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The error injected TLPs : ep_logs/err_binary_completer.txt")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_err_call_fn.py file")
+logger.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The error injected TLPs : ep_logs/err_binary_completer.txt")
 
 
 

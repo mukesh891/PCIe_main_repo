@@ -3,7 +3,7 @@ from pcie_seq_tlp_item_base_pkg import *
 from pcie_rc_com_file import *
 from pcie_com_file import *
 import queue
-logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_mem_seq.py file")
+logger.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_mem_seq.py file")
 
 class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
     def __init__(self):
@@ -69,7 +69,7 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
             self.first_dw_be            = random.choice([10,5,9,11,13])
             self.last_dw_be             = 0
         elif(self.length > mps):
-            logging.fatal("Length cannot be greater than 1024 i.e MAX_PAYLOAD_SIZE : 1024")
+            logger.fatal("Length cannot be greater than 1024 i.e MAX_PAYLOAD_SIZE : 1024")
         temp_dw = DW
         mps_width = f'0{32*mps}b'
         #for j in range(6):

@@ -4,7 +4,7 @@ from pcie_com_file import *
 from pcie_rc_com_file import *
 from pcie_rc_generated_logs import *
 
-logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_base_test.py file")
+logger.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_base_test.py file")
 
 class pcie_rc_base_test:
     def __init__(self):
@@ -27,13 +27,13 @@ class basic_seq_test(pcie_rc_base_test):
         super().run(test_name)
 
     def cfg_test(self):
-        logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX: RUNNING \"cfg_seq_test\"")
+        logger.info(f"{formatted_datetime} \t\t\tROOT COMPLEX: RUNNING \"cfg_seq_test\"")
         print("---cfg test")
         for i in range(num_pkts):  # as we are sending 128 bits
             cfg_seq.run_cfg()
 
     def cfg_with_mem_seq_test(self):
-        logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX: RUNNING \"cfg_with_mem_seq_test\"")
+        logger.info(f"{formatted_datetime} \t\t\tROOT COMPLEX: RUNNING \"cfg_with_mem_seq_test\"")
         for i in range(num_pkts):  # as we are sending 128 bits
             # First 10 packets have to be config type
             if i > 9:

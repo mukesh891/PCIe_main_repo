@@ -102,7 +102,7 @@ class pcie_rc_config_pkt(pcie_pkg):
         ###############################################
         
         ## Concatenating all the value into tlp_pkt in string format of binary value ##
-        tlp_packet = (str(fmt_str)+str(type_str)+str(self.reserve_bit1)+
+        tlp_packet_without_ecrc  = (str(fmt_str)+str(type_str)+str(self.reserve_bit1)+
         str(tc_str        )+str(self.reserve_bit2)+
         str(attr1_str     )+
         str(self.reserve_bit3)+
@@ -124,7 +124,20 @@ class pcie_rc_config_pkt(pcie_pkg):
         str(payload_str))
         ##################################################################################
         
+        #ECRC Value Conversion
+        integer_tlp_value = int(tlp_packet_without_ecrc , 2)
+        ecrc_divisor = int(fixed_ecrc_divisor, 2)
+        integer_ecrc_value = integer_tlp_value % ecrc_divisor 
+        #remainder = integer_value % fixed_integer_value
+        ecrc_value = bin(integer_ecrc_value)[2:].zfill(32)
+        tlp_packet = (str(tlp_packet_without_ecrc )+str(ecrc_value))
+        ##################################################################################
+
+        ##putting the tlp packet into txt file ##
+        #TLP_Packet_f.write(f" integer_tlp_value:{integer_tlp_value }\n ecrc_divisor :{ecrc_divisor}\n ecrc:{integer_ecrc_value}\n{tlp_packet_with_ecrc}\n") 
+        #TLP_Packet_f.write(f"{tlp_packet_with_ecrc}\n")
         ## puting the tlp_packet into queue ##
         g_pkt_queue.put(tlp_packet)
+        #self.iter = self.iter+1
         #print("->",tlp_packet)
         ## Writing the tlp_packet into the hex_fil.txt ##

@@ -18,7 +18,7 @@ class pcie_ep_mem_pkt(ep_base_pkt):
 		super.__init__(self)
 		
 	
-	def mem_tx_fn(self, pkt_num):
+	def mem_tx_fn(pkt_num):
 		Fmt = random.choice([0, 2])	
 		Type = random.choice([0])	
 		T9 = 0
@@ -88,8 +88,19 @@ class pcie_ep_mem_pkt(ep_base_pkt):
 
 		TLP = Fmt_str + Type_str + T9_str + TC_str + T8_str + Attr1_str + LN_str + TH_str + TD_str + EP_str + Attr0_str + AT_str + Length_str + Requester_Id_str + Tag_str + Last_DW_BE_str +First_DW_BE_str + Address_str + Rsv_11_1_str + Payload_str
 
-		pkt_tlp_tb = [[ Fmt_str, Type_str, T9_str, TC_str, T8_str, Attr1_str, LN_str, TH_str, TD_str, EP_str, Attr0_str, AT_str, Length_str, Requester_Id_str, Tag_str, Last_DW_BE_str, First_DW_BE_str, Address_str,Rsv_11_1_str,Payload_str, '']]
-		names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Address_str','Rsv_11_1','Payload_str', '']
+
+		if(TD == '1'):
+			ECRC = int(TLP, 2) % int(fixed_ecrc_divisor, 2)
+			TLP = TLP + format(ECRC, '032b')
+		else:
+			ECRC = None
+			TLP = TLP
+
+
+
+
+		pkt_tlp_tb = [[ Fmt_str, Type_str, T9_str, TC_str, T8_str, Attr1_str, LN_str, TH_str, TD_str, EP_str, Attr0_str, AT_str, Length_str, Requester_Id_str, Tag_str, Last_DW_BE_str, First_DW_BE_str, Address_str,Rsv_11_1_str,Payload_str, ECRC, '']]
+		names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Address_str','Rsv_11_1','Payload_str', 'ECRC', '']
 		table = tabulate(pkt_tlp_tb, headers=names, tablefmt='orgtbl')
 		#mem_tx.write('MEMORY TLP {} : {}\n\n'.format(pkt_num, TLP))
 		#mem_tx.write(table)

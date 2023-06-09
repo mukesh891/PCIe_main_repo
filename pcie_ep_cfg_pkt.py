@@ -21,7 +21,7 @@ class pcie_ep_cfg_pkt(ep_base_pkt):
 		super.__init__(self)
 
 
-	def cfg_tx_fn(self, pkt_num):
+	def cfg_tx_fn(pkt_num):
 		Fmt = random.choice([0, 2])	
 		Type = 5
 		T9 = 0
@@ -30,7 +30,7 @@ class pcie_ep_cfg_pkt(ep_base_pkt):
 		Attr1 = 0
 		LN = 0
 		TH = 0
-		TD = 0
+		TD = 1
 		EP = 0
 		Attr0 = 0
 		AT = 0
@@ -95,14 +95,23 @@ class pcie_ep_cfg_pkt(ep_base_pkt):
 		if(Fmt_str[1] == '1'):
 			Payload = random.getrandbits(32*1)
 		else:
-			Payload = 0
-		
+			Payload = 0		
 		Payload_str = format(Payload, '032b')
 
 		TLP = Fmt_str + Type_str + T9_str + TC_str + T8_str + Attr1_str + LN_str + TH_str + TD_str + EP_str + Attr0_str + AT_str + Length_str + Requester_Id_str + Tag_str + Last_DW_BE_str +First_DW_BE_str + Completion_Id_str + Rsv_10_7_str + Ext_Register_Num_str + Register_Num_str + Rsv_11_1_str + Payload_str
 		
-		pkt_tlp_tb = [[ Fmt_str, Type_str, T9_str, TC_str, T8_str, Attr1_str, LN_str, TH_str, TD_str, EP_str, Attr0_str, AT_str, Length_str, Requester_Id_str, Tag_str, Last_DW_BE_str, First_DW_BE_str, Completion_Id_str,Rsv_10_7_str, Ext_Register_Num_str, Register_Num_str,Rsv_11_1_str,Payload_str, '']]
-		names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id','Rsv_10_7', 'Ext_Register_Num', 'Register_Num','Rsv_11_1','Payload_str', '']
+		
+		if(TD == '1'):
+			ECRC = int(TLP, 2) % int(fixed_ecrc_divisor, 2)
+			TLP = TLP + format(ECRC, '032b')
+		else:
+			ECRC = None
+			TLP = TLP
+
+
+
+		pkt_tlp_tb = [[ Fmt_str, Type_str, T9_str, TC_str, T8_str, Attr1_str, LN_str, TH_str, TD_str, EP_str, Attr0_str, AT_str, Length_str, Requester_Id_str, Tag_str, Last_DW_BE_str, First_DW_BE_str, Completion_Id_str,Rsv_10_7_str, Ext_Register_Num_str, Register_Num_str,Rsv_11_1_str,Payload_str, ECRC, '']]
+		names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id','Rsv_10_7', 'Ext_Register_Num', 'Register_Num','Rsv_11_1','Payload_str', 'ECRC', '']
 		table = tabulate(pkt_tlp_tb, headers=names, tablefmt='orgtbl')
 		#cfg_tx.write('CFG TLP {} : {}\n\n'.format(pkt_num, TLP))
 		#cfg_tx.write(table)

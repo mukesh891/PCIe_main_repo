@@ -1,4 +1,4 @@
-#from pcie_ep_com_file import *
+from pcie_com_file import *
 #from pcie_ep_base import *
 from pcie_ep_com_file import *
 from pcie_ep_pkt_checker import *
@@ -6,9 +6,9 @@ from pcie_ep_config_space_type0 import *
 from pcie_ep_memory_space import *
 from pcie_ep_err_id import *
 from pcie_ep_pkt_transmitter import *
-
+from pcie_ep_err_call_fn import *
 from tabulate import tabulate
-
+import time, random
 ###### Giving info about the log files###############
 logging.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_pkt_completer.py file")
 logging.info(f"{formatted_datetime} \t\t\t END-POINT : Creating log For knowing The complition TLP : ep_logs/completer_rec.txt")
@@ -18,14 +18,10 @@ completer_rec = open('ep_logs/completer_rec.txt', 'w')
 binary_completer = open('ep_logs/binary_completer.txt', 'w')
 
 class ep_pkt_completer(ep_base_pkt):
-	def pkt_compl_fn(self, pkt_num):
+	def pkt_compl_fn(pkt_num, err_eij):
 		temp_valid_pkts = pkt_with_flag_queue.queue[pkt_num]   # getting the request TLP from queue (stored by ep_checker)
 		valid_pkts = temp_valid_pkts[:-1]                      #since last bit is for flat, not including the last bit
 		
-		
-		#print('packet {} \n' '{}'.format(pkt_num, valid_pkts))
-		#completer_rec.write('priting packet {} from completer\n' '{}\n'.format(pkt_num, valid_pkts))
-		#completer_rec.write('priting packet including flag {} from completer\n' '{}\n'.format(pkt_num, temp_valid_pkts))
 		if(valid_pkts[5] == '1'):
 			req = 'CFG'
 		elif(valid_pkts[3:7] == '0000'):
@@ -39,8 +35,15 @@ class ep_pkt_completer(ep_base_pkt):
 		if((int(base_TLP[:96], 2) == int(valid_pkts[:96], 2))):		#here i am checking if the packet received from rc and ep_checker is same, because might be some fields got overriten, in that case completion status will be 100 and fmt: 000
 			completer_rec.write('\n Error not injected in end-point \n')
 			header = valid_pkts[0:96]
-			data = valid_pkts[96:]
-
+			td_l = valid_pkts[16]
+			if(int(td_l, 2)):
+				data = valid_pkts[96:len(valid_pkts)-32]
+				ECRC = valid_pkts[-32:]
+			else:
+				data = valid_pkts[96:]
+				ECRC = None
+			
+			
 			Fmt_l = valid_pkts[0:3]
 			Type_l = valid_pkts[3:8]
 			length_l = valid_pkts[22:32]
@@ -80,8 +83,8 @@ class ep_pkt_completer(ep_base_pkt):
 			Attr1 = valid_pkts[13]               # must be same as request
 			LN = format(0, '01b')                # LN is clear since request is not LN read/write
 			TH = format(0, '01b')
-			TD = valid_pkts[16]
-			EP = valid_pkts[17]
+			TD = format(0, '01b')
+			EP = format(0, '01b')
 			Attr0 = valid_pkts[18:20]            # must be same as request
 			AT = format(0, '02b')                # must be 0 for receivers
 			Length = valid_pkts[22:32]
@@ -130,7 +133,9 @@ class ep_pkt_completer(ep_base_pkt):
 						completer_data = format(0, '032b')
 						#print('inv/mem/read complter data = {}'.format(completer_data))
 						
-					
+
+			
+			
 					
 
 		else:
@@ -192,6 +197,7 @@ class ep_pkt_completer(ep_base_pkt):
 
 		#TLP = format(0, '0128b')   #default set
 		TLP = Fmt + Type + T9 + TC + T8 + Attr1 + LN + TH + TD + EP + Attr0 + AT + Length + Completion_Id + Compl_status + BCM + Byte_count + Requester_Id + Tag + Rsv_11_7 + Lower_address
+
 		data_size = '0' + str(32 * int(Length, 2)) + 'b'      # data size must always be equal to length in DW
 
 
@@ -202,8 +208,17 @@ class ep_pkt_completer(ep_base_pkt):
 			data = int(str(completer_data), 2)
 			TLP = TLP + format(data, data_size)
 		
-		data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Completion_Id, Compl_status,BCM,Byte_count, Requester_Id,Tag,Rsv_11_7,Lower_address,'']]
-		headers = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length','Completion_Id', 'Compl_status', ' BCM' ,'Byte_count', 'Requester_Id', 'Tag','Rsv_11_7', 'Lower_address', '']
+
+		if(TD == '1'):
+			ECRC = int(TLP, 2) % int(fixed_ecrc_divisor, 2)
+			TLP = TLP + format(ECRC, '032b')
+		else:
+			ECRC = None
+			TLP = TLP 
+
+
+		data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Completion_Id, Compl_status,BCM,Byte_count, Requester_Id,Tag,Rsv_11_7,Lower_address, ECRC, '']]
+		headers = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length','Completion_Id', 'Compl_status', ' BCM' ,'Byte_count', 'Requester_Id', 'Tag','Rsv_11_7', 'Lower_address', 'ECRC', '']
 		
 		table = tabulate(data, headers=headers, tablefmt='orgtbl')
 		completer_rec.write(table)
@@ -212,14 +227,30 @@ class ep_pkt_completer(ep_base_pkt):
 		
 		
 		if not ((Type_l == '00000') & (Fmt_l == '010')):
+			start_time = time.time()
 			binary_completer.write('{}\n'.format(TLP))
+			if delay_en:
+				random_delay = 2 #random.uniform(1, 2)
+				time.sleep(random_delay)
+			else:
+				print("no delay")
 			pkt_valid_queue.put(TLP)
+			pcie_ep_err_call.ep_err_call_fn(pkt_num, TLP, err_eij)
+			end_time = time.time()
+			err_bin_compl2.write("\nTotal Execution Time: {} seconds".format(end_time - start_time))
+			err_bin_compl2.write('\n\n\n\n\n')
+		
 
-	def ep_pkt_tx_fn(self, pkt_num):
-		TLP = pcie_ep_pkt_transmitter.cfg_mem_tx_fn(self, pkt_num)
+	def ep_pkt_tx_fn(pkt_num, err_eij):
+		start_time = time.time()
+		TLP = pcie_ep_pkt_transmitter.cfg_mem_tx_fn(pkt_num)
 		binary_completer.write('{}\n'.format(TLP))
 		#print('start of ep_tx')
 		pkt_valid_queue.put(TLP)
+		pcie_ep_err_call.ep_err_call_fn(pkt_num, TLP, err_eij)
+		end_time = time.time()
+		err_bin_compl2.write("\nTotal Execution Time: {} seconds".format(end_time - start_time))
+		err_bin_compl2.write('\n\n\n\n\n')
 
 		
 		

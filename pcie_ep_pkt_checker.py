@@ -17,13 +17,21 @@ received_valid_pkt = open("ep_logs/received_valid_pkt.txt","w")
 received_invalid_pkt = open("ep_logs/received_invalid_pkt.txt","w")
 #log_file = open("log.txt", "w")
 
+
+inval_pkt = {'index':0}
+val_pkt = {'index':0}
+inval_pkt_num = [];
+val_pkt_num = [];
+
+
+
+
 class ep_check_pkt(ep_base_pkt):
 
 
-	def ep_fn(self, pkt_num):
-		TLP = ep_base_pkt.checker_fn_base(self, pkt_num)
-		received_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:])))
-		received_pkt.write('header is {}, Data is {}\n'.format(hex(int(TLP[0:96], 2)), hex(int(TLP[96:], 2))))
+	def ep_fn(pkt_num):
+		TLP = ep_base_pkt.checker_fn_base(pkt_num)
+		
 
 		'''log_file.write('\n\n********************************* TLP number {} **********************************\n'.format(pkt_num))
 		log_file.write('inherited TLP is {}\n'.format(TLP))'''
@@ -64,22 +72,48 @@ class ep_check_pkt(ep_base_pkt):
 
 
 		Header = TLP[0:96]
-		Data = TLP[96:]
+		cfg3_size = 32*3 + 32
+		mem3_size = 32*3 + 32*int(Length, 2)
+		mem4_size = 32*4 + 32*int(Length, 2)
+		if(Type[2] == '1'):
+			size_crc = cfg3_size + 32
+		elif((Type[:-1] == '0000') & (Fmt[-1] == '0')):
+			size_crc = mem3_size + 32
+		elif((Type[:-1] == '0000') & (Fmt[-1] == '1')):
+			size_crc = mem4_size + 32
+
+
+
+		if(int(TD, 2) & (len(TLP) == size_crc)):
+			Data = TLP[96:len(TLP)-32]
+			TLP_wo_ecrc = TLP[:len(TLP)-32]
+			ECRC = int(TLP[-32:], 2)
+		else:
+			Data = TLP[96:]
+			TLP_wo_ecrc = TLP
+			ECRC = None
+
+		received_pkt.write('TLP: {} {} {}\n'.format(Header, Data, ECRC))
+		received_pkt.write('header is {}, Data is {}, ECRC {}\n'.format( hex(int(Header, 2)), hex(int(Data, 2)), ECRC))
 
 
 		if (Type[2] == '1'):            # for cfg
-			pkt_tlp_tb = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id,Rsv_10_7, Ext_Register_Num, Register_Num,Rsv_11_1,Data, '']]
-			names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id','Rsv_10_7', 'Ext_Register_Num', 'Register_Num','Rsv_11_1','Data', '']
+			pkt_tlp_tb = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Completion_Id,Rsv_10_7, Ext_Register_Num, Register_Num,Rsv_11_1,Data, ECRC if int(TD, 2) else 'NONE' , '']]
+			names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id','Rsv_10_7', 'Ext_Register_Num', 'Register_Num','Rsv_11_1','Data', 'ECRC', '']
 			table = tabulate(pkt_tlp_tb, headers=names, tablefmt='orgtbl')
 			print(table)
 		#log_file.write(table)
 		elif(Type[:-1] == '0000'):      # for memory
-			pkt_tlp_tb = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Address, Rsv_11_1,Data, '']]
-			names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Address','Rsv_11_1','Data', '']
+			pkt_tlp_tb = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id, Tag, Last_DW_BE, First_DW_BE, Address, Rsv_11_1,Data,  ECRC if int(TD, 2) else 'NONE' ,'']]
+			names = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Address','Rsv_11_1','Data', 'ECRC', '']
 			table = tabulate(pkt_tlp_tb, headers=names, tablefmt='orgtbl')
 			print(table)
 
-
+		if(TD == '1'):
+			ECRC_check = int(TLP_wo_ecrc, 2) % int(fixed_ecrc_divisor, 2)			
+		else:
+			ECRC_check = None
+			
 		
 		
 		Fmt_int = int(Fmt, 2)		
@@ -232,6 +266,14 @@ class ep_check_pkt(ep_base_pkt):
 				false_pkt += 1
 			'''else:
 				true_pkt += 1'''
+
+
+
+			# ECRC check 
+			if(ECRC_check != ECRC):
+				print('TLP is INVALID due to ECRC Mismatch between RC and EP: RC-ECRC {} and EP-ECRC {}'.format(ECRC, ECRC_check))
+				received_invalid_pkt.write('TLP is INVALID due to ECRC Mismatch between RC and EP: RC-ECRC {} and EP-ECRC {}'.format(ECRC, ECRC_check))
+				false_pkt += 1
         
         
 
@@ -275,10 +317,10 @@ class ep_check_pkt(ep_base_pkt):
 					print('INVALID TLP: for CFG request, TH is not ZERO: Value {}'.format(TH_int))
 					received_invalid_pkt.write('INVALID TLP: for CFG request, TH is not ZERO: Value {}\n'.format(TH_int))
 					false_pkt += 1
-				''''if not (TD_int==0):    # must be reserved for cfg
-					print('INVALID TLP: for CFG request, TD is not ZERO: Value {}'.format(TD_int))
-					received_invalid_pkt.write('INVALID TLP: for CFG request, TD is not ZERO: Value {}\n'.format(TD_int))
-					false_pkt += 1'''
+				if not (((TD_int==1) & (ECRC != None)) | ((TD_int==0) & (ECRC == None))):    # must be reserved for cfg
+					print('INVALID TLP: for CFG request, ECRC is not as per TD: TD {}, ECRC {}'.format(TD_int, ECRC))
+					received_invalid_pkt.write('INVALID TLP: for CFG request, ECRC is not as per TD: TD {}, ECRC {}\n'.format(TD_int, ECRC))
+					false_pkt += 1
 				if not (EP_int==0):    # will be 0
 					print('INVALID TLP: for CFG request, EP is not ZERO: Value {}'.format(EP_int))
 					received_invalid_pkt.write('INVALID TLP: for CFG request, EP is not ZERO: Value {}\n'.format(EP_int))
@@ -335,7 +377,7 @@ class ep_check_pkt(ep_base_pkt):
 					print('INVALID TLP: for CFG request, DATA should be 1DW: Length in bits {} SIZE of Data{}'.format(32*Length_int, len(Data))) 
 					received_invalid_pkt.write('INVALID TLP: for CFG request, DATA should be 1DW: Length in bits {} SIZE of Data{}\n'.format(32*Length_int, len(Data)))
 					false_pkt += 1			
-				if not (len(TLP) == (32*4)):   #TLP  size must be 4DW (including 1DW data)
+				if not (len(TLP) == (32*3) + 32 + (32 if TD_int else 0)):   #TLP  size must be 4DW (including 1DW data)
 					print('INVALID TLP: for CFG request, LENGTH of the TLP must be 4DW (including 1DW data): TLP size {}'.format(len(TLP))) 
 					received_invalid_pkt.write('INVALID TLP: for CFG request, LENGTH of the TLP must be 4DW (including 1DW data): TLP size {}\n'.format(len(TLP)))
 					false_pkt += 1
@@ -382,10 +424,10 @@ class ep_check_pkt(ep_base_pkt):
 					print('INVALID TLP: for Memory request, TH is not ZERO: Value {}'.format(TH_int))
 					received_invalid_pkt.write('INVALID TLP: for Memory request, TH is not ZERO: Value {}\n'.format(TH_int))
 					false_pkt += 1
-				''''if not (TD_int==0):    # must be reserved for Memory
-					print('INVALID TLP: for Memory request, TD is not ZERO: Value {}'.format(TD_int))
-					received_invalid_pkt.write('INVALID TLP: for Memory request, TD is not ZERO: Value {}\n'.format(TD_int))
-					false_pkt += 1'''
+				if not (((TD_int==1) & (ECRC != None)) | ((TD_int==0) & (ECRC == None))):    # 
+					print('INVALID TLP: for Memory request, ECRC is not as per TD: TD {}, ECRC {}'.format(TD_int, ECRC))
+					received_invalid_pkt.write('INVALID TLP: for Memory request, ECRC is not as per TD: TD {}, ECRC {}\n'.format(TD_int, ECRC))
+					false_pkt += 1
 				if not (EP_int == 0):    # will be 0
 					print('INVALID TLP: for Memory request, EP is not ZERO: Value {}'.format(EP_int))
 					received_invalid_pkt.write('INVALID TLP: for Memory request, EP is not ZERO: Value {}\n'.format(EP_int))
@@ -430,7 +472,7 @@ class ep_check_pkt(ep_base_pkt):
 					print('INVALID TLP: for Memory request, DATA is not matching with Lenght: Length in bits {} SIZE of Data{}'.format(32*Length_int, len(Data))) 
 					received_invalid_pkt.write('INVALID TLP: for Memory request, DATA should be 1DW: Length in bits {} SIZE of Data{}'.format(32*Length_int, len(Data)))
 					false_pkt += 1			
-				if not (len(TLP) == (32*3) + (32*Length_int) + (32 if int(Fmt[-1], 2) else 0)):   #TLP  size must be 4DW (including 1DW data) + 1DW (if header is 4 DW )
+				if not (len(TLP) == (32*3) + (32*Length_int) + (32 if int(Fmt[-1], 2) else 0) + (32 if TD_int else 0)):   #TLP  size must be 4DW (including 1DW data) + 1DW (if header is 4 DW )
 					print('INVALID TLP: for Memory request, LENGTH of TLP must be 4DW (including 1DW data) + 1DW (if header is 4 DW ): Length of TLP {}'.format(len(TLP))) 
 					received_invalid_pkt.write('INVALID TLP: for Memory request, LENGTH of the TLP must be 4DW (including 1DW data) + 1DW (if header is 4 DW ): Length of TLP {}'.format(len(TLP)))
 					false_pkt += 1
@@ -459,8 +501,11 @@ class ep_check_pkt(ep_base_pkt):
 				Data = ldata3 + ldata2 + ldata1 + ldata0 + Data[-((32*Length_int)-32):-32] + fdata3 + fdata2 + fdata1 + fdata0
 			
 
-		TLP = 0
-		TLP = Header + Data
+		#TLP = 0
+		if(int(TD, 2) & (len(TLP) == size_crc)):
+			TLP = Header + Data + format(ECRC, '032b')
+		else:
+			TLP = Header + Data 
 
 		Header_int = int(Header, 2)
 		Data_int = int(Data, 2)
@@ -471,20 +516,36 @@ class ep_check_pkt(ep_base_pkt):
 		inv_tlp = format(0, tlp_flag_size)
 
 		if(false_pkt):
-			received_invalid_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:])))
-			received_invalid_pkt.write('header is {}, Data is {}\n'.format(hex(Header_int), hex(Data_int)))
+			received_invalid_pkt.write('TLP: {} {} {}\n'.format(Header, Data, ECRC))
+			received_invalid_pkt.write('header is {}, Data is {}, ECRC {}\n'.format( hex(int(Header, 2)), hex(int(Data, 2)), ECRC))
 			received_invalid_pkt.write('{}\n'.format(table))
 
 			print('\n*** EP_CHECKER_ERR_ID_{} ***'.format(pkt_num))
+			inval_pkt_num.append(pkt_num)
+			inval_pkt['index'] = inval_pkt['index'] + 1
+
+			print('Packet failed the end-point!')
+			#print('\033[31mPacket failed the end-point!\033[0m')          #for printing in red colour
+			#log_file.write('\n Packet failed the end-point!\n')
+			received_pkt.write('Packet failed the end-point!\n\n')
+			received_invalid_pkt.write('Packet failed the end-point!\n\n\n\n\n')
 
 			inv_tlp = TLP + '1'   # adding this 1 because, 1 indicates that the error_flag is 1 (as a indication for ERROR from requested TLP)
 			pkt_with_flag_queue.put(inv_tlp)  # sending TLPs(including flag) to another queue so that it will help me during completion process 
 			return False
 		else:
-			received_valid_pkt.write('TLP: {} {}\n'.format((TLP[0:96]), (TLP[96:])))
-			received_valid_pkt.write('header is {}, Data is {}\n'.format(hex(Header_int), hex(Data_int)))			
+			received_valid_pkt.write('TLP: {} {} {}\n'.format(Header, Data, ECRC))
+			received_valid_pkt.write('header is {}, Data is {}, ECRC {}\n'.format( hex(int(Header, 2)), hex(int(Data, 2)), ECRC))		
 			received_valid_pkt.write('{}\n'.format(table))
-			
+
+			val_pkt_num.append(pkt_num)
+			val_pkt['index'] = val_pkt['index'] + 1
+			print('Packet passed the end-point!')
+			 #print('\033[32mPacket passed the end-point!\n\033[0m')       #for printing in green colour
+			#log_file.write('\n Packet passed the end-point!\n')
+			received_pkt.write('Packet passed the end-point!\n\n')
+			received_valid_pkt.write('Packet passed the end-point!\n\n\n\n\n')
+
       		#need to modify it furthere just made it for checking purpose"
 			if(pkt_num==5):
 				#print('pkt num is 5')
@@ -492,3 +553,7 @@ class ep_check_pkt(ep_base_pkt):
 			v_tlp = TLP + '0'   # adding this 0 because, 0 indicates that the error_flag is 0 (as a indication for NO ERROR from requested TLP)
 			pkt_with_flag_queue.put(v_tlp)  # sending TLPs(including flag) to another queue so that it will help me during completion process 
 			return True
+
+class call_checker_class():
+	def call_checker_fn(pkt_num):
+		ep_check_pkt.ep_fn(pkt_num)

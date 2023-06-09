@@ -56,8 +56,8 @@ class pcie_rc_tx_monitor:
             
             
             Header = line[0:96]
-            Data = line[96:]
-            #data_size = len(line[96:])
+            Data = line[96:len(line)-32]
+            ecrc  = line[len(line)-32:]
             
             #if((int(Fmt[1], 2) == 1) | (int(temp_valid_pkts[-1], 2) != 0)):  # data will be zero if either packet is invalid or config write line
                 	#	data = 0
@@ -119,8 +119,8 @@ class pcie_rc_tx_monitor:
             
             
             Header = line[0:96]
-            Data = line[96:]
-            #data_size = len(line[96:])
+            Data = line[96:len(line)-32]
+            ecrc  = line[len(line)-32:]
             headers = [ 'Fmt', 'Type', 'T9', 'TC', 'T8', 'Attr1', 'LN', 'TH', 'TD', 'EP', 'Attr0', 'AT', 'Length', 'Requester_Id', 'Tag', 'Last_DW_BE', 'First_DW_BE', 'Completion_Id', 'Rsv_10_7', 'Ext_Register_Num', 'Register_Num', 'Rsv_11_1', 'Header', 'Data']
             if (Type[2] == '1'): # for cfg
                 data = [[ Fmt, Type,T9, TC, T8, Attr1, LN, TH, TD, EP, Attr0, AT, Length, Requester_Id,Tag,Last_DW_BE, First_DW_BE, Completion_Id, Rsv_10_7,Ext_Register_Num, Rsv_11_1, Header, Data]] 

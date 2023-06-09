@@ -20,6 +20,9 @@ class pcie_config_obj:
         parser.add_argument('--test', type= str , help = 'Total no. of error pkt to be injected in completer', default = 'cfg_test')
         parser.add_argument('--num_ep_pkt_tx', type= int , help = 'Total number of packets generated from end-point', default = 0)
         parser.add_argument('--DW', type= int , help = 'Maximum payload size to be sent', default = 1,choices=range(1,1024))
+        parser.add_argument('--mps', type= int , help = 'Maximum payload size to be sent', default = 3,choices=range(1,10))
+        parser.add_argument('--delay_en', type= int , help = 'Total no. of error pkt to be injected in completer', default = 0)
+
         
 
         return parser.parse_args()
@@ -34,10 +37,14 @@ ep_err_pkt_no = argv.ep_err_pkt_no
 test = argv.test
 num_ep_pkt_tx = argv.num_ep_pkt_tx
 DW = argv.DW
+mps = argv.mps
+delay_en= argv.delay_en
+
 pkt_queue = queue.Queue()
 seq_tx_no = 0
 
 compl_pkt_queue = queue.Queue()
+fixed_ecrc_divisor = '10101010101010101010101010101010'
 
 
 if(err_pkt_no > num_pkts):

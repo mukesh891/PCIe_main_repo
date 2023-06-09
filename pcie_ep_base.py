@@ -1,4 +1,4 @@
-import random
+import random, time
 import console_to_log
 #from pkt_dict import *
 from pcie_com_file import *
@@ -31,11 +31,21 @@ class ep_base_pkt():
 		Last_DW_BE = 0
 		First_DW_BE = 0	
 	
-	def checker_fn_base(self, pkt_num):
+	def checker_fn_base(pkt_num):
 		
 		TLP = format(0, '0128b')   #default set
 		#TLP = pkt_queue.queue[pkt_num]
+		'''while pkt_queue.empty():'''
+		#time.sleep(5)
+
+		start_time = time.time()
+		#TLP = pkt_queue.queue[pkt_num]
 		TLP = pkt_queue.get()
+		end_time = time.time()
+		delay  = end_time - start_time
+		current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+		print('Current Time in TLP pkt {} from EP : {}\n'.format(pkt_num, current_time))
+		#print('DELAY: {}s : TLP {} from EP base class : {}\n'.format(delay, pkt_num, TLP))
 		print('TLP {} from EP base class : {}\n'.format(pkt_num, TLP))
 		base_rec_queue.put(TLP)
 		#tlp_temp = base_rec_queue.queue[pkt_num]

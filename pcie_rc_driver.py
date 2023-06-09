@@ -1,5 +1,5 @@
 from pcie_lib import *
-#from pcie_com_file import *
+#from pcie_rc_com_file import *
 from err_id_creation import *
 from pcie_rc_generated_logs import *
 
@@ -8,23 +8,41 @@ from pcie_rc_base_test import *
 
 logging.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_driver.py file")
 
-from pcie_rc_callback import *
-err_id_f = open("gen_logs/error_id_file.txt","w") 
 bin_f = open("gen_logs/rc_tx_good_bin_file.txt","r") 
+err_id_f = open("gen_logs/error_id_file.txt","w") 
 err_bin_f = open("gen_logs/rc_tx_mixed_bin_file.txt","w")
+from pcie_rc_callback import *
 class pcie_rc_driver:
     def __init__(self):
         self.k=0
         self.m=0
-    def drive_tx(self):
         num_pkts= argv.num_pkts
         ln = ""
+    def drive_tx(self):
+        global rc_error_count_for_write_mem
+        global rc_error_count_for_read_mem
         err_eij_hdl = pcie_err_eij()
+        line = bin_f.readline()
+        line = line.replace("\n","")
         ## INFO :Erro injection using commandline arg "--err_eij=1" ##
-        for line in bin_f:
-            line = line.strip('\n')
+        if line:
+            #line = line.strip('\n')
             # error injection enable
+            if delay_en:
+                random_delay = 0.5 #random.uniform(1, 2)
+                #print('time in RC {}s, TLP: {}\n'.format(random_delay,tlp_packet))
+                time.sleep(random_delay)
+                current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+                print('Current Time in TLP pkt {} from RC : {}\n'.format(num_pkts, current_time))
+                ## TODO: IMPLEMENT DELAY VARIABLE
+            else:
+                print("no delay")
+
             if(err_eij):
+                if(line[:8] == '01000000'):
+                    rc_error_count_for_write_mem = rc_error_count_for_write_mem+1
+                elif(line[:8] == '00000000'):
+                    rc_error_count_for_read_mem = rc_error_count_for_read_mem+1
                 # m is no. of iterations till num_pkts-1
                 # checking whether m is lessthan the no. of error pkts injected
                 if(self.m < num_pkts):
@@ -39,10 +57,7 @@ class pcie_rc_driver:
                             fmt_str                 =format(fmt, '03b')       
                             #print("modified fmt->",fmt_str) 
                             ln =fmt_str+line[3:]
-                            err_id_f.write("FMT_ERROR_")
-                            err_id_f.write(fmt_str)
-                            err_id_f.write(str(err_id_q[self.k][self.m]))
-                            err_id_f.write("\n")
+                            err_id_f.write("FMT_ERROR_{}_{}\n".format((fmt_str),str(err_id_q[self.k][self.m])))
                             err_id_f.write(ln)
                             err_bin_f.write(ln)
                             pkt_queue.put(ln)
@@ -65,10 +80,7 @@ class pcie_rc_driver:
                             TC_str=format(TC, '03b')       
                             #print(TC_str) 
                             ln = line[:9]+TC_str+line[12:] 
-                            err_id_f.write("TC_ERROR_")
-                            err_id_f.write(TC_str)
-                            err_id_f.write(str(err_id_q[self.k][self.m]))
-                            err_id_f.write("\n")
+                            err_id_f.write("TC_ERROR_{}_{}\n".format((TC_str),str(err_id_q[self.k][self.m])))
                             err_id_f.write(ln)
                             err_bin_f.write(ln)
                             pkt_queue.put(ln)
@@ -251,20 +263,20 @@ class pcie_rc_driver:
             err_bin_f.write("\n")
             err_id_f.write("\n")
 
-        err_bin_f.close()
-        bin_f.close()
+        #err_bin_f.close()
+        #bin_f.close()
+        #err_id_f.close() 
 
-p = pcie_rc_driver()
+#p = pcie_rc_driver()
 #tx = pcie_seq_rc_config_pkt()
 #for i in range(num_pkts):
 #tx.cfg0_pkt() 
-p.drive_tx()
+#p.drive_tx()
 #p.err_eij_file_handle()
 #with open("err_bin_file.txt","w") as file:
 #    file.writelines(contents)
 #err_bin_f.close()
-err_id_f.close() 
-from pcie_rc_tx_monitor import *
+#from pcie_rc_tx_monitor import *
 
 
 

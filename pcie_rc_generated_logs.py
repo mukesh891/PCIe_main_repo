@@ -70,11 +70,14 @@ class pcie_rc_generated_logs:
                 ext_register_num = line[84:88]
                 register_num = line[88:94]
                 reserve_bit5 = line[94:96]       # reserved byte 11- bit 1:0
-                payload = line[96:]
+                payload = line[96:len(line)-32]
+                ecrc = line[len(line)-32:]
+
             elif(typ == '00000'):      # for memory
                 addresses = line[64:94]
                 reserve_bit4 = line[94:96] 
-                payload = line[96:]
+                payload = line[96:len(line)-32]
+                ecrc = line[len(line)-32:]
         	
 
             '''
@@ -262,6 +265,9 @@ class pcie_rc_generated_logs:
                 gen_f.write("payload = ")
                 gen_f.write(str(hex(int(payload,2))))
                 gen_f.write("\n")
+                gen_f.write("ECRC = ")
+                gen_f.write(str(hex(int(ecrc,2))))
+                gen_f.write("\n")
             elif(int(typ,2) == 0):      # for memory
                 gen_f.write("Address  = ")
                 gen_f.write(str(hex(int(addresses,2))))
@@ -271,6 +277,9 @@ class pcie_rc_generated_logs:
                 #gen_f.write("\n")
                 gen_f.write("payload = ")
                 gen_f.write(str(hex(int(payload,2))))
+                gen_f.write("\n")
+                gen_f.write("ECRC = ")
+                gen_f.write(str(hex(int(ecrc,2))))
                 gen_f.write("\n")
 			
 

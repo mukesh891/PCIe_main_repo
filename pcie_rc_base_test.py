@@ -51,4 +51,6 @@ g_log.bin_file_handle()
 g_log.hex_file_handle()
 g_log.gen_log()
 g_log.mem_rd_file_handle()
+#from pcie_rc_memory_space import *
+#gen_memory_space()
 

@@ -3,6 +3,7 @@ from pcie_seq_tlp_item_base_pkg import *
 from pcie_rc_com_file import *
 from pcie_com_file import *
 import queue
+from pcie_rc_memory_space import *
 logger.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_mem_seq.py file")
 
 class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
@@ -105,6 +106,8 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
                 ## TODO : Implement the asme code in base file pcie_pkg
                  
                 self.payload            = self.chunk_data[self.i]
+
+                logger.info("$$$$$$$$$$$$$$$$$$$$$$   payload is {} $$$$$$$$$$$$$$$$$$$$$$$".format(self.payload))
                 if(self.i==0):
                     pass
                 else:
@@ -112,9 +115,6 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
                     self.addresses           = self.addresses + mps  #The purpose of this code is to ensure that self.addresses is a multiple of 4 or 4 byte aligned
                     
                 
-                #if(self.i==0):
-                #    self.temp_length = self.length
-                #    self.temp_addr   = self.addresses
                 self.i += 1
         ## Note: else do for memory read
         elif (self.iter %2==1):
@@ -174,13 +174,7 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
         reserve_bit4_str        =format(self.reserve_bit4, '01b')               
         addresses_str           =format(self.addresses, '030b')
         reserve_bit5_str        =format(self.reserve_bit5, '01b') 
-        #payload_size = f'0{32*mps}b'
-        #if(mps):
-        #    payload_str             = format(self.payload, payload_size)
-        #else:
-        #    payload_str             = format(self.payload, payload_size )
-        ###############################################
-        
+                
         ## Concatenating all the value into tlp_pkt in string format of binary value ##
         tlp_packet_without_ecrc = (str(fmt_str)+str(type_str)+str(self.reserve_bit1)+
         str(tc_str        )+str(self.reserve_bit2)+
@@ -216,22 +210,35 @@ class pcie_rc_mem_seq(pcie_pkg): #Extending from base class
 
         ##################################################################################
 
-        ##putting the tlp packet into txt file ##
-        #TLP_Packet_f.write(f" integer_tlp_value:{integer_tlp_value }\n ecrc_divisor :{ecrc_divisor}\n ecrc:{integer_ecrc_value}\n{tlp_packet_with_ecrc}\n") 
-        #TLP_Packet_f.write(f"{tlp_packet_with_ecrc}\n")
         ## puting the tlp_packet into queue ##
         g_pkt_queue.put(tlp_packet)
         #self.iter = self.iter+1
-        ## Writing the tlp_packet into the hex_fil.txt ###c = pcie_rc_mem_seq()
+        
+    def write_to_mem_space(self):
+        logger.info("$$$$$$$$$$$$$$$$$$$$$$   payload is {} $$$$$$$$$$$$$$$$$$$$$$$".format(self.payload))
+        if self.length < mps:
+            write_modify_data(self.addresses, '0b'+self.payload, self.length)
+        else:
+            write_modify_data(self.addresses, '0b'+self.payload, mps)
+
+
+
+
     def run_mem(self):
 
+        ## NOTE : For memory write ,multiple tx will be sent if DW > MPS
         if(self.iter % 2 ==0 ):
             for i in range(self.num_tx):
                 self.mem_pkt()
                 self.run_mem_str()
+                self.write_to_mem_space()
+
+
+        ## NOTE : For memory read 
         else:
             self.mem_pkt()
             self.run_mem_str()
 
+    
 
 

@@ -220,6 +220,8 @@ class pcie_ep_err_call:
                 #err_bin_compl.write('{}\n'.format(pkt))
 
             err_id['index'] = err_id['index'] +1
+
+
             compl_pkt_queue.put(TLP)
             err_bin_compl.write('{}\n'.format(TLP))
             pcie_final_ep_tx_table_file.pcie_final_ep_tx_table_fn(err_id['index'] - 1, TLP)

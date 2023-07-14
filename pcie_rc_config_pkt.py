@@ -130,8 +130,12 @@ class pcie_rc_config_pkt(pcie_pkg):
         integer_ecrc_value = integer_tlp_value % ecrc_divisor 
         #remainder = integer_value % fixed_integer_value
         ecrc_value = bin(integer_ecrc_value)[2:].zfill(32)
-        tlp_packet = (str(tlp_packet_without_ecrc )+str(ecrc_value))
-        ##################################################################################
+        if self.td:
+            tlp_packet = (str(tlp_packet_without_ecrc)+str(ecrc_value))
+        else:
+            tlp_packet = tlp_packet_without_ecrc
+
+         ##################################################################################
 
         ##putting the tlp packet into txt file ##
         #TLP_Packet_f.write(f" integer_tlp_value:{integer_tlp_value }\n ecrc_divisor :{ecrc_divisor}\n ecrc:{integer_ecrc_value}\n{tlp_packet_with_ecrc}\n") 

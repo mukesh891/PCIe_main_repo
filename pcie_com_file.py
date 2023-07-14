@@ -27,10 +27,11 @@ class pcie_config_obj:
         parser.add_argument('--test', type= str , help = 'Total no. of error pkt to be injected in completer', default = 'cfg_test')
         parser.add_argument('--num_ep_pkt_tx', type= int , help = 'Total number of packets generated from end-point', default = 0)
         parser.add_argument('--DW', type= int , help = 'Maximum payload size to be sent', default = 1,choices=range(1,1024))
-        parser.add_argument('--mps', type= int , help = 'Maximum payload size to be sent', default = 3,choices=range(1,10))
+        parser.add_argument('--mps', type= int , help = 'Maximum payload size to be sent', default = 3,choices=range(1,20))
         parser.add_argument('--delay_en', type= int , help = 'Total no. of error pkt to be injected in completer', default = 0)
+        parser.add_argument('--RCB64_en', type= bool , help = 'for enabling RCB to read 64 bytes at 1 time', default = 1)
+        parser.add_argument('--RCB128_en', type= bool , help = 'for enabling RCB to read 128 bytes at 1 time', default = 0)
 
-        
 
         return parser.parse_args()
 c=pcie_config_obj
@@ -46,7 +47,8 @@ num_ep_pkt_tx = argv.num_ep_pkt_tx
 DW = argv.DW
 mps = argv.mps
 delay_en= argv.delay_en
-
+RCB64_en = argv.RCB64_en
+RCB128_en = argv.RCB128_en
 pkt_queue = queue.Queue()
 seq_tx_no = 0
 

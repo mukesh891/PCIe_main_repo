@@ -1,3 +1,9 @@
+import os
+
+os.system("rm -rf mem.txt")
+with open("mem.txt", "w") as file:
+    print("mem.txt file created")
+    
 import random, time
 import concurrent.futures
 #from pkt_dict import *
@@ -15,6 +21,8 @@ from pcie_rc_rx_pkt_checker import *
 #from pcie_ep_memory_space import *
 
 import console_to_log
+
+
 
 
 

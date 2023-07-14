@@ -13,6 +13,9 @@ rc_error_count_for_read_mem = 0
 ep_to_rc_err_eij_arr = []
 
 packet_numbers = 0
+
+ep_good_pkts_rcvd = []
+ep_bad_pkts_rcvd = []
 #arr = []
 #if(err_eij): 
 #    while len(arr) < err_pkt_no:

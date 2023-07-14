@@ -1,121 +1,94 @@
-from pcie_com_file import *
-import random
-import re
-mem_queue = {}
-RC_BASE_ADDR = 0x10000
-EP_BASE_ADDR = 0x100000
-MAX_PAYLOAD = 32 # 3DW
-## 256kb of configuration space ##
-CFG_SPACE = 256 * 2**3
-# Define the queue as a dictionary with offset addresses as keys and values as lists of random data
+import logging,os
+#os.system("rm -rf /gen_logs/memory.txt")
+#with open("/gen_logs/memory.txt", "w") as file:
+#    print("file created")
+def write_modify_data(address,data,length):
 
-logger.info(f"{formatted_datetime} \t\t\tROOT COMPLEX : Compiling pcie_rc_memory_space.py file")
+    def is_address_present(address):
+        with open("gen_logs/memory.txt", "r") as file:
+            lines = file.readlines()
+            for line in lines:
+                line = line.strip()
+                if line:
+                    line_address, data = line.strip().split()
+                #print(int(line_address,16))
+                    if int(line_address,16) == address:
+                        print("check for address  line_address macth", address, line_address)
+                        return True
+        return False
 
-def memory_space():
-    ## Note : to open the rc_rx_good_bin_file.txt in read format to get the payload to be written to ep memory
-    bin_f = open("gen_logs/rc_tx_good_bin_file.txt","r")
-    ## Note : Write the rc memory space for completion check 
-    mem_f = open("gen_logs/rc_memory.txt","w")
-    for line in bin_f:  # range for 1kb addr offset
-        line = line.strip('\n')        
-        if((line[:3] == '010') and (line[3:8] == '00000')) or ((line[:3] in ['000','010']) and (line[3:8] in '00100')):
-            offset = line[89:94]
-            first_dw_be = line[60:64]
-            data0 = line[96:]
-            length = line[22:32]
-            for j in range(int(length,2)):
-                data = data0[(j*32):32*(j+1)]
+    def write_data_to_mem_space(address, data, length):
+        with open("gen_logs/memory.txt", "a") as file:
+            #bin_data = bin(data)[2:].zfill(length * 32)
+            length = int(str(length),2)
+            hex_data = hex(int(data,2))[2:].zfill(length * 2)
+            len_data = len(data)//32
+            if(len_data == length ):
+                for i in range(0, len(hex_data), 2):
+                    byte = str(hex_data[i:i + 2])
+                    #file.write(f"0x{address + i // 2:02X} 0x{byte}\n")
+                    file.write("0x{:02X} 0x{}\n".format(int(address,2) + i // 2, byte))
+            else:
+                logging.error("Write data fn: Inavlid length or data entered, length = {}dw , len_data = {}dw, hex data = {}, bin_data = {}".format(length,len_data,hex_data,data))
 
-                #mem_f.write(str(j))
-                #mem_f.write(" dw")
-                #mem_f.write(data)
-                #mem_f.write("\n")
-                for i in range(0,(int(len(data))//int(MAX_PAYLOAD))):
-                    data = int(data,2)
-                    byte1 = data  & 0xFF
-                    byte2 = data  & 0x0000FF00
-                    byte3 = data  & 0x00FF0000
-                    byte4 = data  & 0xFF000000
-                    
-                    ## Note : Getting payload according to first_dw_be 
-                    if first_dw_be == "0000": 
-                        data = format(0,'032b')
-                    elif first_dw_be == "0001":
-                        data = byte1 
-                        data = format(0,'032b')
-                    elif first_dw_be == "0010":
-                        data = byte2 
-                    elif first_dw_be == "0011":
-                        data = byte1 + byte2 
-                    elif first_dw_be == "0100":
-                        data = byte3
-                    elif first_dw_be == "0101":
-                        data = byte1 + byte3 
-                    elif first_dw_be == "0110":
-                        data = byte2 + byte3 
-                    elif first_dw_be == "0111":
-                        data = byte1 + byte2 + byte3 
-                    elif first_dw_be == "1000":
-                        data = byte4
-                    elif first_dw_be == "1001":
-                        data = byte4 + byte1 
-                    elif first_dw_be == "1010":
-                        data = byte4 + byte3 
-                    elif first_dw_be == "1011":
-                        data = byte4 + byte1 + byte2 
-                    elif first_dw_be == "1100":
-                        data = byte4 + byte3
-                    elif first_dw_be == "1101":
-                        data = byte4 + byte3 +byte1  
-                    elif first_dw_be == "1110":
-                        data = byte4 + byte3 +byte2  
-                    elif first_dw_be == "1111":
-                        data = byte4 + byte3 +byte2 +byte1 
-                    '''
-                    if int(first_dw_be,2) >0 :
-                        offset = offset+'00'
-                    elif int(first_dw_be,2) >=2 :
-                        offset = offset+'01'
-                    elif int(first_dw_be,2) >=4 :
-                        offset = offset+'10'
-                    elif int(first_dw_be,2) ==8 :
-                        offset = offset+'11'
-                    '''
-                    data = '0X'+'{:08X}'.format(data)
-                    offset_hex = (hex(int(offset,2)+(4*j)).upper())
-                    mem_queue[offset] = data
-                    mem_f.write(f"Offset: {offset_hex}\t Data: {data}")
-                    mem_f.write("\n")
-    mem_f.close()
-    bin_f.close()
+    def modify_data_in_mem_space(address, data, length):
+        with open("gen_logs/memory.txt", "r") as file:
+            lines = file.readlines()
 
-memory_space()
-
-def completion_data():
-    com_bin_f = open("ep_logs/binary_completer.txt","r")
-    mem_f = open("gen_logs/rc_memory.txt","r")
-    com_mem_f = open("gen_logs/compl_mem_match.txt","w")
-    for line in com_bin_f:  # range for 1kb addr offset
-        line = line.strip('\n')        
-        data0 = line[96:]
-        length = line[22:32]
-        for j in range(int(length,2)):
-            data = data0[(j*32):32*(j+1)]
-            data = int(data0,2)
-            data = '0X'+'{:08X}'.format(data)
-            for l in mem_f:
-                data_search = r'Data:\s*(0X[0-9A-F]+)'
-                data_pat = re.search(data_search,l)
-                if data_pat:
-                    com_mem_f.write(f"Data Matched : {data}")
-                    com_mem_f.write("\n")
-                    break
-
-        mem_f.seek(0)
-    com_mem_f.close()
-    com_bin_f.close()
-
-completion_data()
+        with open("gen_logs/memory.txt", "r+") as file:
+            #bin_data = bin(data)[2:].zfill(length * 32)
+            hex_data = hex(int(data,2))[2:].zfill(length * 2)
+            len_data = len(data[2:])
+            if len_data == length * 32:
+                for i in range(0, len(hex_data), 2):
+                    #print("Modifying address  data length", address,data,length)
+                    byte = hex_data[i:i + 2]
+                    file.write(f"0x{address + i // 2:02X} 0x{byte}\n")
+            else:
+                logging.error("Modified data fn: Invalid length or data entered, Length = {}B, Data Width = {}b, data = {}, bin_data = {}".format(length, len_data, hex_data, data))
+                        
+    if is_address_present(address):
+        print("Modifying address ", address)
+        modify_data_in_mem_space(address, data, length)
+    else:
+        write_data_to_mem_space(address, data,length)
 
 
+def read_data_from_mem_space(address, length):
+    address = int(address,2)
+    length = int(length,2)
+    #length = 2
+    #with open("gen_logs/memory.txt", "a") as file:
+    #    file.write("Reading data fn: address fetched = {}, length = {}".format(address,length))
 
+    data_chunk = []
+    with open("gen_logs/memory.txt", "r") as file:
+        file.seek(0)  # Move the file pointer to the beginning of the file
+        lines = file.readlines()
+        for line in lines:
+            line_address, value = line.strip().split()
+            if address <= int(line_address, 16) < address + (length * 4):
+                data_chunk.append(int(value,16))  # Convert hexadecimal value to integer
+    print(data_chunk)
+    data = ''.join(format(value, '08b') for value in data_chunk)
+    logging.info("data sent from mem space = {}".format(data))
+    #with open("gen_logs/memory.txt", "a") as file:
+    #    file.write("\ndata during read call ------> = {}\n".format(data))
+    return data
+# Example usage:
+#write_modify_data(1000,0b000100100011010001010110011110101010001001110011111111111111111111111111111111111111110010111010,3)
+#write_modify_data(1000, 0b11111111111111111111111111111111,1)
+
+#data = read_data_from_file(0x1000, 1)
+#print(data)
+#write_data_to_file(0x1004, 0xABCE)
+#write_data_to_file(0x1008, 0xABCF)
+#write_data_to_file(0x100a, 0xABCF)
+#modify_data_in_file(0x1000, 0xFFFF)
+
+#wddress = 1000
+#wength = 2
+#ata = read_data_from_file(address, length)
+#rint(data)
+#binary_string = ''.join(format(value, '016b') for value in data)
+#print(binary_string)

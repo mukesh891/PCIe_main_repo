@@ -7,3 +7,4 @@ logger.info(f"{formatted_datetime} \t\t\t END-POINT : Compiling pcie_ep_com_file
 
 base_rec_queue = queue.Queue()
 pkt_with_flag_queue = queue.Queue()
+ep_to_rc_queue = queue.Queue()

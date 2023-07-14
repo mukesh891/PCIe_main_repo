@@ -8,6 +8,7 @@ logger.info(f"{formatted_datetime} \t\t END-POINT : Creating log For Generation 
 tx_send_ep_bin = open('ep_logs/ep_tx_send_pkt_bin.txt', 'w')
 #total_pkts = 0
 
+ep_mem_pkt = pcie_ep_mem_pkt()
 
 class pcie_ep_pkt_transmitter:
     def cfg_mem_tx_fn(pkt_num):
@@ -17,7 +18,7 @@ class pcie_ep_pkt_transmitter:
             #tx_send_ep_bin.write('\npkt num for cfg {}\n'.format(pkt_num))
             #total_pkts += 1
         else:
-            TLP = pcie_ep_mem_pkt.mem_tx_fn(pkt_num)
+            TLP = ep_mem_pkt.mem_tx_fn(pkt_num)
             logger.info(f"{formatted_datetime} \t\t\t END-POINT : RUNNING \"ep_mem_tx_fn\"")
             #tx_send_ep_bin.write('\npkt num for mem {}\n'.format(pkt_num))
             #total_pkts += 1

@@ -8,7 +8,7 @@ Comprehensive PCIe Testing: With the PCIe Python TLP Generator and Checker, deve
 Simplified PCIe Verification: The Python-based TLP Generator and Checker provide an intuitive and flexible approach to PCIe verification, enabling engineers to streamline the testing process, accelerate debugging, and enhance overall system performance.
 Command line for running the main.py file:
 
-**#TODO : design the architecture**
+#TODO : design the architecture
 
 
 
